@@ -1,0 +1,95 @@
+# =============================================================================
+# Project-specific
+# =============================================================================
+uploads/
+.private/
+tasks/
+.vscode/
+.history/
+*.vsix
+.idea/
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# =============================================================================
+# Node.js / pnpm / npm / yarn
+# =============================================================================
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+package-lock.json.backup
+
+# =============================================================================
+# Build outputs
+# =============================================================================
+dist/
+build/
+out/
+.next/
+.turbo/
+.vercel/
+.netlify/
+.nuxt/
+.output/
+.svelte-kit/
+.astro/
+storybook-static/
+.docusaurus/
+.cache/
+.parcel-cache/
+.rollup.cache/
+.vite/
+.wrangler/
+
+# =============================================================================
+# TypeScript
+# =============================================================================
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# =============================================================================
+# Testing / coverage
+# =============================================================================
+coverage/
+.nyc_output/
+*.lcov
+.jest/
+playwright-report/
+test-results/
+playwright/.cache/
+vitest.config.ts.timestamp-*
+
+.env
+.env.example
+
+logs/
+
+supabase/
+.n8n/
+
+
+*.bak
+*.orig
+*.rej
+.sass-cache/
+.eslintcache
+.stylelintcache
+.prettiercache
+.dccache

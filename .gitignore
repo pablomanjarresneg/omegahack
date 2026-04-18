@@ -77,11 +77,18 @@ playwright/.cache/
 vitest.config.ts.timestamp-*
 
 .env
-.env.example
+.env.local
+.env.*.local
 
 logs/
 
-supabase/
+# Supabase: ignore everything except migrations and config.toml (which are
+# infra-as-code and must be version-tracked).
+supabase/*
+!supabase/migrations/
+!supabase/config.toml
+supabase/.branches/
+supabase/.temp/
 .n8n/
 
 

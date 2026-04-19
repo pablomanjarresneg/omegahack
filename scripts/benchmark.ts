@@ -56,6 +56,19 @@ type M1 = {
   respuestas_ahorradas: number;
 };
 
+type SecretariaDist = { secretaria_id: string | null; nombre: string | null; count: number };
+
+type M2 = {
+  total_pqrs: number;
+  classified_pqrs: number;
+  priority_assigned: number;
+  high_confidence_tagged_pqrs: number;
+  auto_routing_rate: number;
+  priority_rate: number;
+  high_confidence_rate: number;
+  top_secretarias: SecretariaDist[];
+};
+
 async function computeM1(db: Db, tenantId: string): Promise<M1> {
   const [totalRes, groupedRes, activeGroupsRes, hotGroupsRes] = await Promise.all([
     db
@@ -102,6 +115,90 @@ async function computeM1(db: Db, tenantId: string): Promise<M1> {
   };
 }
 
+async function computeM2(db: Db, tenantId: string): Promise<M2> {
+  const [totalRes, classifiedRes, priorityRes, pqrsWithTagsRes, pqrRowsRes, secretariasRes] =
+    await Promise.all([
+      db
+        .from("pqr")
+        .select("id", { count: "exact", head: true })
+        .eq("tenant_id", tenantId),
+      db
+        .from("pqr")
+        .select("id", { count: "exact", head: true })
+        .eq("tenant_id", tenantId)
+        .not("secretaria_id", "is", null),
+      db
+        .from("pqr")
+        .select("id", { count: "exact", head: true })
+        .eq("tenant_id", tenantId)
+        .not("priority_level", "is", null),
+      db
+        .from("pqr_tags")
+        .select("pqr_id, pqr!inner(tenant_id)")
+        .eq("pqr.tenant_id", tenantId)
+        .gte("confidence", 0.7),
+      db
+        .from("pqr")
+        .select("secretaria_id")
+        .eq("tenant_id", tenantId)
+        .not("secretaria_id", "is", null),
+      db
+        .from("secretarias")
+        .select("id, nombre")
+        .eq("tenant_id", tenantId),
+    ]);
+
+  for (const [label, res] of [
+    ["pqr count", totalRes],
+    ["classified count", classifiedRes],
+    ["priority count", priorityRes],
+    ["high-conf tags", pqrsWithTagsRes],
+    ["secretaria rows", pqrRowsRes],
+    ["secretarias", secretariasRes],
+  ] as const) {
+    if (res.error) throw new Error(`${label}: ${res.error.message}`);
+  }
+
+  const total = totalRes.count ?? 0;
+  const classified = classifiedRes.count ?? 0;
+  const priority = priorityRes.count ?? 0;
+
+  const tagRows = (pqrsWithTagsRes.data ?? []) as Array<{ pqr_id: string }>;
+  const highConfPqrs = new Set(tagRows.map((r) => r.pqr_id)).size;
+
+  const secretariaCounts = new Map<string, number>();
+  for (const row of (pqrRowsRes.data ?? []) as Array<{ secretaria_id: string | null }>) {
+    if (!row.secretaria_id) continue;
+    secretariaCounts.set(
+      row.secretaria_id,
+      (secretariaCounts.get(row.secretaria_id) ?? 0) + 1,
+    );
+  }
+  const nameById = new Map<string, string>();
+  for (const row of (secretariasRes.data ?? []) as Array<{ id: string; nombre: string }>) {
+    nameById.set(row.id, row.nombre);
+  }
+  const top: SecretariaDist[] = [...secretariaCounts.entries()]
+    .map(([secretaria_id, count]) => ({
+      secretaria_id,
+      nombre: nameById.get(secretaria_id) ?? null,
+      count,
+    }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+
+  return {
+    total_pqrs: total,
+    classified_pqrs: classified,
+    priority_assigned: priority,
+    high_confidence_tagged_pqrs: highConfPqrs,
+    auto_routing_rate: total > 0 ? classified / total : 0,
+    priority_rate: total > 0 ? priority / total : 0,
+    high_confidence_rate: total > 0 ? highConfPqrs / total : 0,
+    top_secretarias: top,
+  };
+}
+
 function printM1(m1: M1): void {
   console.log("");
   console.log("── M1 · Repetición de casos ────────────────────────────────");
@@ -129,8 +226,36 @@ async function main(): Promise<void> {
   console.log(`benchmark · tenant ${tenantId}`);
   console.log(`corrido:    ${new Date().toISOString()}`);
 
-  const m1 = await computeM1(db, tenantId);
+  const [m1, m2] = await Promise.all([
+    computeM1(db, tenantId),
+    computeM2(db, tenantId),
+  ]);
   printM1(m1);
+  printM2(m2);
+}
+
+function printM2(m2: M2): void {
+  console.log("");
+  console.log("── M2 · Cargas innecesarias ────────────────────────────────");
+  console.log(`   Total PQRs              ${m2.total_pqrs.toLocaleString("es-CO")}`);
+  console.log(`   Con secretaría asignada ${m2.classified_pqrs.toLocaleString("es-CO")}`);
+  console.log(`   Con prioridad asignada  ${m2.priority_assigned.toLocaleString("es-CO")}`);
+  console.log(
+    `   Con tags de alta conf.  ${m2.high_confidence_tagged_pqrs.toLocaleString("es-CO")} (≥ 0.7)`,
+  );
+  console.log("");
+  console.log(`   Sin OmegaHack           auto-routing 0.0% (todo manual)`);
+  console.log(
+    `   Con OmegaHack           auto-routing ${fmtPct(m2.auto_routing_rate)} · prioridad ${fmtPct(m2.priority_rate)} · tags ${fmtPct(m2.high_confidence_rate)}`,
+  );
+  if (m2.top_secretarias.length > 0) {
+    console.log("");
+    console.log("   Top secretarías (volumen):");
+    for (const row of m2.top_secretarias) {
+      const label = row.nombre ?? row.secretaria_id ?? "(sin asignar)";
+      console.log(`     ${row.count.toString().padStart(4)}  ${label}`);
+    }
+  }
 }
 
 main().catch((err: unknown) => {

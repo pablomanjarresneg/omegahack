@@ -1,0 +1,9 @@
+{
+  "extends": "@omega/config-ts/base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "noEmit": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

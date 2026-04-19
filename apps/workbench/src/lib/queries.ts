@@ -286,11 +286,40 @@ export async function getLatestResponse(
 export type ProblemGroupRow =
   Database["public"]["Tables"]["problem_groups"]["Row"];
 
+export type PriorityCounts = Record<PriorityLevel | "unset", number>;
+
+export type ProblemGroupWithBreakdown = ProblemGroupRow & {
+  priority_counts: PriorityCounts;
+  top_secretarias: Array<{ id: string; nombre: string; codigo: string; count: number }>;
+};
+
+export type ProblemGroupFilters = {
+  hotOnly?: boolean;
+  priorityLevel?: PriorityLevel | null;
+  secretariaId?: string | null;
+};
+
+function emptyPriorityCounts(): PriorityCounts {
+  return {
+    P0_critica: 0,
+    P1_alta: 0,
+    P2_media: 0,
+    P3_baja: 0,
+    unset: 0,
+  };
+}
+
+/**
+ * Fetches problem_groups plus per-group priority histograms and the top 2
+ * secretarías by member count. One round-trip per section — keeps the
+ * /grupos page fast even when the filter drawer narrows the result set.
+ */
 export async function listProblemGroups(
   limit = 100,
-): Promise<ProblemGroupRow[]> {
+  filters: ProblemGroupFilters = {},
+): Promise<ProblemGroupWithBreakdown[]> {
   const supabase = getServerSupabase();
-  const { data, error } = await supabase
+  let q = supabase
     .from("problem_groups")
     .select("*")
     .eq("tenant_id", env.demoTenantId)
@@ -298,8 +327,86 @@ export async function listProblemGroups(
     .order("member_count", { ascending: false })
     .order("updated_at", { ascending: false })
     .limit(limit);
+  if (filters.hotOnly) q = q.eq("hot", true);
+
+  const { data: groups, error } = await q;
   if (error) throw error;
-  return (data ?? []) as ProblemGroupRow[];
+  const groupRows = (groups ?? []) as ProblemGroupRow[];
+  if (groupRows.length === 0) return [];
+
+  const groupIds = groupRows.map((g) => g.id);
+
+  const { data: members, error: memErr } = await supabase
+    .from("pqr_problem_group_members")
+    .select(
+      "group_id, pqr:pqr(id, priority_level, secretaria_id, secretaria:secretarias(id, nombre, codigo))",
+    )
+    .in("group_id", groupIds);
+  if (memErr) throw memErr;
+
+  type MemberRow = {
+    group_id: string;
+    pqr: {
+      id: string;
+      priority_level: PriorityLevel | null;
+      secretaria_id: string | null;
+      secretaria: { id: string; nombre: string; codigo: string } | null;
+    } | null;
+  };
+
+  const countsByGroup = new Map<string, PriorityCounts>();
+  const secretariasByGroup = new Map<
+    string,
+    Map<string, { id: string; nombre: string; codigo: string; count: number }>
+  >();
+
+  for (const raw of (members ?? []) as MemberRow[]) {
+    if (!raw.pqr) continue;
+    const pc = countsByGroup.get(raw.group_id) ?? emptyPriorityCounts();
+    const bucket = raw.pqr.priority_level ?? "unset";
+    pc[bucket] += 1;
+    countsByGroup.set(raw.group_id, pc);
+
+    if (raw.pqr.secretaria) {
+      const sMap =
+        secretariasByGroup.get(raw.group_id) ??
+        new Map<string, { id: string; nombre: string; codigo: string; count: number }>();
+      const existing = sMap.get(raw.pqr.secretaria.id);
+      if (existing) {
+        existing.count += 1;
+      } else {
+        sMap.set(raw.pqr.secretaria.id, {
+          id: raw.pqr.secretaria.id,
+          nombre: raw.pqr.secretaria.nombre,
+          codigo: raw.pqr.secretaria.codigo,
+          count: 1,
+        });
+      }
+      secretariasByGroup.set(raw.group_id, sMap);
+    }
+  }
+
+  let enriched: ProblemGroupWithBreakdown[] = groupRows.map((g) => {
+    const pc = countsByGroup.get(g.id) ?? emptyPriorityCounts();
+    const sMap = secretariasByGroup.get(g.id);
+    const top_secretarias = sMap
+      ? [...sMap.values()].sort((a, b) => b.count - a.count).slice(0, 2)
+      : [];
+    return { ...g, priority_counts: pc, top_secretarias };
+  });
+
+  if (filters.priorityLevel) {
+    enriched = enriched.filter(
+      (g) => (g.priority_counts[filters.priorityLevel!] ?? 0) > 0,
+    );
+  }
+  if (filters.secretariaId) {
+    enriched = enriched.filter((g) =>
+      g.top_secretarias.some((s) => s.id === filters.secretariaId),
+    );
+  }
+
+  return enriched;
 }
 
 export type AuditEntry = Database["public"]["Tables"]["pqr_audit"]["Row"];

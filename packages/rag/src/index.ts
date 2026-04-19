@@ -42,3 +42,6 @@ export type { PqrRenderRow, PqrRenderedDoc } from './pqr-renderer.js';
 
 export { indexPqrBatch } from './pqr-indexer.js';
 export type { IndexPqrBatchDeps, IndexPqrBatchResult } from './pqr-indexer.js';
+
+export { fireNellaIndexRequest } from './pqr-indexer-trigger.js';
+export type { FireNellaIndexArgs } from './pqr-indexer-trigger.js';

@@ -12,7 +12,8 @@
     "./embedding": "./src/embedding.ts",
     "./nella-client": "./src/nella-client.ts",
     "./pqr-renderer": "./src/pqr-renderer.ts",
-    "./pqr-indexer": "./src/pqr-indexer.ts"
+    "./pqr-indexer": "./src/pqr-indexer.ts",
+    "./pqr-indexer-trigger": "./src/pqr-indexer-trigger.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

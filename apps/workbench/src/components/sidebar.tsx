@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Inbox,
+  ListTodo,
   Layers,
   ShieldCheck,
   Settings,
@@ -12,6 +13,7 @@ import {
 import clsx from "clsx";
 
 const NAV = [
+  { href: "/bandeja", label: "Bandeja", icon: ListTodo },
   { href: "/alcaldia", label: "Alcaldía", icon: LayoutDashboard },
   { href: "/queue", label: "Cola de revisión", icon: Inbox },
   { href: "/grupos", label: "Grupos problema", icon: Layers },

@@ -216,6 +216,30 @@ export async function listQueue(filters: QueueFilters = {}): Promise<QueuePqr[]>
   return (data ?? []) as QueuePqr[];
 }
 
+export async function listActiveQueue(limit = 300): Promise<QueuePqr[]> {
+  const supabase = getServerSupabase();
+  const { data, error } = await supabase
+    .from("pqr")
+    .select(
+      "id, radicado, status, channel, tipo, priority_level, priority_score, lead, display_text, issued_at, legal_deadline, secretaria_id, comuna_id",
+    )
+    .eq("tenant_id", env.demoTenantId)
+    .in("status", [
+      "received",
+      "accepted",
+      "assigned",
+      "in_draft",
+      "in_review",
+      "approved",
+    ])
+    .order("priority_score", { ascending: false, nullsFirst: false })
+    .order("legal_deadline", { ascending: true, nullsFirst: false })
+    .order("issued_at", { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  return (data ?? []) as QueuePqr[];
+}
+
 export type PqrDetail = Pqr & {
   secretaria: Pick<Secretaria, "id" | "nombre" | "codigo"> | null;
   comuna: Pick<Comuna, "id" | "nombre" | "numero" | "tipo"> | null;

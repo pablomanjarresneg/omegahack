@@ -7,8 +7,10 @@ import { StatusPill } from "@/components/status-pill";
 import { ChannelIcon, channelLabel } from "@/components/channel-icon";
 import { DeadlineCell } from "@/components/deadline-cell";
 import { Timeline, type TimelineEntry } from "@/components/timeline";
+import { ActionCard } from "@/components/action-card";
 import { getPqrDetail, getPqrTimeline } from "@/lib/queries";
 import { pqrProgress } from "@/lib/deadline";
+import { nextActionFor } from "@/lib/next-action";
 import { formatDateTimeCO } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
@@ -102,6 +104,8 @@ export default async function PqrDetailPage({
 
       <main className="grid flex-1 gap-6 p-6 lg:grid-cols-[1fr_320px]">
         <div className="flex flex-col gap-6">
+          <ActionCard action={nextActionFor(pqr.status)} />
+
           <header className="rounded border border-border bg-surface p-5">
             <div className="flex flex-wrap items-center gap-2">
               <PriorityBadge level={pqr.priority_level} />

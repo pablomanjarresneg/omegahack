@@ -238,6 +238,39 @@ export async function getPqrDetail(id: string): Promise<PqrDetail | null> {
 export type PqrEvent = Database["public"]["Tables"]["pqr_events"]["Row"];
 export type PqrAudit = Database["public"]["Tables"]["pqr_audit"]["Row"];
 
+export type ProblemGroupRow =
+  Database["public"]["Tables"]["problem_groups"]["Row"];
+
+export async function listProblemGroups(
+  limit = 100,
+): Promise<ProblemGroupRow[]> {
+  const supabase = getServerSupabase();
+  const { data, error } = await supabase
+    .from("problem_groups")
+    .select("*")
+    .eq("tenant_id", env.demoTenantId)
+    .order("hot", { ascending: false })
+    .order("member_count", { ascending: false })
+    .order("updated_at", { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  return (data ?? []) as ProblemGroupRow[];
+}
+
+export type AuditEntry = Database["public"]["Tables"]["pqr_audit"]["Row"];
+
+export async function listRecentAudit(limit = 100): Promise<AuditEntry[]> {
+  const supabase = getServerSupabase();
+  const { data, error } = await supabase
+    .from("pqr_audit")
+    .select("*")
+    .eq("tenant_id", env.demoTenantId)
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  return (data ?? []) as AuditEntry[];
+}
+
 export async function getPqrTimeline(pqrId: string): Promise<{
   events: PqrEvent[];
   audits: PqrAudit[];

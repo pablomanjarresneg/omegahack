@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { getServerSupabase } from "@/lib/supabase-server";
 import { env } from "@/lib/env";
 import { buildDraftTemplate } from "@/lib/draft-template";
+import { notifyCitizenOfStatus } from "@/lib/citizen-notifications";
 import type { Database, Json } from "@omega/db/types";
 
 type Status = Database["public"]["Enums"]["pqr_status"];
@@ -28,6 +29,13 @@ async function transitionStatus(
     payload: event.payload ?? {},
   });
   if (eventError) throw new Error(eventError.message);
+
+  await notifyCitizenOfStatus(supabase, {
+    pqrId,
+    status: to,
+    statusEventKind: event.kind,
+    statusEventPayload: event.payload,
+  });
 
   revalidatePath("/bandeja");
   revalidatePath("/queue");
@@ -71,11 +79,19 @@ export async function transferPqr(
     .eq("tenant_id", env.demoTenantId);
   if (error) throw new Error(error.message);
 
-  await supabase.from("pqr_events").insert({
+  const { error: eventError } = await supabase.from("pqr_events").insert({
     tenant_id: env.demoTenantId,
     pqr_id: pqrId,
     kind: "pqr_transferred",
     payload: { to_secretaria: secretariaId },
+  });
+  if (eventError) throw new Error(eventError.message);
+
+  await notifyCitizenOfStatus(supabase, {
+    pqrId,
+    status: "transferred",
+    statusEventKind: "pqr_transferred",
+    statusEventPayload: { to_secretaria: secretariaId },
   });
 
   revalidatePath("/bandeja");
@@ -145,11 +161,19 @@ export async function generateDraft(pqrId: string): Promise<void> {
     .eq("tenant_id", env.demoTenantId);
   if (statusError) throw new Error(statusError.message);
 
-  await supabase.from("pqr_events").insert({
+  const { error: eventError } = await supabase.from("pqr_events").insert({
     tenant_id: env.demoTenantId,
     pqr_id: pqrId,
     kind: "pqr_draft_created",
     payload: { citations_count: citations.length },
+  });
+  if (eventError) throw new Error(eventError.message);
+
+  await notifyCitizenOfStatus(supabase, {
+    pqrId,
+    status: "in_draft",
+    statusEventKind: "pqr_draft_created",
+    statusEventPayload: { citations_count: citations.length },
   });
 
   revalidatePath("/bandeja");
@@ -215,15 +239,25 @@ export async function approveDraft(pqrId: string): Promise<void> {
     .eq("tenant_id", env.demoTenantId);
   if (statusError) throw new Error(statusError.message);
 
-  await supabase.from("pqr_events").insert({
+  const eventPayload: Json = {
+    citations_count: Array.isArray(draft.citations)
+      ? draft.citations.length
+      : 0,
+  };
+
+  const { error: eventError } = await supabase.from("pqr_events").insert({
     tenant_id: env.demoTenantId,
     pqr_id: pqrId,
     kind: "pqr_approved",
-    payload: {
-      citations_count: Array.isArray(draft.citations)
-        ? draft.citations.length
-        : 0,
-    },
+    payload: eventPayload,
+  });
+  if (eventError) throw new Error(eventError.message);
+
+  await notifyCitizenOfStatus(supabase, {
+    pqrId,
+    status: "approved",
+    statusEventKind: "pqr_approved",
+    statusEventPayload: eventPayload,
   });
 
   revalidatePath("/bandeja");

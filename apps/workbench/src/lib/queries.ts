@@ -243,6 +243,10 @@ export async function listActiveQueue(limit = 300): Promise<QueuePqr[]> {
 export type PqrDetail = Pqr & {
   secretaria: Pick<Secretaria, "id" | "nombre" | "codigo"> | null;
   comuna: Pick<Comuna, "id" | "nombre" | "numero" | "tipo"> | null;
+  citizen: Pick<
+    Database["public"]["Tables"]["citizens"]["Row"],
+    "id" | "nombre" | "email" | "telefono"
+  > | null;
 };
 
 export async function getPqrDetail(id: string): Promise<PqrDetail | null> {
@@ -250,7 +254,7 @@ export async function getPqrDetail(id: string): Promise<PqrDetail | null> {
   const { data, error } = await supabase
     .from("pqr")
     .select(
-      "*, secretaria:secretarias(id, nombre, codigo), comuna:comunas(id, nombre, numero, tipo)",
+      "*, secretaria:secretarias(id, nombre, codigo), comuna:comunas(id, nombre, numero, tipo), citizen:citizens(id, nombre, email, telefono)",
     )
     .eq("tenant_id", env.demoTenantId)
     .eq("id", id)

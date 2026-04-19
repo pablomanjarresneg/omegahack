@@ -18,6 +18,7 @@ import {
 import { pqrProgress } from "@/lib/deadline";
 import { nextActionFor } from "@/lib/next-action";
 import { formatDateTimeCO } from "@/lib/format";
+import { maskEmail, maskPhone } from "@/lib/citizen-notifications";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -71,8 +72,8 @@ export default async function PqrDetailPage({
     id: `ev-${e.id}`,
     at: e.created_at,
     title: humanizeEventKind(e.kind),
-    description: renderJsonPayload(e.payload),
-    tone: "default",
+    description: renderEventPayload(e.kind, e.payload),
+    tone: eventTone(e.kind),
   }));
 
   const auditEntries: TimelineEntry[] = audits.map((a) => ({
@@ -272,6 +273,15 @@ export default async function PqrDetailPage({
               ["Clasificación", pqr.classification_status],
             ]}
           />
+
+          <MetaCard
+            title="Contacto ciudadano"
+            rows={[
+              ["Nombre", pqr.citizen?.nombre ?? "—"],
+              ["Email", maskEmail(pqr.citizen?.email)],
+              ["Teléfono", maskPhone(pqr.citizen?.telefono)],
+            ]}
+          />
         </aside>
       </main>
     </>
@@ -321,6 +331,10 @@ function MetaCard({
 
 function humanizeEventKind(kind: string): string {
   const map: Record<string, string> = {
+    received: "Recibida en intake",
+    classified: "Clasificada",
+    assigned: "Asignada a funcionario",
+    response_sent: "Respuesta enviada al ciudadano",
     pqr_received: "Recibida en intake",
     pqr_accepted: "Aceptada por jurídica",
     pqr_assigned: "Asignada a funcionario",
@@ -331,8 +345,72 @@ function humanizeEventKind(kind: string): string {
     pqr_approved: "Respuesta aprobada",
     pqr_sent: "Respuesta enviada al ciudadano",
     pqr_closed: "Cerrada",
+    citizen_notification_sent: "Notificación enviada al ciudadano",
+    citizen_notification_skipped: "Notificación no enviada",
   };
   return map[kind] ?? kind.replace(/_/g, " ");
+}
+
+function eventTone(kind: string): TimelineEntry["tone"] {
+  if (kind === "citizen_notification_sent") return "ok";
+  if (kind === "citizen_notification_skipped") return "warn";
+  if (kind === "pqr_bounced" || kind === "pqr_rejected") return "warn";
+  return "default";
+}
+
+function renderEventPayload(kind: string, payload: unknown): React.ReactNode {
+  if (
+    kind === "citizen_notification_sent" ||
+    kind === "citizen_notification_skipped"
+  ) {
+    return renderNotificationPayload(kind, payload);
+  }
+  return renderJsonPayload(payload);
+}
+
+function renderNotificationPayload(
+  kind: string,
+  payload: unknown,
+): React.ReactNode {
+  const p = asRecord(payload);
+  if (!p) return null;
+
+  if (kind === "citizen_notification_skipped") {
+    return (
+      <p className="mt-1 text-xs text-fg-muted">
+        No hay email ni teléfono registrado para este ciudadano.
+      </p>
+    );
+  }
+
+  const channels = Array.isArray(p.channels)
+    ? p.channels
+        .map((entry) => {
+          const c = asRecord(entry);
+          if (!c) return null;
+          const channel = typeof c.channel === "string" ? c.channel : "canal";
+          const destination =
+            typeof c.destination === "string" ? c.destination : "—";
+          return `${channelLabelForNotification(channel)} a ${destination}`;
+        })
+        .filter(Boolean)
+    : [];
+  const message = typeof p.message === "string" ? p.message : null;
+
+  return (
+    <div className="mt-1 space-y-1">
+      {channels.length > 0 ? (
+        <p>{channels.join(" · ")}</p>
+      ) : (
+        <p>Canal de contacto registrado.</p>
+      )}
+      {message ? (
+        <p className="whitespace-pre-wrap text-[11px] leading-relaxed text-fg-subtle">
+          {message}
+        </p>
+      ) : null}
+    </div>
+  );
 }
 
 function renderJsonPayload(payload: unknown): React.ReactNode {
@@ -378,6 +456,21 @@ function renderAudit(a: {
     );
   }
   return null;
+}
+
+function asRecord(value: unknown): Record<string, unknown> | null {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null;
+}
+
+function channelLabelForNotification(channel: string): string {
+  const map: Record<string, string> = {
+    email: "Email",
+    sms: "SMS",
+    whatsapp: "WhatsApp",
+  };
+  return map[channel] ?? channel;
 }
 
 function shortJson(v: unknown): string {

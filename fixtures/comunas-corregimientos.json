@@ -1,0 +1,352 @@
+[
+  {
+    "tipo": "comuna",
+    "numero": 1,
+    "nombre": "Popular",
+    "barrios_principales": [
+      "Santo Domingo Savio No. 1",
+      "Santo Domingo Savio No. 2",
+      "Popular",
+      "Granizal",
+      "Moscú No. 2",
+      "Villa Guadalupe",
+      "San Pablo",
+      "La Avanzada",
+      "Carpinelo"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 2,
+    "nombre": "Santa Cruz",
+    "barrios_principales": [
+      "La Isla",
+      "El Playón de los Comuneros",
+      "Pablo VI",
+      "La Frontera",
+      "La Francia",
+      "Andalucía",
+      "Villa del Socorro",
+      "Villa Niza",
+      "Moscú No. 1",
+      "Santa Cruz",
+      "La Rosa"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 3,
+    "nombre": "Manrique",
+    "barrios_principales": [
+      "La Salle",
+      "Las Granjas",
+      "Campo Valdés No. 2",
+      "Santa Inés",
+      "El Raizal",
+      "El Pomar",
+      "Manrique Central No. 2",
+      "Manrique Oriental",
+      "Versalles No. 1",
+      "La Cruz"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 4,
+    "nombre": "Aranjuez",
+    "barrios_principales": [
+      "Berlín",
+      "San Isidro",
+      "Palermo",
+      "Moravia",
+      "Sevilla",
+      "San Pedro",
+      "Manrique Central No. 1",
+      "Campo Valdés No. 1",
+      "Aranjuez",
+      "Brasilia"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 5,
+    "nombre": "Castilla",
+    "barrios_principales": [
+      "Toscana",
+      "Florencia",
+      "Boyacá",
+      "Belalcázar",
+      "Girardot",
+      "Tricentenario",
+      "Castilla",
+      "Francisco Antonio Zea",
+      "Alfonso López",
+      "Caribe"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 6,
+    "nombre": "Doce de Octubre",
+    "barrios_principales": [
+      "Santander",
+      "Doce de Octubre No. 1",
+      "Doce de Octubre No. 2",
+      "Pedregal",
+      "La Esperanza",
+      "San Martín de Porres",
+      "Kennedy",
+      "Picacho",
+      "Picachito",
+      "El Triunfo"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 7,
+    "nombre": "Robledo",
+    "barrios_principales": [
+      "Cerro El Volador",
+      "San Germán",
+      "La Pilarica",
+      "Córdoba",
+      "López de Mesa",
+      "Aures No. 1",
+      "Aures No. 2",
+      "Robledo",
+      "Santa Margarita",
+      "Pajarito"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 8,
+    "nombre": "Villa Hermosa",
+    "barrios_principales": [
+      "Villa Hermosa",
+      "La Mansión",
+      "San Miguel",
+      "La Ladera",
+      "Llanaditas",
+      "Enciso",
+      "Sucre",
+      "Trece de Noviembre",
+      "Villatina",
+      "Villa Turbay"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 9,
+    "nombre": "Buenos Aires",
+    "barrios_principales": [
+      "Juan Pablo II",
+      "Bomboná No. 2",
+      "Alejandro Echavarría",
+      "Buenos Aires",
+      "Miraflores",
+      "La Milagrosa",
+      "Gerona",
+      "Loreto",
+      "Asomadera No. 1",
+      "Ocho de Marzo"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 10,
+    "nombre": "La Candelaria",
+    "barrios_principales": [
+      "Prado",
+      "Jesús Nazareno",
+      "Guayaquil",
+      "Corazón de Jesús",
+      "Bomboná No. 1",
+      "Boston",
+      "Los Ángeles",
+      "La Candelaria",
+      "San Diego",
+      "Perpetuo Socorro"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 11,
+    "nombre": "Laureles-Estadio",
+    "barrios_principales": [
+      "Carlos E. Restrepo",
+      "Suramericana",
+      "Naranjal",
+      "San Joaquín",
+      "Bolivariana",
+      "Laureles",
+      "Las Acacias",
+      "La Castellana",
+      "El Velódromo",
+      "Estadio"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 12,
+    "nombre": "La América",
+    "barrios_principales": [
+      "Ferrini",
+      "Calasanz",
+      "Los Pinos",
+      "La América",
+      "La Floresta",
+      "Santa Lucía",
+      "Santa Mónica",
+      "Barrio Cristóbal",
+      "Simón Bolívar",
+      "Santa Teresita"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 13,
+    "nombre": "San Javier",
+    "barrios_principales": [
+      "Blanquizal",
+      "Santa Rosa de Lima",
+      "San Javier No. 1",
+      "San Javier No. 2",
+      "Veinte de Julio",
+      "Belencito",
+      "Betania",
+      "El Corazón",
+      "Las Independencias",
+      "Nuevos Conquistadores"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 14,
+    "nombre": "El Poblado",
+    "barrios_principales": [
+      "Villa Carlota",
+      "Castropol",
+      "Las Lomas No. 1",
+      "El Tesoro",
+      "Los Balsos No. 1",
+      "San Lucas",
+      "El Poblado",
+      "Manila",
+      "Astorga",
+      "La Aguacatala"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 15,
+    "nombre": "Guayabal",
+    "barrios_principales": [
+      "Trinidad",
+      "Santa Fe",
+      "Campo Amor",
+      "Cristo Rey",
+      "Guayabal",
+      "La Colina",
+      "Parque Juan Pablo II",
+      "El Rodeo"
+    ]
+  },
+  {
+    "tipo": "comuna",
+    "numero": 16,
+    "nombre": "Belén",
+    "barrios_principales": [
+      "Fátima",
+      "Rosales",
+      "Belén",
+      "Granada",
+      "San Bernardo",
+      "Las Playas",
+      "La Mota",
+      "La Loma de los Bernal",
+      "Los Alpes",
+      "Altavista"
+    ]
+  },
+  {
+    "tipo": "corregimiento",
+    "numero": 50,
+    "nombre": "San Sebastián de Palmitas",
+    "barrios_principales": [
+      "Palmitas Sector Central",
+      "La Aldea",
+      "La Sucia",
+      "La Suiza",
+      "Urquitá",
+      "La Frisola",
+      "Potrera Miserengo",
+      "Volcana Guayabal"
+    ]
+  },
+  {
+    "tipo": "corregimiento",
+    "numero": 60,
+    "nombre": "San Cristóbal",
+    "barrios_principales": [
+      "San Cristóbal (Cabecera)",
+      "Pedregal Alto",
+      "Pedregal Bajo",
+      "La Palma",
+      "Travesías",
+      "El Llano",
+      "Naranjal",
+      "La Cuchilla",
+      "Boquerón",
+      "Pajarito"
+    ]
+  },
+  {
+    "tipo": "corregimiento",
+    "numero": 70,
+    "nombre": "Altavista",
+    "barrios_principales": [
+      "Altavista Sector Central",
+      "Aguas Frías",
+      "El Corazón",
+      "El Jardín",
+      "El Morro",
+      "La Esperanza",
+      "San José del Manzanillo",
+      "San Pablo"
+    ]
+  },
+  {
+    "tipo": "corregimiento",
+    "numero": 80,
+    "nombre": "San Antonio de Prado",
+    "barrios_principales": [
+      "San Antonio de Prado (Cabecera)",
+      "La Florida",
+      "Potrerito",
+      "Montañita",
+      "Yarumalito",
+      "El Astillero",
+      "El Salado",
+      "La Verde"
+    ]
+  },
+  {
+    "tipo": "corregimiento",
+    "numero": 90,
+    "nombre": "Santa Elena",
+    "barrios_principales": [
+      "Santa Elena Sector Central",
+      "Media Luna",
+      "Piedras Blancas - Matasano",
+      "Mazo",
+      "Piedra Gorda",
+      "Barro Blanco",
+      "El Placer",
+      "El Cerro",
+      "El Llano",
+      "El Plan",
+      "Las Palmas"
+    ]
+  }
+]

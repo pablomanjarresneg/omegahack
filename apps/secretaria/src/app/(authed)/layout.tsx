@@ -34,13 +34,13 @@ export default async function AuthedLayout({
   const secretaria = await getSecretaria(session.user.secretaria_id);
 
   return (
-    <div className="flex min-h-screen bg-bg text-fg">
+    <div className="flex min-h-screen overflow-x-hidden bg-bg text-fg">
       <Sidebar
         userName={session.user.nombre}
         userRole={session.user.role}
         secretariaName={secretaria?.nombre ?? "Secretaría"}
       />
-      <div className="flex min-w-0 flex-1 flex-col">{children}</div>
+      <div className="flex min-w-0 flex-1 flex-col overflow-x-hidden">{children}</div>
     </div>
   );
 }

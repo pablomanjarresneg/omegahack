@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-19T01:59:36.044Z",
+  "generatedAt": "2026-04-19T10:38:14.439Z",
   "deadlineCases": [
     {
       "id": "dl-0001",
@@ -4001,6 +4001,64 @@
           "2026-05-01"
         ]
       }
+    },
+    {
+      "id": "dl-0258",
+      "label": "oposicion-2025-03-10",
+      "input": {
+        "issuedAt": "2025-03-10T12:00:00.000Z",
+        "plazoType": "oposicion"
+      },
+      "expected": {
+        "deadlineAt": "2025-03-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0259",
+      "label": "oposicion-2026-04-20",
+      "input": {
+        "issuedAt": "2026-04-20T12:00:00.000Z",
+        "plazoType": "oposicion"
+      },
+      "expected": {
+        "deadlineAt": "2026-04-27T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0260",
+      "label": "oposicion-2027-11-08",
+      "input": {
+        "issuedAt": "2027-11-08T12:00:00.000Z",
+        "plazoType": "oposicion"
+      },
+      "expected": {
+        "deadlineAt": "2027-11-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": [
+          "2027-11-15"
+        ]
+      }
+    },
+    {
+      "id": "dl-0261",
+      "label": "oposicion-2028-05-10",
+      "input": {
+        "issuedAt": "2028-05-10T12:00:00.000Z",
+        "plazoType": "oposicion"
+      },
+      "expected": {
+        "deadlineAt": "2028-05-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
     }
   ],
   "extensionCases": [
@@ -4819,6 +4877,108 @@
         "shouldThrow": true,
         "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
       }
+    },
+    {
+      "id": "ext-049",
+      "label": "oposicion-2027-11-08-x1.25",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "extension by 1.25x for testing",
+        "newDeadlineAt": "2027-11-17T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-11-17T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-050",
+      "label": "oposicion-2027-11-08-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2027-11-19T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-11-19T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-051",
+      "label": "oposicion-2027-11-08-x1.75",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "extension by 1.75x for testing",
+        "newDeadlineAt": "2027-11-22T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-11-22T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-052",
+      "label": "oposicion-2027-11-08-x2.5-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2027-11-26T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-053",
+      "label": "oposicion-2027-11-08-x3-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2027-11-30T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-054",
+      "label": "oposicion-2027-11-08-earlier-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "cannot shorten the deadline",
+        "newDeadlineAt": "2027-11-11T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
+      }
     }
   ],
   "progressCases": [
@@ -5330,6 +5490,57 @@
         "status": "overdue",
         "unit": "business_days",
         "amount": 10
+      }
+    },
+    {
+      "id": "prog-031",
+      "label": "oposicion-2027-11-08-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "now": "2027-11-09T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 5
+      }
+    },
+    {
+      "id": "prog-032",
+      "label": "oposicion-2027-11-08-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "now": "2027-11-12T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 5
+      }
+    },
+    {
+      "id": "prog-033",
+      "label": "oposicion-2027-11-08-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "now": "2027-11-18T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 5
       }
     }
   ]

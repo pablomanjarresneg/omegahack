@@ -13,6 +13,7 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "test:rls": "pnpm -F @omega/rls-tests test",
     "typecheck": "turbo run typecheck",
     "db:types": "supabase gen types typescript --linked --schema public,qa_bank 2>/dev/null > packages/db/src/types.ts",
     "db:push": "supabase db push",

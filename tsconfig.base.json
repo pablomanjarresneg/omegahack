@@ -23,7 +23,11 @@
       "@omega/db": ["./packages/db/src/index.ts"],
       "@omega/db/*": ["./packages/db/src/*"],
       "@omega/deadline-engine": ["./packages/deadline-engine/src/index.ts"],
-      "@omega/deadline-engine/*": ["./packages/deadline-engine/src/*"]
+      "@omega/deadline-engine/*": ["./packages/deadline-engine/src/*"],
+      "@omega/habeas-data": ["./packages/habeas-data/src/index.ts"],
+      "@omega/habeas-data/*": ["./packages/habeas-data/src/*"],
+      "@omega/search": ["./packages/search/src/index.ts"],
+      "@omega/search/*": ["./packages/search/src/*"]
     }
   },
   "exclude": ["node_modules", ".next", "dist", ".turbo"]

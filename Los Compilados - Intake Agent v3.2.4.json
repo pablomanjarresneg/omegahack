@@ -1,0 +1,2110 @@
+﻿{
+    "name":  "Los Compilados - Intake Agent v3.2.4",
+    "nodes":  [
+                  {
+                      "parameters":  {
+                                         "httpMethod":  "POST",
+                                         "path":  "pqrs/intake",
+                                         "responseMode":  "responseNode",
+                                         "options":  {
+                                                         "allowedOrigins":  "*",
+                                                         "ignoreBots":  true
+                                                     }
+                                     },
+                      "id":  "99e34a54-c626-41ec-b105-733a097cff4a",
+                      "name":  "Webhook PQRS Intake",
+                      "type":  "n8n-nodes-base.webhook",
+                      "typeVersion":  2.1,
+                      "position":  [
+                                       16,
+                                       80
+                                   ],
+                      "webhookId":  "6e3ec561-bcf8-46b8-9c1a-d98213db933f"
+                  },
+                  {
+                      "parameters":  {
+
+                                     },
+                      "id":  "299f118e-a48b-4cd8-a5a5-674c1e1a422c",
+                      "name":  "Unificar Entradas",
+                      "type":  "n8n-nodes-base.merge",
+                      "typeVersion":  3.2,
+                      "position":  [
+                                       560,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+
+                                     },
+                      "id":  "64f34a9f-ed67-4610-ab47-724c3a22540b",
+                      "name":  "Disparador Manual",
+                      "type":  "n8n-nodes-base.manualTrigger",
+                      "typeVersion":  1,
+                      "position":  [
+                                       16,
+                                       432
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "const root = $input.item.json ?? {};\nconst body = root.body \u0026\u0026 typeof root.body === \u0027object\u0027 ? root.body : {};\nconst pick = (k) =\u003e (body[k] !== undefined ? body[k] : root[k]);\n\nconst toStr = (v) =\u003e {\n  if (v === undefined || v === null) return null;\n  return String(v).trim();\n};\n\nconst toBool = (v, fallback = false) =\u003e {\n  if (typeof v === \u0027boolean\u0027) return v;\n  if (typeof v === \u0027number\u0027) return v === 1;\n  if (typeof v === \u0027string\u0027) {\n    const s = v.trim().toLowerCase();\n    if ([\u0027true\u0027,\u00271\u0027,\u0027si\u0027,\u0027sí\u0027,\u0027yes\u0027].includes(s)) return true;\n    if ([\u0027false\u0027,\u00270\u0027,\u0027no\u0027].includes(s)) return false;\n  }\n  return fallback;\n};\n\nconst allowedChannels = new Set([\u0027web\u0027,\u0027email\u0027,\u0027mercurio\u0027,\u0027form\u0027,\u0027phone\u0027,\u0027whatsapp\u0027]);\nconst rawChannel = (toStr(pick(\u0027source_channel\u0027)) || \u0027web\u0027).toLowerCase();\nconst source_channel = allowedChannels.has(rawChannel) ? rawChannel : \u0027web\u0027;\n\nconst subject = toStr(pick(\u0027subject\u0027)) || \u0027\u0027;\nconst description = toStr(pick(\u0027description\u0027)) || \u0027\u0027;\nconst raw_text = toStr(pick(\u0027raw_text\u0027)) || description;\n\nreturn {\n  source_channel,\n  citizen_name: toStr(pick(\u0027citizen_name\u0027)),\n  is_anonymous: toBool(pick(\u0027is_anonymous\u0027), false),\n  document_id: toStr(pick(\u0027document_id\u0027)),\n  email: toStr(pick(\u0027email\u0027)),\n  phone: toStr(pick(\u0027phone\u0027)),\n  subject,\n  description,\n  raw_text,\n  attachments: Array.isArray(pick(\u0027attachments\u0027)) ? pick(\u0027attachments\u0027) : [],\n  location_text: toStr(pick(\u0027location_text\u0027)),\n  consent_data: toBool(pick(\u0027consent_data\u0027), false),\n  created_at: toStr(pick(\u0027created_at\u0027)) || new Date().toISOString(),\n\n  // Campos extra para pruebas/control de deduplicado\n  test_case: toStr(pick(\u0027test_case\u0027)),\n  source_hash_override: toStr(pick(\u0027source_hash_override\u0027)),\n  expected_branch: toStr(pick(\u0027expected_branch\u0027)),\n  tenant_id: toStr(pick(\u0027tenant_id\u0027)),\n};"
+                                     },
+                      "id":  "e70274c3-fffb-4faf-9f63-1151f4272135",
+                      "name":  "Extraer Payload",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       816,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "const it = $input.item.json;\nconst errors = [];\nconst allowedChannels = new Set([\u0027web\u0027,\u0027email\u0027,\u0027mercurio\u0027,\u0027form\u0027,\u0027phone\u0027,\u0027whatsapp\u0027]);\nif (!allowedChannels.has(it.source_channel)) errors.push(\u0027source_channel inválido\u0027);\nif (typeof it.is_anonymous !== \u0027boolean\u0027) errors.push(\u0027is_anonymous debe ser booleano\u0027);\nif (typeof it.consent_data !== \u0027boolean\u0027) errors.push(\u0027consent_data debe ser booleano\u0027);\nif (!it.subject || it.subject.length === 0) errors.push(\u0027subject vacío\u0027);\nif (!it.description || it.description.length === 0) errors.push(\u0027description vacía\u0027);\nif (!it.raw_text || it.raw_text.length === 0) errors.push(\u0027raw_text vacío\u0027);\nif (!it.created_at || isNaN(Date.parse(it.created_at))) errors.push(\u0027created_at no es ISO 8601\u0027);\nif (!Array.isArray(it.attachments)) errors.push(\u0027attachments debe ser arreglo\u0027);\nif (!it.consent_data) errors.push(\u0027consent_data debe ser true (Ley 1581/2012)\u0027);\nif (it.raw_text \u0026\u0026 it.raw_text.length \u003e 10000) errors.push(\u0027raw_text excede 10000 caracteres\u0027);\nreturn { ...it, _schema_errors: errors, _schema_ok: errors.length === 0 };"
+                                     },
+                      "id":  "90949757-b1c1-4f1b-8a20-9e7f6746a49c",
+                      "name":  "Validar Esquema NormalizedIntake",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1072,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "conditions":  {
+                                                            "options":  {
+                                                                            "caseSensitive":  true,
+                                                                            "leftValue":  "",
+                                                                            "typeValidation":  "loose",
+                                                                            "version":  3
+                                                                        },
+                                                            "conditions":  [
+                                                                               {
+                                                                                   "id":  "c-schema",
+                                                                                   "leftValue":  "={{ !!($json._schema_ok ?? false) }}",
+                                                                                   "operator":  {
+                                                                                                    "type":  "boolean",
+                                                                                                    "operation":  "true"
+                                                                                                },
+                                                                                   "rightValue":  ""
+                                                                               }
+                                                                           ],
+                                                            "combinator":  "and"
+                                                        },
+                                         "looseTypeValidation":  true,
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "e6bf865a-dfb2-4c1e-9a0c-74c55c8cfad4",
+                      "name":  "¿Esquema Válido?",
+                      "type":  "n8n-nodes-base.if",
+                      "typeVersion":  2.3,
+                      "position":  [
+                                       1328,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "const crypto = require(\u0027crypto\u0027);\nconst it = $input.item.json;\nconst CHANNEL_MAP = { web:\u0027web\u0027, form:\u0027web\u0027, email:\u0027email\u0027, mercurio:\u0027mercurio_csv\u0027, phone:\u0027verbal\u0027, whatsapp:\u0027social_manual\u0027 };\nconst channel = CHANNEL_MAP[it.source_channel] ?? \u0027web\u0027;\nconst issuedAt = new Date(it.created_at);\nconst yyyymmdd = issuedAt.toISOString().slice(0,10).replace(/-/g,\u0027\u0027);\nconst suffix = crypto.randomBytes(3).toString(\u0027hex\u0027).toUpperCase();\nconst radicado = `MED-${yyyymmdd}-${suffix}`;\n\nconst normalized = (it.raw_text || \u0027\u0027).replace(/\\s+/g,\u0027 \u0027).trim().toLowerCase();\nconst hashInput = [normalized, it.email ?? \u0027\u0027, it.document_id ?? \u0027\u0027, it.phone ?? \u0027\u0027].join(\u0027|\u0027);\nconst computedHash = crypto.createHash(\u0027sha256\u0027).update(hashInput).digest(\u0027hex\u0027);\n\nconst override = String(it.source_hash_override ?? \u0027\u0027).trim();\nconst source_hash = (override \u0026\u0026 override !== \u0027undefined\u0027 \u0026\u0026 override !== \u0027null\u0027) ? override : computedHash;\n\nconst tenantCandidate = String(it.tenant_id ?? \u0027\u0027).trim();\nconst tenant_id = (tenantCandidate \u0026\u0026 tenantCandidate !== \u0027undefined\u0027 \u0026\u0026 tenantCandidate !== \u0027null\u0027)\n  ? tenantCandidate\n  : \u002700000000-0000-0000-0000-000000000001\u0027;\n\nreturn { ...it, channel, radicado, source_hash, tenant_id, issued_at: issuedAt.toISOString() };"
+                                     },
+                      "id":  "912fc855-d92d-49e9-804c-f2d8e653bd4d",
+                      "name":  "Computar Identidad",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1600,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "const it = $input.item.json;\nconst raw_text = it.raw_text;\nconst display_text = String(raw_text).replace(/\\r\\n?/g, \u0027\\n\u0027).replace(/[\\t\\f\\v]+/g, \u0027 \u0027).replace(/[ ]{2,}/g, \u0027 \u0027).replace(/\\n{3,}/g, \u0027\\n\\n\u0027).trim();\nlet llm_text = display_text;\nllm_text = llm_text.replace(/[\\w.+-]+@[\\w-]+\\.[\\w.-]+/g, \u0027[EMAIL]\u0027);\nllm_text = llm_text.replace(/(?\u003c!\\d)(?:\\+?57[\\s-]?)?3\\d{2}[\\s-]?\\d{3}[\\s-]?\\d{4}(?!\\d)/g, \u0027[PHONE]\u0027);\nllm_text = llm_text.replace(/\\b(?:CC|C\\.C\\.|TI|T\\.I\\.|CE|C\\.E\\.|NIT)\\s*[:.-]?\\s*\\d[\\d.\\-]{5,14}/gi, \u0027[DOC]\u0027);\nllm_text = llm_text.replace(/(?\u003c!\\d)\\d{6,11}(?!\\d)/g, \u0027[DOC]\u0027);\nllm_text = llm_text.replace(/(?:cra|carrera|cl|calle|av|avenida|tv|transversal|dg|diagonal)\\s*[\\d#\\-\\sa-zA-Z]{2,30}/gi, \u0027[DIRECCION]\u0027);\nreturn { ...it, raw_text, display_text, llm_text };"
+                                     },
+                      "id":  "6d4278af-6fb1-4b59-afef-f13a084a7d52",
+                      "name":  "Format Preserve (raw/display/llm)",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1856,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "operation":  "getAll",
+                                         "tableId":  "pqr",
+                                         "limit":  1,
+                                         "matchType":  "allFilters",
+                                         "filters":  {
+                                                         "conditions":  [
+                                                                            {
+                                                                                "keyName":  "tenant_id",
+                                                                                "condition":  "eq",
+                                                                                "keyValue":  "={{ (() =\u003e { const s = String(($json.tenant_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : \"00000000-0000-0000-0000-000000000001\"; })() }}"
+                                                                            },
+                                                                            {
+                                                                                "keyName":  "source_hash",
+                                                                                "condition":  "eq",
+                                                                                "keyValue":  "={{ $json.source_hash }}"
+                                                                            }
+                                                                        ]
+                                                     }
+                                     },
+                      "id":  "a6a02eb2-17b0-4f64-a77a-02ceaefe5a69",
+                      "name":  "Chequear Duplicado (source_hash)",
+                      "type":  "n8n-nodes-base.supabase",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2112,
+                                       224
+                                   ],
+                      "alwaysOutputData":  true,
+                      "credentials":  {
+                                          "supabaseApi":  {
+                                                              "id":  "ThBCT3ZXhob9Yi7x",
+                                                              "name":  "Supabase account"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const base = $(\u0027Format Preserve (raw/display/llm)\u0027).item.json;\nconst rows = $input.all().map(i =\u003e i.json).filter(r =\u003e r \u0026\u0026 r.id);\nconst dup = rows.length \u003e 0 ? rows[0] : null;\nreturn [{ ...base, is_duplicate: !!dup, duplicate_of: dup ? { id: dup.id, radicado: dup.radicado, status: dup.status } : null }];"
+                                     },
+                      "id":  "29884489-a1c6-41d0-8da6-9ebac63f06e6",
+                      "name":  "Normalizar Resultado Dedup",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       2368,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "conditions":  {
+                                                            "options":  {
+                                                                            "caseSensitive":  true,
+                                                                            "leftValue":  "",
+                                                                            "typeValidation":  "loose",
+                                                                            "version":  3
+                                                                        },
+                                                            "conditions":  [
+                                                                               {
+                                                                                   "id":  "c-dup",
+                                                                                   "leftValue":  "={{ !!($json.is_duplicate ?? false) }}",
+                                                                                   "operator":  {
+                                                                                                    "type":  "boolean",
+                                                                                                    "operation":  "true"
+                                                                                                },
+                                                                                   "rightValue":  ""
+                                                                               }
+                                                                           ],
+                                                            "combinator":  "and"
+                                                        },
+                                         "looseTypeValidation":  true,
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "0adbdff7-d520-4724-a006-50c497538ddf",
+                      "name":  "¿Duplicado?",
+                      "type":  "n8n-nodes-base.if",
+                      "typeVersion":  2.3,
+                      "position":  [
+                                       2640,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "respondWith":  "json",
+                                         "responseBody":  "={{ { ok: true, stage: \u0027duplicate\u0027, duplicate_of: $json.duplicate_of, radicado: $json.duplicate_of.radicado, processed_at: $now.toISO() } }}",
+                                         "options":  {
+                                                         "responseCode":  200,
+                                                         "responseHeaders":  {
+                                                                                 "entries":  [
+                                                                                                 {
+                                                                                                     "name":  "Content-Type",
+                                                                                                     "value":  "application/json; charset=utf-8"
+                                                                                                 }
+                                                                                             ]
+                                                                             }
+                                                     }
+                                     },
+                      "id":  "479c1145-69f6-4e02-81be-34c2a8a9c57b",
+                      "name":  "Responder 200 Duplicado",
+                      "type":  "n8n-nodes-base.respondToWebhook",
+                      "typeVersion":  1.5,
+                      "position":  [
+                                       2896,
+                                       608
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "promptType":  "define",
+                                         "text":  "=Asunto: {{ $json.subject }}\n\nDescripción (texto sin PII):\n{{ $json.llm_text }}\n\nUbicación declarada: {{ $json.location_text || \u0027no especificada\u0027 }}\nAnónimo: {{ $json.is_anonymous }}\nTiene contacto verificable: {{ ($json.email || $json.document_id || $json.phone) ? \u0027sí\u0027 : \u0027no\u0027 }}",
+                                         "hasOutputParser":  true,
+                                         "options":  {
+                                                         "systemMessage":  "Eres el agente de validez del intake de PQRSD para la Alcaldía de Medellín. Decide si una PQR cumple el Art. 16 de la Ley 1755/2015 y extrae los componentes que la jurídica usará.\n\nProduce SIEMPRE un JSON con estos campos:\n1. **hechos** (string): 1-3 oraciones, tercera persona, sin opiniones. Vacío si no hay hechos verificables.\n2. **peticion** (string): una oración con verbo de petición (solicita/pide/requiere). Vacío si no hay petición clara.\n3. **lead** (string): resumen de una línea (máx 280 caracteres) para la cola.\n4. **respeto_ok** (boolean): true si el tono es respetuoso.\n5. **is_offensive** (boolean): true si hay insultos directos a funcionarios o terceros.\n6. **estructura_minima** (objeto): {hechos_ok, peticion_ok, lugar_ok, fecha_ok} booleanos.\n7. **tutela_risk_score** (0..1): sube con derechos fundamentales, vulnerabilidad, urgencia, lenguaje legalista.\n8. **missing_fields** (array): qué falta (ej: \"ubicación específica\", \"fecha\").\n\nReglas: NO inventes datos. Si es ininteligible u otro idioma, deja hechos/peticion vacíos y reporta missing_fields. Responde SOLO con el JSON.\nRegla adicional critica: NO infieras peticiones implicitas. Solo marca peticion/estructura_minima.peticion_ok cuando exista un verbo de peticion explicito en el texto del ciudadano.",
+                                                         "maxIterations":  3
+                                                     }
+                                     },
+                      "id":  "da8f239b-d9f2-47b8-880b-766b4c62362f",
+                      "name":  "Agente Validez",
+                      "type":  "@n8n/n8n-nodes-langchain.agent",
+                      "typeVersion":  3.1,
+                      "position":  [
+                                       2896,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "options":  {
+                                                         "maxOutputTokens":  2048,
+                                                         "temperature":  0.1
+                                                     },
+                                         "modelName":  "models/gemini-2.5-flash"
+                                     },
+                      "id":  "8fd81018-2082-493d-9d34-d0d21127ffa1",
+                      "name":  "Gemini Validez",
+                      "type":  "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2896,
+                                       432
+                                   ],
+                      "credentials":  {
+                                          "googlePalmApi":  {
+                                                                "id":  "B6ex4IZHxJvi9bJX",
+                                                                "name":  "Google Gemini(PaLM) Api account 2"
+                                                            }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsonSchemaExample":  "{\r\n    \"hechos\":  \"Existe un hueco en la vía pública en la Comuna 11 que está provocando accidentes.\",\r\n    \"peticion\":  \"Solicita la reparación inmediata del hueco para evitar más accidentes.\",\r\n    \"lead\":  \"Hueco en la vía en Comuna 11 está causando accidentes; piden reparación inmediata.\",\r\n    \"respeto_ok\":  true,\r\n    \"is_offensive\":  false,\r\n    \"estructura_minima\":  {\r\n                              \"hechos_ok\":  true,\r\n                              \"peticion_ok\":  true,\r\n                              \"lugar_ok\":  true,\r\n                              \"fecha_ok\":  false\r\n                          },\r\n    \"tutela_risk_score\":  0.35,\r\n    \"missing_fields\":  [\r\n                           \"ubicación específica\"\r\n                       ]\r\n}"
+                                     },
+                      "id":  "3ad61e7e-9fa5-427b-b0bb-504f0200957e",
+                      "name":  "Parser Validez",
+                      "type":  "@n8n/n8n-nodes-langchain.outputParserStructured",
+                      "typeVersion":  1.3,
+                      "position":  [
+                                       3040,
+                                       432
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "assignments":  {
+                                                             "assignments":  [
+                                                                                 {
+                                                                                     "id":  "v1",
+                                                                                     "name":  "hechos",
+                                                                                     "value":  "={{ $json.output.hechos }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "v2",
+                                                                                     "name":  "peticion",
+                                                                                     "value":  "={{ $json.output.peticion }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "v3",
+                                                                                     "name":  "lead",
+                                                                                     "value":  "={{ $json.output.lead }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "v4",
+                                                                                     "name":  "respeto_ok",
+                                                                                     "value":  "={{ $json.output.respeto_ok }}",
+                                                                                     "type":  "boolean"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "v5",
+                                                                                     "name":  "is_offensive",
+                                                                                     "value":  "={{ $json.output.is_offensive }}",
+                                                                                     "type":  "boolean"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "v6",
+                                                                                     "name":  "estructura_minima",
+                                                                                     "value":  "={{ $json.output.estructura_minima }}",
+                                                                                     "type":  "object"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "v7",
+                                                                                     "name":  "tutela_risk_score",
+                                                                                     "value":  "={{ $json.output.tutela_risk_score }}",
+                                                                                     "type":  "number"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "v8",
+                                                                                     "name":  "missing_fields",
+                                                                                     "value":  "={{ $json.output.missing_fields }}",
+                                                                                     "type":  "array"
+                                                                                 }
+                                                                             ]
+                                                         },
+                                         "includeOtherFields":  true,
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "816abda3-4623-4e26-afa3-52b0fc76737a",
+                      "name":  "Extraer Validez",
+                      "type":  "n8n-nodes-base.set",
+                      "typeVersion":  3.4,
+                      "position":  [
+                                       3168,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "const it = $input.item.json;\nconst em = it.estructura_minima || {};\n\nconst text = (v) =\u003e String(v ?? \u0027\u0027).trim();\nconst lower = (v) =\u003e text(v).toLowerCase();\nconst isBlankish = (v) =\u003e {\n  const s = lower(v);\n  return !s || [\u0027undefined\u0027, \u0027null\u0027, \u0027[null]\u0027, \u0027n/a\u0027, \u0027na\u0027, \u0027sin dato\u0027, \u0027no aplica\u0027].includes(s);\n};\n\nconst looksLikeEmail = (v) =\u003e /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(text(v));\nconst looksLikePhone = (v) =\u003e text(v).replace(/\\D/g, \u0027\u0027).length \u003e= 7;\nconst looksLikeDoc = (v) =\u003e /^[0-9a-zA-Z-]{5,}$/.test(text(v));\n\nconst isAnon =\n  it.is_anonymous === true ||\n  lower(it.is_anonymous) === \u0027true\u0027 ||\n  /^an[oó]n/.test(lower(it.citizen_name));\n\nconst hasContact =\n  (!isBlankish(it.email) \u0026\u0026 looksLikeEmail(it.email)) ||\n  (!isBlankish(it.phone) \u0026\u0026 looksLikePhone(it.phone)) ||\n  (!isBlankish(it.document_id) \u0026\u0026 looksLikeDoc(it.document_id));\n\nconst anonimato_ok = !isAnon || hasContact;\n\n// Fallback defensivo por si algún nodo intermedio no conserva el texto fuente.\nlet preserved = {};\ntry {\n  preserved = $(\u0027Format Preserve (raw/display/llm)\u0027).item.json || {};\n} catch (e) {\n  preserved = {};\n}\n\nconst srcRaw = text(it.raw_text || preserved.raw_text || \u0027\u0027);\nconst srcDesc = text(it.description || preserved.description || preserved.display_text || \u0027\u0027);\nconst srcSub = text(it.subject || preserved.subject || \u0027\u0027);\nconst sourceOriginal = `${srcRaw} ${srcDesc} ${srcSub}`.toLowerCase().trim();\nconst hasSourceMaterial = sourceOriginal.length \u003e= 8 \u0026\u0026 !isBlankish(sourceOriginal);\n\nconst rePeticion = /\\b(solicit\\w+|pido|pedimos|pedir|requier\\w+|reclamo|exijo|ruego|interpongo|necesito(?:\\s+que)?|quiero(?:\\s+que)?|urge(?:\\s+que)?|por\\s+favor\\s+(reparar|resolver|atender|arreglar|intervenir)|repar\\w+|arregl\\w+|interven\\w+|atiend\\w+)\\b/i;\nconst hasExplicitVerbOriginal = rePeticion.test(sourceOriginal);\n\nconst modelPeticionText = text(it.peticion);\nconst modelPeticionStrong = em.peticion_ok === true \u0026\u0026 !isBlankish(modelPeticionText) \u0026\u0026 rePeticion.test(modelPeticionText.toLowerCase());\n\nconst hechosByModel = em.hechos_ok === true \u0026\u0026 !isBlankish(it.hechos);\nconst hechosByText = !isBlankish(srcRaw) \u0026\u0026 srcRaw.length \u003e= 20;\nconst hechos_ok = hechosByModel || hechosByText;\n\n// Regla: si hay texto fuente, manda el texto fuente; si no lo hay, usamos fallback del modelo.\nconst peticion_ok = hasSourceMaterial ? hasExplicitVerbOriginal : modelPeticionStrong;\n\nconst respeto_ok = it.is_offensive === true ? false : (it.respeto_ok !== false);\n\nconst gates = {\n  hechos_ok,\n  peticion_ok,\n  respeto_ok,\n  anonimato_ok,\n};\n\nconst gate_fail_reasons = [];\nif (!gates.hechos_ok) gate_fail_reasons.push(\u0027faltan_hechos\u0027);\nif (!gates.peticion_ok) gate_fail_reasons.push(\u0027falta_peticion\u0027);\nif (!gates.respeto_ok) gate_fail_reasons.push(\u0027irrespetuoso\u0027);\nif (!gates.anonimato_ok) gate_fail_reasons.push(\u0027anonimo_sin_datos_contacto\u0027);\n\nconst passes_validity = gate_fail_reasons.length === 0;\n\nreturn {\n  ...it,\n  gates,\n  gate_fail_reasons,\n  anonimato: isAnon,\n  passes_validity,\n  debug_gate: {\n    isAnon,\n    hasContact,\n    hasSourceMaterial,\n    hasExplicitVerbOriginal,\n    modelPeticionStrong,\n    hechosByModel,\n    hechosByText,\n    respeto_ok,\n    test_case: it.test_case ?? null,\n  },\n};"
+                                     },
+                      "id":  "5391274e-8730-4706-a050-0c920d532777",
+                      "name":  "Aplicar Compuertas",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       3424,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "conditions":  {
+                                                            "options":  {
+                                                                            "caseSensitive":  true,
+                                                                            "leftValue":  "",
+                                                                            "typeValidation":  "loose",
+                                                                            "version":  3
+                                                                        },
+                                                            "conditions":  [
+                                                                               {
+                                                                                   "id":  "c-val",
+                                                                                   "leftValue":  "={{ !!(($json.passes_validity === true) \u0026\u0026 (!Array.isArray($json.gate_fail_reasons) || $json.gate_fail_reasons.length === 0)) }}",
+                                                                                   "operator":  {
+                                                                                                    "type":  "boolean",
+                                                                                                    "operation":  "true"
+                                                                                                },
+                                                                                   "rightValue":  "={{ true }}"
+                                                                               }
+                                                                           ],
+                                                            "combinator":  "and"
+                                                        },
+                                         "looseTypeValidation":  true,
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "1fd4f3b2-a186-40ae-9a35-901651b92483",
+                      "name":  "¿Es Válido?",
+                      "type":  "n8n-nodes-base.if",
+                      "typeVersion":  2.3,
+                      "position":  [
+                                       3680,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "promptType":  "define",
+                                         "text":  "=Asunto: {{ $json.subject || \"(sin asunto)\" }}\nUbicación declarada: {{ $json.location_text || \"no especificada\" }}\n\nHechos: {{ $json.hechos || \"(sin hechos extraidos)\" }}\nPetición: {{ $json.peticion || \"(sin peticion extraida)\" }}\n\nTexto completo (sin PII):\n{{ $json.llm_text || $json.display_text || $json.raw_text || \"(sin texto)\" }}",
+                                         "hasOutputParser":  true,
+                                         "options":  {
+                                                         "systemMessage":  "Eres el agente clasificador de PQRSD del intake de la Alcaldía de Medellín. Recibes un caso ya validado y produces clasificación de tipo, competencia, territorio y temática.\n\nProduce SIEMPRE un JSON con:\n\n1. **tipo** — uno de: \u0027peticion\u0027, \u0027queja\u0027, \u0027reclamo\u0027, \u0027sugerencia\u0027, \u0027denuncia\u0027.\n   - peticion: solicita información, trámite o actuación administrativa.\n   - queja: manifiesta inconformidad con la conducta de un servidor público.\n   - reclamo: exige resolver un derecho o servicio mal prestado.\n   - sugerencia: propone una mejora.\n   - denuncia: reporta una conducta que requiere investigación.\n\n2. **secretaria_codigo** — UNO de los 26 códigos oficiales:\n   DESP=Despacho del Alcalde · SGOB=Gobierno y Gabinete · SHAC=Hacienda · SSAL=Salud · SEDU=Educación · SMOV=Movilidad · SMAM=Medio Ambiente · SINF=Infraestructura Física · SSEG=Seguridad y Convivencia · SDE=Desarrollo Económico · SCUL=Cultura Ciudadana · SJUV=Juventud · SMUJ=Mujeres · SPDH=Paz y DDHH · SPAR=Participación Ciudadana · SGHS=Gestión Humana y Servicio a la Ciudadanía · SSUM=Suministros y Servicios · SEVC=Evaluación y Control · SINC=Inclusión Social y Familia · SCOM=Comunicaciones · SIND=Innovación Digital · DAP=Planeación · DAGRD=Gestión del Riesgo · GCEN=Gerencia del Centro · GCOR=Gerencia de Corregimientos · UAEBC=Buen Comienzo.\n\n   Guías rápidas: huecos / vías / pavimento / puentes / alumbrado público → SINF; semáforos / tránsito / transporte público → SMOV; basuras / aseo → SMAM (recolección) o EPM si es servicio domiciliario; ruido / convivencia / espacio público / inspecciones de policía → SGOB o SSEG; impuesto predial / industria y comercio → SHAC; matrícula / PAE / docentes → SEDU; régimen subsidiado / IPS / vacunación → SSAL; deslizamientos / emergencias / desastres → DAGRD; trámites del centro / venteros del centro → GCEN; trámites en corregimientos rurales → GCOR.\n\n3. **comuna_numero** (entero o null) — Comunas (1-16): 1 Popular, 2 Santa Cruz, 3 Manrique, 4 Aranjuez, 5 Castilla, 6 Doce de Octubre, 7 Robledo, 8 Villa Hermosa, 9 Buenos Aires, 10 La Candelaria, 11 Laureles-Estadio, 12 La América, 13 San Javier, 14 El Poblado, 15 Guayabal, 16 Belén. Corregimientos: 50 San Sebastián de Palmitas, 60 San Cristóbal, 70 Altavista, 80 San Antonio de Prado, 90 Santa Elena.\n\n4. **comuna_tipo** — \u0027comuna\u0027 o \u0027corregimiento\u0027 o null si no se identifica.\n\n5. **barrio** (string o null) — barrio mencionado, si lo hay.\n\n6. **discriminacion_tematica** — arreglo de tags namespaced. Usa estos namespaces:\n   - `tema:*` → movilidad, salud, seguridad, servicios-publicos, educacion, vivienda, ambiente, empleo, cultura, deporte, discapacidad, genero, infancia, adulto-mayor.\n   - `subtema:*` → ej. movilidad:huecos, movilidad:semaforos, salud:ips, ambiente:basuras.\n   - `ubicacion:comuna:N` o `ubicacion:corregimiento:N`.\n   - `infraestructura:*` → via, alumbrado, acueducto, alcantarillado, parque, puente, edificio-publico.\n   - `actor:*` → epm, afinia, eps-sura, contratista, policia, fiscalia.\n   - `vulnerabilidad:*` → menor-de-edad, adulto-mayor, persona-con-discapacidad, victima-conflicto, mujer-embarazada.\n   - `sentimiento:*` → neutro, frustrado, enojado, urgente, agradecido.\n   Devuelve entre 3 y 10 tags relevantes; no inventes datos.\n\n7. **reasoning** (string) — una oración explicando por qué esta secretaría y este territorio.\n\nReglas duras:\n- Si la temática NO es competencia municipal (ej. cédulas, pasaportes, salud nacional), elige la secretaría más cercana y agrega el tag `keyword:fuera-de-competencia`.\n- Si el territorio no es claro, comuna_numero=null y comuna_tipo=null.\n- Responde SIEMPRE en el esquema JSON, sin texto adicional.\nSalida estricta obligatoria:\n- Devuelve SOLO un objeto JSON válido (sin markdown, sin bloques de código, sin texto extra).\n- NO llames herramientas ni funciones.\n- Nunca uses null en ningún campo.\n- Si no hay territorio claro, usa exactamente: comuna_numero=0, comuna_tipo=\"\", barrio=\"\".\n- comuna_numero debe ser entero.\n- discriminacion_tematica siempre debe ser un arreglo de 3 a 10 strings.\nFallback obligatorio por datos incompletos:\n- NUNCA hagas preguntas, NUNCA pidas aclaraciones, NUNCA respondas en lenguaje conversacional.\n- Si faltan datos, igual debes devolver JSON válido usando:\n  tipo=\"peticion\"\n  secretaria_codigo=\"SGOB\"\n  comuna_numero=0\n  comuna_tipo=\"\"\n  barrio=\"\"\n  discriminacion_tematica=[\"tema:movilidad\",\"infraestructura:via\",\"sentimiento:neutro\"]\n  reasoning=\"Información insuficiente; se aplica clasificación conservadora inicial.\"\n- Si detectas huecos/vía/pavimento con suficiente señal textual, prioriza SINF y subtema movilidad:huecos.",
+                                                         "maxIterations":  3
+                                                     }
+                                     },
+                      "id":  "b9c10861-398e-459a-9d4e-c287336a362f",
+                      "name":  "Agente Clasificador",
+                      "type":  "@n8n/n8n-nodes-langchain.agent",
+                      "typeVersion":  3.1,
+                      "position":  [
+                                       3936,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "options":  {
+                                                         "maxOutputTokens":  2048,
+                                                         "temperature":  0.1
+                                                     },
+                                         "modelName":  "models/gemini-2.5-flash"
+                                     },
+                      "id":  "71184d29-3170-4a2d-8ce1-4a0a49bb6358",
+                      "name":  "Gemini Clasificador",
+                      "type":  "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+                      "typeVersion":  1,
+                      "position":  [
+                                       3936,
+                                       432
+                                   ],
+                      "credentials":  {
+                                          "googlePalmApi":  {
+                                                                "id":  "B6ex4IZHxJvi9bJX",
+                                                                "name":  "Google Gemini(PaLM) Api account 2"
+                                                            }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsonSchemaExample":  "{\r\n    \"tipo\":  \"peticion\",\r\n    \"secretaria_codigo\":  \"SINF\",\r\n    \"comuna_numero\":  0,\r\n    \"comuna_tipo\":  \"\",\r\n    \"barrio\":  \"\",\r\n    \"discriminacion_tematica\":  [\r\n                                    \"tema:movilidad\",\r\n                                    \"subtema:movilidad:huecos\",\r\n                                    \"infraestructura:via\"\r\n                                ],\r\n    \"reasoning\":  \"Clasificación por temática vial y competencia administrativa municipal.\"\r\n}"
+                                     },
+                      "id":  "20c45442-b874-4a9d-a5ab-9da928e2b63f",
+                      "name":  "Parser Clasificación",
+                      "type":  "@n8n/n8n-nodes-langchain.outputParserStructured",
+                      "typeVersion":  1.3,
+                      "position":  [
+                                       4080,
+                                       432
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "assignments":  {
+                                                             "assignments":  [
+                                                                                 {
+                                                                                     "id":  "k1",
+                                                                                     "name":  "tipo",
+                                                                                     "value":  "={{ String($json.output.tipo || \"peticion\").toLowerCase() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "k2",
+                                                                                     "name":  "secretaria_codigo",
+                                                                                     "value":  "={{ String($json.output.secretaria_codigo || \"SGOB\").toUpperCase() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "k3",
+                                                                                     "name":  "comuna_numero",
+                                                                                     "value":  "={{ Number.isFinite(Number($json.output.comuna_numero)) ? Number($json.output.comuna_numero) : 0 }}",
+                                                                                     "type":  "number"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "k4",
+                                                                                     "name":  "comuna_tipo",
+                                                                                     "value":  "={{ String($json.output.comuna_tipo || \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "k5",
+                                                                                     "name":  "barrio",
+                                                                                     "value":  "={{ String($json.output.barrio || \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "k6",
+                                                                                     "name":  "discriminacion_tematica",
+                                                                                     "value":  "={{ Array.isArray($json.output.discriminacion_tematica) ? $json.output.discriminacion_tematica.filter(t =\u003e typeof t === \"string\").slice(0,10) : [] }}",
+                                                                                     "type":  "array"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "k7",
+                                                                                     "name":  "classification_reasoning",
+                                                                                     "value":  "={{ String($json.output.reasoning || \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 }
+                                                                             ]
+                                                         },
+                                         "includeOtherFields":  true,
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "2d769e70-f64b-4269-8196-ef5cea55797b",
+                      "name":  "Extraer Clasificación",
+                      "type":  "n8n-nodes-base.set",
+                      "typeVersion":  3.4,
+                      "position":  [
+                                       4208,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "operation":  "getAll",
+                                         "tableId":  "secretarias",
+                                         "limit":  1,
+                                         "matchType":  "allFilters",
+                                         "filters":  {
+                                                         "conditions":  [
+                                                                            {
+                                                                                "keyName":  "tenant_id",
+                                                                                "condition":  "eq",
+                                                                                "keyValue":  "={{ (() =\u003e { const s = String(($json.tenant_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : \"00000000-0000-0000-0000-000000000001\"; })() }}"
+                                                                            },
+                                                                            {
+                                                                                "keyName":  "codigo",
+                                                                                "condition":  "eq",
+                                                                                "keyValue":  "={{ $json.secretaria_codigo }}"
+                                                                            }
+                                                                        ]
+                                                     }
+                                     },
+                      "id":  "fb0b26dd-db65-49c7-989e-89fccc877583",
+                      "name":  "Buscar Secretaría",
+                      "type":  "n8n-nodes-base.supabase",
+                      "typeVersion":  1,
+                      "position":  [
+                                       4464,
+                                       224
+                                   ],
+                      "credentials":  {
+                                          "supabaseApi":  {
+                                                              "id":  "ThBCT3ZXhob9Yi7x",
+                                                              "name":  "Supabase account"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "assignments":  {
+                                                             "assignments":  [
+                                                                                 {
+                                                                                     "id":  "sec1",
+                                                                                     "name":  "secretaria_id",
+                                                                                     "value":  "={{ $json.id ? String($json.id) : \"\" }}",
+                                                                                     "type":  "string"
+                                                                                 }
+                                                                             ]
+                                                         },
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "6a6ddbb9-d454-4d91-97d1-2dd704ef7254",
+                      "name":  "Capturar Secretaría ID",
+                      "type":  "n8n-nodes-base.set",
+                      "typeVersion":  3.4,
+                      "position":  [
+                                       4720,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "mode":  "combine",
+                                         "combineBy":  "combineByPosition",
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "8f52e72b-b0fc-43fe-ac36-362cb07b955e",
+                      "name":  "Unir Clasificación + Secretaría",
+                      "type":  "n8n-nodes-base.merge",
+                      "typeVersion":  3.2,
+                      "position":  [
+                                       4976,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "mode":  "runOnceForEachItem",
+                                         "jsCode":  "const it = $input.item.json;\nconst g = it.gates || {};\nconst inputCodes = Array.isArray(it.gate_fail_reasons) ? it.gate_fail_reasons : [];\nconst codes = [...inputCodes];\nconst messages = [];\n\nconst ensure = (code) =\u003e {\n  if (!codes.includes(code)) codes.push(code);\n};\n\nif (codes.length === 0) {\n  if (!g.hechos_ok) ensure(\u0027faltan_hechos\u0027);\n  if (!g.peticion_ok) ensure(\u0027falta_peticion\u0027);\n  if (!g.respeto_ok) ensure(\u0027irrespetuoso\u0027);\n  if (!g.anonimato_ok) ensure(\u0027anonimo_sin_datos_contacto\u0027);\n}\n\nfor (const c of codes) {\n  if (c === \u0027faltan_hechos\u0027) messages.push(\u0027No identificamos hechos concretos en su PQR.\u0027);\n  if (c === \u0027falta_peticion\u0027) messages.push(\u0027No identificamos una petición clara.\u0027);\n  if (c === \u0027irrespetuoso\u0027) messages.push(\u0027La PQR contiene lenguaje no respetuoso.\u0027);\n  if (c === \u0027anonimo_sin_datos_contacto\u0027) messages.push(\u0027Como anónimo no podemos contactarle; aporte un medio de contacto.\u0027);\n}\n\nif (codes.length === 0) {\n  codes.push(\u0027fuera_de_competencia_municipal\u0027);\n  messages.push(\u0027La temática parece no corresponder al ámbito municipal.\u0027);\n}\n\nreturn { ...it, invalid_reason_codes: codes, invalid_reason_message: messages.join(\u0027 \u0027) };"
+                                     },
+                      "id":  "c64afea4-40f0-44a2-9f72-1ffd6411c595",
+                      "name":  "Generar Razón de Rebote",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       3936,
+                                       720
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "assignments":  {
+                                                             "assignments":  [
+                                                                                 {
+                                                                                     "id":  "b01",
+                                                                                     "name":  "tenant_id",
+                                                                                     "value":  "={{ (() =\u003e { const s = String(($json.tenant_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : \"00000000-0000-0000-0000-000000000001\"; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b02",
+                                                                                     "name":  "radicado",
+                                                                                     "value":  "={{ (() =\u003e { const r = String(($json.radicado ?? \"\")).trim(); return r \u0026\u0026 r !== \"undefined\" \u0026\u0026 r !== \"null\" ? r : (\"RB-\" + $now.toFormat(\"yyyyMMddHHmmss\")); })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b03",
+                                                                                     "name":  "source_hash",
+                                                                                     "value":  "={{ (() =\u003e { const h = String(($json.source_hash ?? \"\")).trim(); if (h \u0026\u0026 h !== \"undefined\" \u0026\u0026 h !== \"null\") return h; const base = String(($json.raw_text ?? $json.description ?? $json.subject ?? \"rebote\")).trim().toLowerCase(); const seed = `${$execution.id}-${$now.toMillis()}-${$itemIndex}`; return \"fallback-\" + (base.slice(0,48).replace(/\\s+/g,\"-\") || \"rebote\") + \"-\" + seed; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b04",
+                                                                                     "name":  "channel",
+                                                                                     "value":  "={{ (() =\u003e { const c = String(($json.channel ?? $json.source_channel ?? \"web\")).trim().toLowerCase(); return c \u0026\u0026 c !== \"undefined\" \u0026\u0026 c !== \"null\" ? c : \"web\"; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b05",
+                                                                                     "name":  "status",
+                                                                                     "value":  "bounced_incomplete",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b06",
+                                                                                     "name":  "classification_status",
+                                                                                     "value":  "failed",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b07",
+                                                                                     "name":  "hechos",
+                                                                                     "value":  "={{ $json.hechos || \u0027\u0027 }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b08",
+                                                                                     "name":  "peticion",
+                                                                                     "value":  "={{ $json.peticion || \u0027\u0027 }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b09",
+                                                                                     "name":  "lead",
+                                                                                     "value":  "={{ $json.invalid_reason_message }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b10",
+                                                                                     "name":  "discriminacion_tematica",
+                                                                                     "value":  "={{ ($json.invalid_reason_codes || []).map(c =\u003e \u0027razon:\u0027 + c) }}",
+                                                                                     "type":  "array"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b11",
+                                                                                     "name":  "raw_text",
+                                                                                     "value":  "={{ String($json.raw_text ?? $json.description ?? \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b12",
+                                                                                     "name":  "display_text",
+                                                                                     "value":  "={{ String($json.display_text ?? $json.raw_text ?? $json.description ?? \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b13",
+                                                                                     "name":  "llm_text",
+                                                                                     "value":  "={{ String($json.llm_text ?? $json.display_text ?? $json.raw_text ?? $json.description ?? \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b14",
+                                                                                     "name":  "estructura_minima",
+                                                                                     "value":  "={{ $json.estructura_minima }}",
+                                                                                     "type":  "object"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b15",
+                                                                                     "name":  "respeto_ok",
+                                                                                     "value":  "={{ $json.respeto_ok }}",
+                                                                                     "type":  "boolean"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b16",
+                                                                                     "name":  "anonimato",
+                                                                                     "value":  "={{ $json.anonimato }}",
+                                                                                     "type":  "boolean"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b17",
+                                                                                     "name":  "tutela_risk_score",
+                                                                                     "value":  "={{ $json.tutela_risk_score }}",
+                                                                                     "type":  "number"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "b18",
+                                                                                     "name":  "issued_at",
+                                                                                     "value":  "={{ $json.issued_at || $now.toISO() }}",
+                                                                                     "type":  "string"
+                                                                                 }
+                                                                             ]
+                                                         },
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "decb9f29-adff-4530-862b-d029e2d9c2fb",
+                      "name":  "Armar Fila Rebote",
+                      "type":  "n8n-nodes-base.set",
+                      "typeVersion":  3.4,
+                      "position":  [
+                                       4208,
+                                       720
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "tableId":  "pqr",
+                                         "dataToSend":  "autoMapInputData"
+                                     },
+                      "id":  "144bbd93-a641-47f6-bba7-48d258f1a8a7",
+                      "name":  "Insertar PQR Rebote",
+                      "type":  "n8n-nodes-base.supabase",
+                      "typeVersion":  1,
+                      "position":  [
+                                       4464,
+                                       720
+                                   ],
+                      "credentials":  {
+                                          "supabaseApi":  {
+                                                              "id":  "ThBCT3ZXhob9Yi7x",
+                                                              "name":  "Supabase account"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "tableId":  "pqr_events",
+                                         "fieldsUi":  {
+                                                          "fieldValues":  [
+                                                                              {
+                                                                                  "fieldId":  "tenant_id",
+                                                                                  "fieldValue":  "={{ (() =\u003e { const s = String(($json.tenant_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : null; })() }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "pqr_id",
+                                                                                  "fieldValue":  "={{ (() =\u003e { const s = String(($json.id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : null; })() }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "kind",
+                                                                                  "fieldValue":  "intake_agent_bounce"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "payload",
+                                                                                  "fieldValue":  "={{ JSON.stringify({ validity: \u0027failed\u0027, reasons: $(\u0027Generar Razón de Rebote\u0027).item.json.invalid_reason_codes, message: $(\u0027Generar Razón de Rebote\u0027).item.json.invalid_reason_message, run_at: $now.toISO() }) }}"
+                                                                              }
+                                                                          ]
+                                                      }
+                                     },
+                      "id":  "7bb5af29-fa36-4bcd-ad8a-346b356ad480",
+                      "name":  "Emitir Evento Rebote",
+                      "type":  "n8n-nodes-base.supabase",
+                      "typeVersion":  1,
+                      "position":  [
+                                       4720,
+                                       720
+                                   ],
+                      "credentials":  {
+                                          "supabaseApi":  {
+                                                              "id":  "ThBCT3ZXhob9Yi7x",
+                                                              "name":  "Supabase account"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "respondWith":  "json",
+                                         "responseBody":  "={{ { ok: false, stage: \u0027bounced_incomplete\u0027, pqr_id: $(\u0027Insertar PQR Rebote\u0027).item.json.id, radicado: $(\u0027Insertar PQR Rebote\u0027).item.json.radicado, reasons: $(\u0027Generar Razón de Rebote\u0027).item.json.invalid_reason_codes, message: $(\u0027Generar Razón de Rebote\u0027).item.json.invalid_reason_message, processed_at: $now.toISO() } }}",
+                                         "options":  {
+                                                         "responseCode":  422,
+                                                         "responseHeaders":  {
+                                                                                 "entries":  [
+                                                                                                 {
+                                                                                                     "name":  "Content-Type",
+                                                                                                     "value":  "application/json; charset=utf-8"
+                                                                                                 }
+                                                                                             ]
+                                                                             }
+                                                     }
+                                     },
+                      "id":  "6a245bd1-ce38-48e9-ba30-7122f90781e3",
+                      "name":  "Responder 422 Rebote",
+                      "type":  "n8n-nodes-base.respondToWebhook",
+                      "typeVersion":  1.5,
+                      "position":  [
+                                       4976,
+                                       720
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "tableId":  "pqr_events",
+                                         "fieldsUi":  {
+                                                          "fieldValues":  [
+                                                                              {
+                                                                                  "fieldId":  "tenant_id",
+                                                                                  "fieldValue":  "={{ (() =\u003e { const s = String(($json.tenant_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : \"00000000-0000-0000-0000-000000000001\"; })() }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "pqr_id",
+                                                                                  "fieldValue":  "={{ (() =\u003e { const v = String(($json.pqr_id ?? \"\")).trim().toLowerCase(); const re = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/; if (re.test(v)) return v; const seed = `${$execution.id ?? \"\"}-${$itemIndex ?? 0}-${$now.toMillis()}`; const hex = (seed.replace(/[^0-9a-f]/gi, \"\") + \"00000000000000000000000000000000\").slice(0, 32).toLowerCase(); return `${hex.slice(0,8)}-${hex.slice(8,12)}-4000-8000-${hex.slice(20,32)}`; })() }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "kind",
+                                                                                  "fieldValue":  "intake_agent_schema_reject"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "payload",
+                                                                                  "fieldValue":  "={{ JSON.stringify({ errors: $json._schema_errors, received_at: $now.toISO(), subject: $json.subject, source_channel: $json.source_channel }) }}"
+                                                                              }
+                                                                          ]
+                                                      }
+                                     },
+                      "id":  "646ab0ba-0f1b-4abe-a0ac-152a5b75686a",
+                      "name":  "Registrar Esquema Inválido",
+                      "type":  "n8n-nodes-base.supabase",
+                      "typeVersion":  1,
+                      "position":  [
+                                       1600,
+                                       496
+                                   ],
+                      "credentials":  {
+                                          "supabaseApi":  {
+                                                              "id":  "ThBCT3ZXhob9Yi7x",
+                                                              "name":  "Supabase account"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "respondWith":  "json",
+                                         "responseBody":  "={{ { ok: false, stage: \u0027schema_rejected\u0027, errors: $(\u0027Validar Esquema NormalizedIntake\u0027).item.json._schema_errors, received_at: $now.toISO() } }}",
+                                         "options":  {
+                                                         "responseCode":  400,
+                                                         "responseHeaders":  {
+                                                                                 "entries":  [
+                                                                                                 {
+                                                                                                     "name":  "Content-Type",
+                                                                                                     "value":  "application/json; charset=utf-8"
+                                                                                                 }
+                                                                                             ]
+                                                                             }
+                                                     }
+                                     },
+                      "id":  "6c358c64-3d5e-41c4-b3d9-bbd9cb05a488",
+                      "name":  "Responder 400 Esquema",
+                      "type":  "n8n-nodes-base.respondToWebhook",
+                      "typeVersion":  1.5,
+                      "position":  [
+                                       1856,
+                                       496
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "operation":  "getAll",
+                                         "tableId":  "comunas",
+                                         "limit":  1,
+                                         "matchType":  "allFilters",
+                                         "filters":  {
+                                                         "conditions":  [
+                                                                            {
+                                                                                "keyName":  "tenant_id",
+                                                                                "condition":  "eq",
+                                                                                "keyValue":  "={{ (() =\u003e { const s = String(($json.tenant_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : \"00000000-0000-0000-0000-000000000001\"; })() }}"
+                                                                            },
+                                                                            {
+                                                                                "keyName":  "tipo",
+                                                                                "condition":  "eq",
+                                                                                "keyValue":  "={{ $json.comuna_tipo || \u0027comuna\u0027 }}"
+                                                                            },
+                                                                            {
+                                                                                "keyName":  "numero",
+                                                                                "condition":  "eq",
+                                                                                "keyValue":  "={{ $json.comuna_numero || 0 }}"
+                                                                            }
+                                                                        ]
+                                                     }
+                                     },
+                      "id":  "5d529898-50a4-48ca-a701-3cb2f6f04e9b",
+                      "name":  "Buscar Comuna",
+                      "type":  "n8n-nodes-base.supabase",
+                      "typeVersion":  1,
+                      "position":  [
+                                       5248,
+                                       224
+                                   ],
+                      "credentials":  {
+                                          "supabaseApi":  {
+                                                              "id":  "ThBCT3ZXhob9Yi7x",
+                                                              "name":  "Supabase account"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const cls = $(\u0027Extraer Clasificación\u0027).item.json;\nconst val = $(\u0027Aplicar Compuertas\u0027).item.json;\nconst comunaItem = $input.item.json;\n\nconst normUuid = (v) =\u003e {\n  const s = (v ?? \u0027\u0027).toString().trim();\n  if (!s || s === \u0027undefined\u0027 || s === \u0027null\u0027) return null;\n  return s;\n};\n\nconst comuna_id = normUuid(comunaItem \u0026\u0026 comunaItem.id ? comunaItem.id : null);\nconst secretaria_id = normUuid($(\u0027Capturar Secretaría ID\u0027).item.json.secretaria_id || null);\n\nconst tags = Array.isArray(cls.discriminacion_tematica) ? cls.discriminacion_tematica : [];\nconst tagSet = new Set(tags.map(t =\u003e String(t).toLowerCase()));\nconst hasTag = (...needles) =\u003e needles.some(n =\u003e [...tagSet].some(t =\u003e t.includes(String(n).toLowerCase())));\n\nconst rawTutela = Number(val.tutela_risk_score || cls.tutela_risk_score || 0);\nconst tutela = Number.isFinite(rawTutela) ? Math.max(0, Math.min(1, rawTutela)) : 0;\nconst codigo = (cls.secretaria_codigo || \u0027\u0027).toUpperCase();\nconst tipo = cls.tipo || \u0027peticion\u0027;\n\nlet level = \u0027P3_baja\u0027;\nlet score = 25;\nconst reasons = [];\n\nif (hasTag(\u0027vulnerabilidad:menor\u0027, \u0027vulnerabilidad:menor-de-edad\u0027, \u0027vulnerabilidad:adulto-mayor\u0027, \u0027vulnerabilidad:persona-con-discapacidad\u0027, \u0027vulnerabilidad:mujer-embarazada\u0027)) {\n  level = \u0027P0_critica\u0027; score = 95; reasons.push(\u0027población vulnerable identificada\u0027);\n}\nif (codigo === \u0027SSAL\u0027 \u0026\u0026 (hasTag(\u0027urgente\u0027) || tutela \u003e= 0.7)) {\n  level = \u0027P0_critica\u0027; score = Math.max(score, 92); reasons.push(\u0027salud + urgencia\u0027);\n}\nif (codigo === \u0027DAGRD\u0027) {\n  level = \u0027P0_critica\u0027; score = Math.max(score, 90); reasons.push(\u0027gestión del riesgo de desastres\u0027);\n}\nif (level !== \u0027P0_critica\u0027) {\n  if (codigo === \u0027SSEG\u0027 || codigo === \u0027SSAL\u0027 || tipo === \u0027denuncia\u0027 || tutela \u003e= 0.5) {\n    level = \u0027P1_alta\u0027; score = 75; reasons.push(`competencia crítica ${codigo} o riesgo tutela ${tutela}`);\n  } else if ([\u0027SINF\u0027,\u0027SMOV\u0027,\u0027SMAM\u0027,\u0027SGOB\u0027].includes(codigo) || tipo === \u0027reclamo\u0027 || tipo === \u0027queja\u0027) {\n    level = \u0027P2_media\u0027; score = 55; reasons.push(`competencia operativa ${codigo} (${tipo})`);\n  } else {\n    level = \u0027P3_baja\u0027; score = 30; reasons.push(`trámite administrativo ${codigo} (${tipo})`);\n  }\n}\n\nconst HOLIDAYS_CO = new Set([\u00272025-01-01\u0027,\u00272025-01-06\u0027,\u00272025-03-24\u0027,\u00272025-04-17\u0027,\u00272025-04-18\u0027,\u00272025-05-01\u0027,\u00272025-06-02\u0027,\u00272025-06-23\u0027,\u00272025-06-30\u0027,\u00272025-07-20\u0027,\u00272025-08-07\u0027,\u00272025-08-18\u0027,\u00272025-10-13\u0027,\u00272025-11-03\u0027,\u00272025-11-17\u0027,\u00272025-12-08\u0027,\u00272025-12-25\u0027,\u00272026-01-01\u0027,\u00272026-01-12\u0027,\u00272026-03-23\u0027,\u00272026-04-02\u0027,\u00272026-04-03\u0027,\u00272026-05-01\u0027,\u00272026-05-18\u0027,\u00272026-06-08\u0027,\u00272026-06-15\u0027,\u00272026-06-29\u0027,\u00272026-07-20\u0027,\u00272026-08-07\u0027,\u00272026-08-17\u0027,\u00272026-10-12\u0027,\u00272026-11-02\u0027,\u00272026-11-16\u0027,\u00272026-12-08\u0027,\u00272026-12-25\u0027]);\n\nconst dayMs = 24 * 60 * 60 * 1000;\nconst businessDays = level === \u0027P0_critica\u0027 ? 1 : level === \u0027P1_alta\u0027 ? 5 : level === \u0027P2_media\u0027 ? 15 : 30;\nlet d = new Date(val.issued_at || val.created_at || Date.now());\nif (Number.isNaN(d.getTime())) d = new Date();\n\nlet added = 0;\nwhile (added \u003c businessDays) {\n  d = new Date(d.getTime() + dayMs);\n  const dow = d.getUTCDay();\n  const ymd = d.toISOString().slice(0,10);\n  if (dow !== 0 \u0026\u0026 dow !== 6 \u0026\u0026 !HOLIDAYS_CO.has(ymd)) added += 1;\n}\nconst legal_deadline = d.toISOString();\n\nreturn [{\n  ...val,\n  ...cls,\n  secretaria_id,\n  comuna_id,\n  priority_level: level,\n  priority_score: score,\n  priority_reason: { rules: reasons, tutela_risk_score: tutela, business_days: businessDays },\n  legal_deadline\n}];"
+                                     },
+                      "id":  "ebdb0931-f945-4db8-a7b6-9c8e1e24cb30",
+                      "name":  "Motor de Prioridad y Plazo",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       5504,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "assignments":  {
+                                                             "assignments":  [
+                                                                                 {
+                                                                                     "id":  "p01",
+                                                                                     "name":  "tenant_id",
+                                                                                     "value":  "={{ (() =\u003e { const s = String(($json.tenant_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : \"00000000-0000-0000-0000-000000000001\"; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p02",
+                                                                                     "name":  "radicado",
+                                                                                     "value":  "={{ (() =\u003e { const r = String(($json.radicado ?? \"\")).trim(); return (r \u0026\u0026 r !== \"undefined\" \u0026\u0026 r !== \"null\") ? r : (\"MED-\" + $now.toFormat(\"yyyyMMdd\") + \"-\" + Math.floor(Math.random()*1e6).toString().padStart(6,\"0\")); })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p03",
+                                                                                     "name":  "source_hash",
+                                                                                     "value":  "={{ (() =\u003e { const h = String(($json.source_hash ?? \"\")).trim(); if (h \u0026\u0026 h !== \"undefined\" \u0026\u0026 h !== \"null\") return h; const base = String(($json.raw_text ?? $json.description ?? $json.subject ?? \"pqr\")).trim().toLowerCase(); const seed = `${$execution.id}-${$now.toMillis()}-${$itemIndex}`; return \"fallback-\" + (base.slice(0,48).replace(/\\s+/g,\"-\") || \"pqr\") + \"-\" + seed; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p04",
+                                                                                     "name":  "tipo",
+                                                                                     "value":  "={{ $json.tipo }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p05",
+                                                                                     "name":  "channel",
+                                                                                     "value":  "={{ (() =\u003e { const c = String(($json.channel ?? $json.source_channel ?? \"web\")).trim().toLowerCase(); return (c \u0026\u0026 c !== \"undefined\" \u0026\u0026 c !== \"null\") ? c : \"web\"; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p06",
+                                                                                     "name":  "status",
+                                                                                     "value":  "received",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p07",
+                                                                                     "name":  "classification_status",
+                                                                                     "value":  "classified",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p08",
+                                                                                     "name":  "hechos",
+                                                                                     "value":  "={{ String($json.hechos ?? \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p09",
+                                                                                     "name":  "peticion",
+                                                                                     "value":  "={{ String($json.peticion ?? \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p10",
+                                                                                     "name":  "lead",
+                                                                                     "value":  "={{ String($json.lead ?? \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p11",
+                                                                                     "name":  "discriminacion_tematica",
+                                                                                     "value":  "={{ $json.discriminacion_tematica }}",
+                                                                                     "type":  "array"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p12",
+                                                                                     "name":  "raw_text",
+                                                                                     "value":  "={{ String($json.raw_text ?? $json.description ?? \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p13",
+                                                                                     "name":  "display_text",
+                                                                                     "value":  "={{ String($json.display_text ?? $json.raw_text ?? $json.description ?? \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p14",
+                                                                                     "name":  "llm_text",
+                                                                                     "value":  "={{ String($json.llm_text ?? $json.display_text ?? $json.raw_text ?? $json.description ?? \"\") }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p15",
+                                                                                     "name":  "secretaria_id",
+                                                                                     "value":  "={{ (() =\u003e { const s = String(($json.secretaria_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : null; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p16",
+                                                                                     "name":  "comuna_id",
+                                                                                     "value":  "={{ (() =\u003e { const s = String(($json.comuna_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : null; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p17",
+                                                                                     "name":  "estructura_minima",
+                                                                                     "value":  "={{ $json.estructura_minima }}",
+                                                                                     "type":  "object"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p18",
+                                                                                     "name":  "respeto_ok",
+                                                                                     "value":  "={{ $json.respeto_ok }}",
+                                                                                     "type":  "boolean"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p19",
+                                                                                     "name":  "anonimato",
+                                                                                     "value":  "={{ $json.anonimato }}",
+                                                                                     "type":  "boolean"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p20",
+                                                                                     "name":  "tutela_risk_score",
+                                                                                     "value":  "={{ Number.isFinite(Number($json.tutela_risk_score)) ? Number($json.tutela_risk_score) : 0 }}",
+                                                                                     "type":  "number"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p21",
+                                                                                     "name":  "issued_at",
+                                                                                     "value":  "={{ $json.issued_at || $now.toISO() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p22",
+                                                                                     "name":  "legal_deadline",
+                                                                                     "value":  "={{ $json.legal_deadline }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p23",
+                                                                                     "name":  "priority_level",
+                                                                                     "value":  "={{ $json.priority_level }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p24",
+                                                                                     "name":  "priority_score",
+                                                                                     "value":  "={{ $json.priority_score }}",
+                                                                                     "type":  "number"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "p25",
+                                                                                     "name":  "priority_reason",
+                                                                                     "value":  "={{ $json.priority_reason }}",
+                                                                                     "type":  "object"
+                                                                                 }
+                                                                             ]
+                                                         },
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "ba9bf826-daf1-45b9-a8bf-40256458bc62",
+                      "name":  "Armar Fila PQR",
+                      "type":  "n8n-nodes-base.set",
+                      "typeVersion":  3.4,
+                      "position":  [
+                                       5760,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "tableId":  "pqr",
+                                         "fieldsUi":  {
+                                                          "fieldValues":  [
+                                                                              {
+                                                                                  "fieldId":  "tenant_id",
+                                                                                  "fieldValue":  "={{ (() =\u003e { const s = String(($json.tenant_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : null; })() }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "radicado",
+                                                                                  "fieldValue":  "={{ $json.radicado }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "source_hash",
+                                                                                  "fieldValue":  "={{ $json.source_hash }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "tipo",
+                                                                                  "fieldValue":  "={{ $json.tipo }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "channel",
+                                                                                  "fieldValue":  "={{ $json.channel }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "status",
+                                                                                  "fieldValue":  "={{ $json.status }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "classification_status",
+                                                                                  "fieldValue":  "={{ $json.classification_status }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "hechos",
+                                                                                  "fieldValue":  "={{ $json.hechos }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "peticion",
+                                                                                  "fieldValue":  "={{ $json.peticion }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "lead",
+                                                                                  "fieldValue":  "={{ $json.lead }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "discriminacion_tematica",
+                                                                                  "fieldValue":  "={{ JSON.stringify($json.discriminacion_tematica) }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "raw_text",
+                                                                                  "fieldValue":  "={{ $json.raw_text }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "display_text",
+                                                                                  "fieldValue":  "={{ $json.display_text }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "llm_text",
+                                                                                  "fieldValue":  "={{ $json.llm_text }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "secretaria_id",
+                                                                                  "fieldValue":  "={{ (() =\u003e { const s = String(($json.secretaria_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : null; })() }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "comuna_id",
+                                                                                  "fieldValue":  "={{ (() =\u003e { const s = String(($json.comuna_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : null; })() }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "estructura_minima",
+                                                                                  "fieldValue":  "={{ JSON.stringify($json.estructura_minima) }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "respeto_ok",
+                                                                                  "fieldValue":  "={{ $json.respeto_ok }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "anonimato",
+                                                                                  "fieldValue":  "={{ $json.anonimato }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "tutela_risk_score",
+                                                                                  "fieldValue":  "={{ $json.tutela_risk_score }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "issued_at",
+                                                                                  "fieldValue":  "={{ $json.issued_at }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "legal_deadline",
+                                                                                  "fieldValue":  "={{ $json.legal_deadline }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "priority_level",
+                                                                                  "fieldValue":  "={{ $json.priority_level }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "priority_score",
+                                                                                  "fieldValue":  "={{ $json.priority_score }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "priority_reason",
+                                                                                  "fieldValue":  "={{ JSON.stringify($json.priority_reason) }}"
+                                                                              }
+                                                                          ]
+                                                      }
+                                     },
+                      "id":  "a7990eaf-de46-4885-a657-31ce485ae4f4",
+                      "name":  "Insertar PQR",
+                      "type":  "n8n-nodes-base.supabase",
+                      "typeVersion":  1,
+                      "position":  [
+                                       6016,
+                                       224
+                                   ],
+                      "credentials":  {
+                                          "supabaseApi":  {
+                                                              "id":  "ThBCT3ZXhob9Yi7x",
+                                                              "name":  "Supabase account"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "tableId":  "pqr_events",
+                                         "fieldsUi":  {
+                                                          "fieldValues":  [
+                                                                              {
+                                                                                  "fieldId":  "tenant_id",
+                                                                                  "fieldValue":  "={{ (() =\u003e { const s = String(($json.tenant_id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : null; })() }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "pqr_id",
+                                                                                  "fieldValue":  "={{ (() =\u003e { const s = String(($json.id ?? \"\")).trim(); return (s \u0026\u0026 s !== \"undefined\" \u0026\u0026 s !== \"null\") ? s : null; })() }}"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "kind",
+                                                                                  "fieldValue":  "intake_agent_run"
+                                                                              },
+                                                                              {
+                                                                                  "fieldId":  "payload",
+                                                                                  "fieldValue":  "={{ JSON.stringify({ validity: \u0027passed\u0027, priority_level: $json.priority_level, secretaria_id: $json.secretaria_id, comuna_id: $json.comuna_id, tutela_risk_score: $json.tutela_risk_score, lead: $json.lead, run_at: $now.toISO() }) }}"
+                                                                              }
+                                                                          ]
+                                                      }
+                                     },
+                      "id":  "14b025cf-2bca-4d94-b77d-a17c102cffa5",
+                      "name":  "Emitir Evento Intake",
+                      "type":  "n8n-nodes-base.supabase",
+                      "typeVersion":  1,
+                      "position":  [
+                                       6288,
+                                       224
+                                   ],
+                      "credentials":  {
+                                          "supabaseApi":  {
+                                                              "id":  "ThBCT3ZXhob9Yi7x",
+                                                              "name":  "Supabase account"
+                                                          }
+                                      }
+                  },
+                  {
+                      "parameters":  {
+                                         "respondWith":  "json",
+                                         "responseBody":  "={{ { ok: true, stage: \u0027accepted\u0027, pqr_id: $(\u0027Insertar PQR\u0027).item.json.id, radicado: $(\u0027Insertar PQR\u0027).item.json.radicado, status: $(\u0027Insertar PQR\u0027).item.json.status, priority_level: $(\u0027Insertar PQR\u0027).item.json.priority_level, priority_score: $(\u0027Insertar PQR\u0027).item.json.priority_score, secretaria_id: $(\u0027Insertar PQR\u0027).item.json.secretaria_id, lead: $(\u0027Insertar PQR\u0027).item.json.lead, legal_deadline: $(\u0027Insertar PQR\u0027).item.json.legal_deadline, processed_at: $now.toISO() } }}",
+                                         "options":  {
+                                                         "responseCode":  201,
+                                                         "responseHeaders":  {
+                                                                                 "entries":  [
+                                                                                                 {
+                                                                                                     "name":  "Content-Type",
+                                                                                                     "value":  "application/json; charset=utf-8"
+                                                                                                 }
+                                                                                             ]
+                                                                             }
+                                                     }
+                                     },
+                      "id":  "2a5a0f8a-d723-4f49-822d-02f01bb66838",
+                      "name":  "Responder 201 Creado",
+                      "type":  "n8n-nodes-base.respondToWebhook",
+                      "typeVersion":  1.5,
+                      "position":  [
+                                       6544,
+                                       224
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "content":  "## 📥 INTAKE\n\nWebhook POST /pqrs/intake recibe payload NormalizedIntake. Manual trigger + Semilla permiten correr sin webhook.\n\n**v2:** responseNode con códigos HTTP por terminal (200/201/400/422).",
+                                         "color":  2
+                                     },
+                      "id":  "956c5c6f-c56f-4eb1-a58f-865dd19a91a1",
+                      "name":  "Sticky Note a4264794",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2928,
+                                       992
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "content":  "## ✅ ESQUEMA + IDENTIDAD\n\nValida NormalizedIntake. Mapea source_channel → pqr.channel. Calcula radicado MED-YYYYMMDD-XXXXXX y source_hash sha256 (idempotencia).\n\n**v2:** hash sobre texto normalizado; rechazos persisten en pqr_events; PII extendida a CC/NIT CO.",
+                                         "color":  4
+                                     },
+                      "id":  "1c268754-c38e-4f48-873e-28d609aba828",
+                      "name":  "Sticky Note d6684683",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2928,
+                                       1152
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "content":  "## 🛡️ DEDUP (NUEVO v2)\n\nAntes de llamar al LLM, chequea source_hash contra pqr existente. Si es duplicado → 200 con el radicado original. Ahorra LLM + evita filas huérfanas.",
+                                         "color":  3
+                                     },
+                      "id":  "212ad749-0aba-4dbe-a793-1874865381a6",
+                      "name":  "Sticky Note 517d3e8f",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2928,
+                                       1296
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "content":  "## 🚦 COMPUERTAS (Ley 1755/2015)\n\nGemini extrae hechos, petición, lead, respeto, estructura mínima y tutela_risk_score. Gate combinado: hechos ∧ petición ∧ respeto ∧ anonimato_ok.",
+                                         "color":  5
+                                     },
+                      "id":  "cf0a7532-b36c-4bda-8395-22afcc37827a",
+                      "name":  "Sticky Note 79cef7ab",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2928,
+                                       1456
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "content":  "## 🤖 CLASIFICACIÓN + COMPETENCIAS\n\ntipo (5), secretaria_codigo (26), comuna/corregimiento, tags. Lookups resuelven secretaria_id y comuna_id.\n\n**v2:** merge por posición une clasificación + secretaría_id (bug del v1).",
+                                         "color":  4
+                                     },
+                      "id":  "b4e98b60-464a-46e0-b8a7-a19120706338",
+                      "name":  "Sticky Note e8597541",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2928,
+                                       1600
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "content":  "## ⚙️ PRIORIDAD + PLAZO\n\nP0 · P1 · P2 · P3. Plazo 1/5/15/30 días hábiles sobre issued_at.\n\n**v2:** calendario festivos CO 2025-2026 (no solo fines de semana).",
+                                         "color":  5
+                                     },
+                      "id":  "5847279b-c223-45e9-a8ba-02b1deb27e11",
+                      "name":  "Sticky Note a0fdd717",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2928,
+                                       1744
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "content":  "## 💾 PERSISTENCIA\n\nInsert en public.pqr + pqr_events.\n\n**v2:** autoMapInputData (−25 mapeos); jsonb nativo sin stringify doble; eventos intake_agent_run / intake_agent_bounce / intake_agent_schema_reject.",
+                                         "color":  6
+                                     },
+                      "id":  "5b8e4378-d9ad-4117-a1b5-79c2d7ea8611",
+                      "name":  "Sticky Note 80401d61",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2928,
+                                       1904
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "content":  "## ↩️ REBOTE (status=bounced_incomplete)\n\nTaxonomía: faltan_hechos · falta_peticion · irrespetuoso · anonimo_sin_datos_contacto · fuera_de_competencia_municipal.",
+                                         "color":  3
+                                     },
+                      "id":  "9f63d389-387e-475d-a5d1-1248898352fa",
+                      "name":  "Sticky Note ea726e50",
+                      "type":  "n8n-nodes-base.stickyNote",
+                      "typeVersion":  1,
+                      "position":  [
+                                       2928,
+                                       2048
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "assignments":  {
+                                                             "assignments":  [
+                                                                                 {
+                                                                                     "id":  "s01",
+                                                                                     "name":  "source_channel",
+                                                                                     "value":  "web",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s02",
+                                                                                     "name":  "citizen_name",
+                                                                                     "value":  "Juan Pérez",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s03",
+                                                                                     "name":  "is_anonymous",
+                                                                                     "value":  "={{ false }}",
+                                                                                     "type":  "boolean"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s04",
+                                                                                     "name":  "document_id",
+                                                                                     "value":  "123456789",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s05",
+                                                                                     "name":  "email",
+                                                                                     "value":  "juan@email.com",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s06",
+                                                                                     "name":  "phone",
+                                                                                     "value":  "3001234567",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s07",
+                                                                                     "name":  "subject",
+                                                                                     "value":  "Hueco en la vía",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s08",
+                                                                                     "name":  "description",
+                                                                                     "value":  "En la comuna 11 hay un hueco grande que está causando accidentes.",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s09",
+                                                                                     "name":  "raw_text",
+                                                                                     "value":  "En la comuna 11, en la avenida principal cerca al parque, hay un hueco grande en la vía que está causando accidentes frecuentes a motos y carros. Solicito reparación urgente.",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s10",
+                                                                                     "name":  "attachments",
+                                                                                     "value":  "={{ [] }}",
+                                                                                     "type":  "array"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s11",
+                                                                                     "name":  "location_text",
+                                                                                     "value":  "Comuna 11, Medellín",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s12",
+                                                                                     "name":  "consent_data",
+                                                                                     "value":  "={{ true }}",
+                                                                                     "type":  "boolean"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "s13",
+                                                                                     "name":  "created_at",
+                                                                                     "value":  "={{ $now.toISO() }}",
+                                                                                     "type":  "string"
+                                                                                 }
+                                                                             ]
+                                                         },
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "f5e5b8a1-a03c-4491-bf0a-956a3d2e7e87",
+                      "name":  "Semilla de Prueba Totalmente Valida",
+                      "type":  "n8n-nodes-base.set",
+                      "typeVersion":  3.4,
+                      "position":  [
+                                       672,
+                                       624
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "assignments":  {
+                                                             "assignments":  [
+                                                                                 {
+                                                                                     "id":  "tc1",
+                                                                                     "name":  "test_case",
+                                                                                     "value":  "aceptado",
+                                                                                     "type":  "string"
+                                                                                 }
+                                                                             ]
+                                                         },
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "75e8a51a-ab52-4417-a266-9814b9e4cdfc",
+                      "name":  "Selector Caso Prueba (Edit/Set)",
+                      "type":  "n8n-nodes-base.set",
+                      "typeVersion":  3.4,
+                      "position":  [
+                                       240,
+                                       368
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "assignments":  {
+                                                             "assignments":  [
+                                                                                 {
+                                                                                     "id":  "c0",
+                                                                                     "name":  "test_case",
+                                                                                     "value":  "={{ $json.test_case || \"aceptado\" }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c00",
+                                                                                     "name":  "expected_branch",
+                                                                                     "value":  "={{ (() =\u003e { const c=($json.test_case||\"aceptado\"); if(c===\"esquema_invalido\") return \"400_schema\"; if(c===\"rebote_sin_peticion\"||c===\"anonimo_sin_contacto\") return \"422_rebote\"; if(c===\"duplicado_replay\") return \"200_duplicado (si ya corriste duplicado_seed)\"; return \"201_creado\"; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c01",
+                                                                                     "name":  "source_hash_override",
+                                                                                     "value":  "={{ [\"duplicado_seed\",\"duplicado_replay\"].includes($json.test_case || \"\") ? \"dup-demo-hash-v1\" : \"\" }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c1",
+                                                                                     "name":  "source_channel",
+                                                                                     "value":  "web",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c2",
+                                                                                     "name":  "citizen_name",
+                                                                                     "value":  "={{ [\"anonimo_sin_contacto\",\"anonimo_con_contacto\"].includes($json.test_case || \"\") ? \"Anónimo\" : \"Juan Pérez\" }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c3",
+                                                                                     "name":  "is_anonymous",
+                                                                                     "value":  "={{ [\"anonimo_sin_contacto\",\"anonimo_con_contacto\"].includes($json.test_case || \"\") }}",
+                                                                                     "type":  "boolean"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c4",
+                                                                                     "name":  "document_id",
+                                                                                     "value":  "={{ (() =\u003e { const c=($json.test_case||\"aceptado\"); return c===\"anonimo_sin_contacto\" ? \"\" : \"123456789\"; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c5",
+                                                                                     "name":  "email",
+                                                                                     "value":  "={{ (() =\u003e { const c=($json.test_case||\"aceptado\"); if(c===\"anonimo_sin_contacto\") return \"\"; if(c===\"anonimo_con_contacto\") return \"anonimo.contacto@email.com\"; return \"juan@email.com\"; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c6",
+                                                                                     "name":  "phone",
+                                                                                     "value":  "={{ (() =\u003e { const c=($json.test_case||\"aceptado\"); return c===\"anonimo_sin_contacto\" ? \"\" : \"3001234567\"; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c7",
+                                                                                     "name":  "subject",
+                                                                                     "value":  "={{ ($json.test_case || \"aceptado\") === \"esquema_invalido\" ? \"\" : \"Hueco en la vía\" }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c8",
+                                                                                     "name":  "description",
+                                                                                     "value":  "={{ (() =\u003e { const c=($json.test_case||\"aceptado\"); if(c===\"esquema_invalido\") return \"\"; if(c===\"rebote_sin_peticion\") return \"En la comuna 11 hay un hueco grande que está causando accidentes. Esto es solo un reporte informativo para conocimiento.\"; if(c===\"duplicado_seed\" || c===\"duplicado_replay\") return \"En la comuna 11 hay un hueco grande en la vía y solicito reparación urgente. Caso de prueba controlado de duplicado.\"; return \"En la comuna 11 hay un hueco grande en la vía y solicito reparación urgente para evitar accidentes.\"; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c9",
+                                                                                     "name":  "raw_text",
+                                                                                     "value":  "={{ (() =\u003e { const c=($json.test_case||\"aceptado\"); if(c===\"esquema_invalido\") return \"\"; if(c===\"rebote_sin_peticion\") return \"En la comuna 11 hay un hueco grande que está causando accidentes. Esto es solo un reporte informativo para conocimiento.\"; if(c===\"duplicado_seed\" || c===\"duplicado_replay\") return \"En la comuna 11 hay un hueco grande en la vía y solicito reparación urgente. Caso de prueba controlado de duplicado.\"; return \"En la comuna 11 hay un hueco grande en la vía y solicito reparación urgente para evitar accidentes.\"; })() }}",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c10",
+                                                                                     "name":  "attachments",
+                                                                                     "value":  "={{ [] }}",
+                                                                                     "type":  "array"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c11",
+                                                                                     "name":  "location_text",
+                                                                                     "value":  "Comuna 11, Medellín",
+                                                                                     "type":  "string"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c12",
+                                                                                     "name":  "consent_data",
+                                                                                     "value":  "={{ ($json.test_case || \"aceptado\") !== \"esquema_invalido\" }}",
+                                                                                     "type":  "boolean"
+                                                                                 },
+                                                                                 {
+                                                                                     "id":  "c13",
+                                                                                     "name":  "created_at",
+                                                                                     "value":  "={{ $now.toISO() }}",
+                                                                                     "type":  "string"
+                                                                                 }
+                                                                             ]
+                                                         },
+                                         "options":  {
+
+                                                     }
+                                     },
+                      "id":  "a1ceffa4-ec77-49b4-91a3-23348f97a524",
+                      "name":  "Semilla Casos de Prueba",
+                      "type":  "n8n-nodes-base.set",
+                      "typeVersion":  3.4,
+                      "position":  [
+                                       400,
+                                       368
+                                   ]
+                  }
+              ],
+    "pinData":  {
+
+                },
+    "connections":  {
+                        "Webhook PQRS Intake":  {
+                                                    "main":  [
+                                                                 [
+                                                                     {
+                                                                         "node":  "Unificar Entradas",
+                                                                         "type":  "main",
+                                                                         "index":  0
+                                                                     }
+                                                                 ]
+                                                             ]
+                                                },
+                        "Unificar Entradas":  {
+                                                  "main":  [
+                                                               [
+                                                                   {
+                                                                       "node":  "Extraer Payload",
+                                                                       "type":  "main",
+                                                                       "index":  0
+                                                                   }
+                                                               ]
+                                                           ]
+                                              },
+                        "Disparador Manual":  {
+                                                  "main":  [
+                                                               [
+                                                                   {
+                                                                       "node":  "Selector Caso Prueba (Edit/Set)",
+                                                                       "type":  "main",
+                                                                       "index":  0
+                                                                   }
+                                                               ]
+                                                           ]
+                                              },
+                        "Extraer Payload":  {
+                                                "main":  [
+                                                             [
+                                                                 {
+                                                                     "node":  "Validar Esquema NormalizedIntake",
+                                                                     "type":  "main",
+                                                                     "index":  0
+                                                                 }
+                                                             ]
+                                                         ]
+                                            },
+                        "Validar Esquema NormalizedIntake":  {
+                                                                 "main":  [
+                                                                              [
+                                                                                  {
+                                                                                      "node":  "¿Esquema Válido?",
+                                                                                      "type":  "main",
+                                                                                      "index":  0
+                                                                                  }
+                                                                              ]
+                                                                          ]
+                                                             },
+                        "¿Esquema Válido?":  {
+                                                 "main":  [
+                                                              [
+                                                                  {
+                                                                      "node":  "Computar Identidad",
+                                                                      "type":  "main",
+                                                                      "index":  0
+                                                                  }
+                                                              ],
+                                                              [
+                                                                  {
+                                                                      "node":  "Registrar Esquema Inválido",
+                                                                      "type":  "main",
+                                                                      "index":  0
+                                                                  }
+                                                              ]
+                                                          ]
+                                             },
+                        "Computar Identidad":  {
+                                                   "main":  [
+                                                                [
+                                                                    {
+                                                                        "node":  "Format Preserve (raw/display/llm)",
+                                                                        "type":  "main",
+                                                                        "index":  0
+                                                                    }
+                                                                ]
+                                                            ]
+                                               },
+                        "Format Preserve (raw/display/llm)":  {
+                                                                  "main":  [
+                                                                               [
+                                                                                   {
+                                                                                       "node":  "Chequear Duplicado (source_hash)",
+                                                                                       "type":  "main",
+                                                                                       "index":  0
+                                                                                   }
+                                                                               ]
+                                                                           ]
+                                                              },
+                        "Chequear Duplicado (source_hash)":  {
+                                                                 "main":  [
+                                                                              [
+                                                                                  {
+                                                                                      "node":  "Normalizar Resultado Dedup",
+                                                                                      "type":  "main",
+                                                                                      "index":  0
+                                                                                  }
+                                                                              ]
+                                                                          ]
+                                                             },
+                        "Normalizar Resultado Dedup":  {
+                                                           "main":  [
+                                                                        [
+                                                                            {
+                                                                                "node":  "¿Duplicado?",
+                                                                                "type":  "main",
+                                                                                "index":  0
+                                                                            }
+                                                                        ]
+                                                                    ]
+                                                       },
+                        "¿Duplicado?":  {
+                                            "main":  [
+                                                         [
+                                                             {
+                                                                 "node":  "Responder 200 Duplicado",
+                                                                 "type":  "main",
+                                                                 "index":  0
+                                                             }
+                                                         ],
+                                                         [
+                                                             {
+                                                                 "node":  "Agente Validez",
+                                                                 "type":  "main",
+                                                                 "index":  0
+                                                             }
+                                                         ]
+                                                     ]
+                                        },
+                        "Agente Validez":  {
+                                               "main":  [
+                                                            [
+                                                                {
+                                                                    "node":  "Extraer Validez",
+                                                                    "type":  "main",
+                                                                    "index":  0
+                                                                }
+                                                            ]
+                                                        ]
+                                           },
+                        "Gemini Validez":  {
+                                               "ai_languageModel":  [
+                                                                        [
+                                                                            {
+                                                                                "node":  "Agente Validez",
+                                                                                "type":  "ai_languageModel",
+                                                                                "index":  0
+                                                                            }
+                                                                        ]
+                                                                    ]
+                                           },
+                        "Parser Validez":  {
+                                               "ai_outputParser":  [
+                                                                       [
+                                                                           {
+                                                                               "node":  "Agente Validez",
+                                                                               "type":  "ai_outputParser",
+                                                                               "index":  0
+                                                                           }
+                                                                       ]
+                                                                   ]
+                                           },
+                        "Extraer Validez":  {
+                                                "main":  [
+                                                             [
+                                                                 {
+                                                                     "node":  "Aplicar Compuertas",
+                                                                     "type":  "main",
+                                                                     "index":  0
+                                                                 }
+                                                             ]
+                                                         ]
+                                            },
+                        "Aplicar Compuertas":  {
+                                                   "main":  [
+                                                                [
+                                                                    {
+                                                                        "node":  "¿Es Válido?",
+                                                                        "type":  "main",
+                                                                        "index":  0
+                                                                    }
+                                                                ]
+                                                            ]
+                                               },
+                        "¿Es Válido?":  {
+                                            "main":  [
+                                                         [
+                                                             {
+                                                                 "node":  "Agente Clasificador",
+                                                                 "type":  "main",
+                                                                 "index":  0
+                                                             }
+                                                         ],
+                                                         [
+                                                             {
+                                                                 "node":  "Generar Razón de Rebote",
+                                                                 "type":  "main",
+                                                                 "index":  0
+                                                             }
+                                                         ]
+                                                     ]
+                                        },
+                        "Agente Clasificador":  {
+                                                    "main":  [
+                                                                 [
+                                                                     {
+                                                                         "node":  "Extraer Clasificación",
+                                                                         "type":  "main",
+                                                                         "index":  0
+                                                                     }
+                                                                 ]
+                                                             ]
+                                                },
+                        "Gemini Clasificador":  {
+                                                    "ai_languageModel":  [
+                                                                             [
+                                                                                 {
+                                                                                     "node":  "Agente Clasificador",
+                                                                                     "type":  "ai_languageModel",
+                                                                                     "index":  0
+                                                                                 }
+                                                                             ]
+                                                                         ]
+                                                },
+                        "Parser Clasificación":  {
+                                                     "ai_outputParser":  [
+                                                                             [
+                                                                                 {
+                                                                                     "node":  "Agente Clasificador",
+                                                                                     "type":  "ai_outputParser",
+                                                                                     "index":  0
+                                                                                 }
+                                                                             ]
+                                                                         ]
+                                                 },
+                        "Extraer Clasificación":  {
+                                                      "main":  [
+                                                                   [
+                                                                       {
+                                                                           "node":  "Buscar Secretaría",
+                                                                           "type":  "main",
+                                                                           "index":  0
+                                                                       },
+                                                                       {
+                                                                           "node":  "Unir Clasificación + Secretaría",
+                                                                           "type":  "main",
+                                                                           "index":  0
+                                                                       }
+                                                                   ]
+                                                               ]
+                                                  },
+                        "Buscar Secretaría":  {
+                                                  "main":  [
+                                                               [
+                                                                   {
+                                                                       "node":  "Capturar Secretaría ID",
+                                                                       "type":  "main",
+                                                                       "index":  0
+                                                                   }
+                                                               ]
+                                                           ]
+                                              },
+                        "Capturar Secretaría ID":  {
+                                                       "main":  [
+                                                                    [
+                                                                        {
+                                                                            "node":  "Unir Clasificación + Secretaría",
+                                                                            "type":  "main",
+                                                                            "index":  1
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                   },
+                        "Unir Clasificación + Secretaría":  {
+                                                                "main":  [
+                                                                             [
+                                                                                 {
+                                                                                     "node":  "Buscar Comuna",
+                                                                                     "type":  "main",
+                                                                                     "index":  0
+                                                                                 }
+                                                                             ]
+                                                                         ]
+                                                            },
+                        "Generar Razón de Rebote":  {
+                                                        "main":  [
+                                                                     [
+                                                                         {
+                                                                             "node":  "Armar Fila Rebote",
+                                                                             "type":  "main",
+                                                                             "index":  0
+                                                                         }
+                                                                     ]
+                                                                 ]
+                                                    },
+                        "Armar Fila Rebote":  {
+                                                  "main":  [
+                                                               [
+                                                                   {
+                                                                       "node":  "Insertar PQR Rebote",
+                                                                       "type":  "main",
+                                                                       "index":  0
+                                                                   }
+                                                               ]
+                                                           ]
+                                              },
+                        "Insertar PQR Rebote":  {
+                                                    "main":  [
+                                                                 [
+                                                                     {
+                                                                         "node":  "Emitir Evento Rebote",
+                                                                         "type":  "main",
+                                                                         "index":  0
+                                                                     }
+                                                                 ]
+                                                             ]
+                                                },
+                        "Emitir Evento Rebote":  {
+                                                     "main":  [
+                                                                  [
+                                                                      {
+                                                                          "node":  "Responder 422 Rebote",
+                                                                          "type":  "main",
+                                                                          "index":  0
+                                                                      }
+                                                                  ]
+                                                              ]
+                                                 },
+                        "Registrar Esquema Inválido":  {
+                                                           "main":  [
+                                                                        [
+                                                                            {
+                                                                                "node":  "Responder 400 Esquema",
+                                                                                "type":  "main",
+                                                                                "index":  0
+                                                                            }
+                                                                        ]
+                                                                    ]
+                                                       },
+                        "Buscar Comuna":  {
+                                              "main":  [
+                                                           [
+                                                               {
+                                                                   "node":  "Motor de Prioridad y Plazo",
+                                                                   "type":  "main",
+                                                                   "index":  0
+                                                               }
+                                                           ]
+                                                       ]
+                                          },
+                        "Motor de Prioridad y Plazo":  {
+                                                           "main":  [
+                                                                        [
+                                                                            {
+                                                                                "node":  "Armar Fila PQR",
+                                                                                "type":  "main",
+                                                                                "index":  0
+                                                                            }
+                                                                        ]
+                                                                    ]
+                                                       },
+                        "Armar Fila PQR":  {
+                                               "main":  [
+                                                            [
+                                                                {
+                                                                    "node":  "Insertar PQR",
+                                                                    "type":  "main",
+                                                                    "index":  0
+                                                                }
+                                                            ]
+                                                        ]
+                                           },
+                        "Insertar PQR":  {
+                                             "main":  [
+                                                          [
+                                                              {
+                                                                  "node":  "Emitir Evento Intake",
+                                                                  "type":  "main",
+                                                                  "index":  0
+                                                              }
+                                                          ]
+                                                      ]
+                                         },
+                        "Emitir Evento Intake":  {
+                                                     "main":  [
+                                                                  [
+                                                                      {
+                                                                          "node":  "Responder 201 Creado",
+                                                                          "type":  "main",
+                                                                          "index":  0
+                                                                      }
+                                                                  ]
+                                                              ]
+                                                 },
+                        "Selector Caso Prueba (Edit/Set)":  {
+                                                                "main":  [
+                                                                             [
+                                                                                 {
+                                                                                     "node":  "Semilla Casos de Prueba",
+                                                                                     "type":  "main",
+                                                                                     "index":  0
+                                                                                 }
+                                                                             ]
+                                                                         ]
+                                                            },
+                        "Semilla Casos de Prueba":  {
+                                                        "main":  [
+                                                                     [
+                                                                         {
+                                                                             "node":  "Unificar Entradas",
+                                                                             "type":  "main",
+                                                                             "index":  1
+                                                                         }
+                                                                     ]
+                                                                 ]
+                                                    }
+                    },
+    "active":  false,
+    "settings":  {
+                     "executionOrder":  "v1",
+                     "binaryMode":  "separate"
+                 },
+    "versionId":  "ed6ca9df-ffb4-46be-aa56-f8caa1ad3e6b",
+    "meta":  {
+                 "instanceId":  "167e13f7dee4d1b83daae116e9b79f6c77585ccbef9c1ec866ca9e74ae87035a"
+             },
+    "id":  "LXc1kZTs4eAdf3yV",
+    "tags":  [
+
+             ]
+}

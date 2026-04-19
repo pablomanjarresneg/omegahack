@@ -14,29 +14,29 @@ import clsx from "clsx";
 
 const NAV = [
   { href: "/bandeja", label: "Bandeja", icon: ListTodo },
-  { href: "/alcaldia", label: "Alcaldía", icon: LayoutDashboard },
-  { href: "/queue", label: "Cola de revisión", icon: Inbox },
+  { href: "/alcaldia", label: "Alcaldia", icon: LayoutDashboard },
+  { href: "/queue", label: "Cola de revision", icon: Inbox },
   { href: "/grupos", label: "Grupos problema", icon: Layers },
-  { href: "/auditoria", label: "Auditoría", icon: ShieldCheck },
+  { href: "/auditoria", label: "Auditoria", icon: ShieldCheck },
 ] as const;
 
 export function Sidebar() {
   const pathname = usePathname() ?? "";
   return (
-    <aside className="sticky top-0 flex h-screen w-60 shrink-0 flex-col border-r border-border bg-surface">
-      <div className="flex items-center gap-2 border-b border-border px-5 py-4">
+    <aside className="glass-panel sticky top-0 z-20 flex h-screen w-60 shrink-0 flex-col border-r border-r-white/10 bg-[rgba(17,17,17,0.68)]">
+      <div className="flex items-center gap-2 border-b border-white/10 px-5 py-4">
         <div
           aria-hidden
-          className="flex h-8 w-8 items-center justify-center rounded bg-brand text-xs font-bold tracking-tight text-brand-fg"
+          className="flex h-8 w-8 items-center justify-center rounded-md bg-brand/90 text-xs font-bold tracking-tight text-brand-fg shadow-[0_0_18px_rgba(16,185,129,0.35)]"
         >
-          Ω
+          O
         </div>
         <div className="leading-tight">
-          <div className="text-sm font-semibold">Workbench</div>
-          <div className="text-[11px] text-fg-subtle">Jurídica · Medellín</div>
+          <div className="text-sm font-semibold text-fg">Workbench</div>
+          <div className="text-[11px] text-fg-subtle">Juridica - Medellin</div>
         </div>
       </div>
-      <nav className="flex-1 px-2 py-3" aria-label="Navegación principal">
+      <nav className="flex-1 px-2 py-3" aria-label="Navegacion principal">
         <ul className="flex flex-col gap-1">
           {NAV.map(({ href, label, icon: Icon }) => {
             const active = pathname === href || pathname.startsWith(`${href}/`);
@@ -46,10 +46,10 @@ export function Sidebar() {
                   href={href}
                   aria-current={active ? "page" : undefined}
                   className={clsx(
-                    "flex items-center gap-2.5 rounded px-3 py-2 text-sm transition-colors",
+                    "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-all duration-200",
                     active
-                      ? "bg-brand/10 font-medium text-brand"
-                      : "text-fg-muted hover:bg-surface-hover hover:text-fg",
+                      ? "border border-brand/35 bg-brand/15 font-medium text-brand shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+                      : "border border-transparent text-fg-muted hover:border-white/10 hover:bg-white/[0.03] hover:text-fg",
                   )}
                 >
                   <Icon className="h-4 w-4 shrink-0" aria-hidden />
@@ -60,10 +60,10 @@ export function Sidebar() {
           })}
         </ul>
       </nav>
-      <div className="border-t border-border px-4 py-3 text-[11px] text-fg-subtle">
+      <div className="border-t border-white/10 px-4 py-3 text-[11px] text-fg-subtle">
         <div className="flex items-center gap-2">
           <Settings className="h-3.5 w-3.5" aria-hidden />
-          <span className="tnum">v0.1 · demo</span>
+          <span className="tnum">v0.1 - demo</span>
         </div>
       </div>
     </aside>

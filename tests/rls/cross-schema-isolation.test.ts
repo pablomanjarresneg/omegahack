@@ -82,4 +82,30 @@ describe("cross-schema role isolation", () => {
     // case the schema grant model hid the table from the catalog entirely.
     expect(["42501", "42P01"]).toContain(pgCode);
   });
+
+  it("app_operational gets permission denied on qa_bank.qa_documents explicitly", async () => {
+    tenantAPool = tenantAPool ?? operationalPoolFor(TENANT_A);
+    const pool = tenantAPool;
+    let threw = false;
+    let pgCode: string | undefined;
+    try {
+      await pool.query("select 1 from qa_bank.qa_documents limit 1");
+    } catch (err) {
+      threw = true;
+      pgCode = (err as { code?: string }).code;
+    }
+    expect(threw).toBe(true);
+    // 42501 insufficient_privilege; 42P01 undefined_table (schema USAGE missing).
+    expect(["42501", "42P01", "3F000"]).toContain(pgCode);
+  });
+
+  it("app_qa_reader can SELECT from qa_bank.qa_documents (positive invariant)", async () => {
+    qaPool = qaPool ?? qaReaderPool();
+    const pool = qaPool;
+    // We don't care about the row count — we care that the query does not throw.
+    const res = await pool.query<{ ok: number }>(
+      "select 1 as ok from qa_bank.qa_documents limit 1",
+    );
+    expect(Array.isArray(res.rows)).toBe(true);
+  });
 });

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "description": "Registry of canonical Q&A corpus sources. PDFs / full texts are NEVER committed to git — the checked-in manifest lives here only so service operators and CI know what's expected inside the qa-corpus Storage bucket. The `qa-ingest` edge function expects each `id` to map to a row in `qa_bank.qa_sources` and the `storagePath` to exist inside the bucket.",
+  "entries": [
+    {
+      "id": "decreto-883-2015",
+      "title": "Decreto 883 de 2015 — Reglamentación de la Ley 1755 en la administración distrital de Medellín",
+      "kind": "decreto",
+      "url": "https://www.medellin.gov.co/normograma/docs/decreto_0883_2015.htm",
+      "published_at": "2015-05-27",
+      "storagePath": "decretos/decreto-883-2015.md",
+      "notes": "Placeholder only. Upload the PDF-to-markdown conversion into qa-corpus/decretos/decreto-883-2015.md via the Supabase dashboard."
+    },
+    {
+      "id": "ley-1755-2015",
+      "title": "Ley 1755 de 2015 — Derecho fundamental de petición",
+      "kind": "ley",
+      "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=65334",
+      "published_at": "2015-06-30",
+      "storagePath": "leyes/ley-1755-2015.md",
+      "notes": "Placeholder only."
+    },
+    {
+      "id": "ley-1581-2012",
+      "title": "Ley 1581 de 2012 — Protección de datos personales (habeas data)",
+      "kind": "ley",
+      "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=49981",
+      "published_at": "2012-10-17",
+      "storagePath": "leyes/ley-1581-2012.md",
+      "notes": "Placeholder only."
+    },
+    {
+      "id": "canonical-response-placeholder",
+      "title": "Respuesta canónica — plantilla base",
+      "kind": "canonical_response",
+      "url": null,
+      "published_at": null,
+      "storagePath": "canonical/response-template.md",
+      "notes": "Placeholder for the first-round set of canonical responses. Populate with vetted templates approved by jurídica."
+    }
+  ]
+}

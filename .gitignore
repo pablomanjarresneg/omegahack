@@ -85,16 +85,11 @@ vitest.config.ts.timestamp-*
 
 logs/
 
-# Supabase: ignore everything except migrations folder, config.toml, and seed.sql.
-# SQL migration files themselves are applied directly to the linked project
-# and are not tracked in git.
 supabase/*
-!supabase/migrations/
 !supabase/config.toml
+!supabase/seed.sql
 supabase/.branches/
 supabase/.temp/
-*.sql
-!supabase/seed.sql
 .n8n/
 
 
@@ -107,3 +102,14 @@ supabase/.temp/
 .prettiercache
 .dccache
 .vercel
+
+# =============================================================================
+# Q&A corpus — exported PQR markdown + nella workspace state.
+# Contains PII-adjacent text (even after redaction) and is not distributable.
+# Only the .gitkeep placeholder is tracked; the manifest lives at
+# fixtures/qa-corpus/manifest.json.
+# =============================================================================
+fixtures/pqr-corpus/*
+!fixtures/pqr-corpus/.gitkeep
+fixtures/pqr-corpus/.nella/
+

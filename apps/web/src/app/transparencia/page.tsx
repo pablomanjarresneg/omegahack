@@ -1,6 +1,6 @@
-import Link from "next/link";
 import nextDynamic from "next/dynamic";
 import type { Metadata } from "next";
+import type { ComponentType } from "react";
 import { loadTransparenciaSnapshot } from "@/lib/transparencia";
 import { listComunas, listSecretarias } from "@/lib/queries";
 import { COMUNA_CENTROIDS } from "@/lib/comuna-centroids";
@@ -10,7 +10,10 @@ import type { ComunaMapPoint } from "@/components/comuna-map";
 const ComunaMap = nextDynamic(
   () => import("@/components/comuna-map").then((m) => m.ComunaMap),
   { ssr: false, loading: () => <MapSkeleton /> },
-);
+) as ComponentType<{
+  points: ComunaMapPoint[];
+  ariaLabel: string;
+}>;
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -272,12 +275,12 @@ export default async function TransparenciaPage() {
                           : row.avgResponseHours.toFixed(1)}
                       </td>
                       <td className="px-2 py-1.5">
-                        <Link
+                        <a
                           href={`/transparencia/comuna/${com.id}`}
                           className="text-emerald-700 underline underline-offset-2 hover:text-emerald-800 focus:outline focus:outline-2 focus:outline-emerald-700"
                         >
                           Ver
-                        </Link>
+                        </a>
                       </td>
                     </tr>
                   );

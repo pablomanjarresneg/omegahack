@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import {
   CircleMarker,
   MapContainer,
@@ -8,6 +8,15 @@ import {
   Tooltip as LeafletTooltip,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+
+type LeafletComponent = (
+  props: Record<string, unknown> & { children?: ReactNode },
+) => JSX.Element;
+
+const LeafletMapContainer = MapContainer as unknown as LeafletComponent;
+const LeafletTileLayer = TileLayer as unknown as LeafletComponent;
+const LeafletCircleMarker = CircleMarker as unknown as LeafletComponent;
+const Tooltip = LeafletTooltip as unknown as LeafletComponent;
 
 export type ComunaMapPoint = {
   id: string;
@@ -47,13 +56,13 @@ export function ComunaMap({
       aria-label={ariaLabel}
       className="relative h-[420px] w-full overflow-hidden rounded border border-stone-200"
     >
-      <MapContainer
+      <LeafletMapContainer
         center={center}
         zoom={11}
         scrollWheelZoom={false}
         className="h-full w-full"
       >
-        <TileLayer
+        <LeafletTileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         />
@@ -63,7 +72,7 @@ export function ComunaMap({
             ? "rgb(120 113 108)"
             : tone(p.pqrCount / maxCount);
           return (
-            <CircleMarker
+            <LeafletCircleMarker
               key={p.id}
               center={[p.lat, p.lng]}
               radius={radius}
@@ -74,7 +83,7 @@ export function ComunaMap({
                 weight: 1.5,
               }}
             >
-              <LeafletTooltip direction="top" opacity={1}>
+              <Tooltip direction="top" opacity={1}>
                 <div className="text-xs">
                   <div className="font-semibold">{p.label}</div>
                   <div>
@@ -83,11 +92,11 @@ export function ComunaMap({
                       : `${p.pqrCount.toLocaleString("es-CO")} PQR`}
                   </div>
                 </div>
-              </LeafletTooltip>
-            </CircleMarker>
+              </Tooltip>
+            </LeafletCircleMarker>
           );
         })}
-      </MapContainer>
+      </LeafletMapContainer>
     </div>
   );
 }

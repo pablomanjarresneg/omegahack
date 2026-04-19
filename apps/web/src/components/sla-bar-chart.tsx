@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import {
   Bar,
   BarChart,
@@ -9,6 +10,19 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+
+type ChartComponent = (
+  props: Record<string, unknown> & { children?: ReactNode },
+) => JSX.Element;
+
+const ChartResponsiveContainer =
+  ResponsiveContainer as unknown as ChartComponent;
+const ChartBarChart = BarChart as unknown as ChartComponent;
+const ChartCartesianGrid = CartesianGrid as unknown as ChartComponent;
+const ChartXAxis = XAxis as unknown as ChartComponent;
+const ChartYAxis = YAxis as unknown as ChartComponent;
+const ChartTooltip = Tooltip as unknown as ChartComponent;
+const ChartBar = Bar as unknown as ChartComponent;
 
 export type SlaBarDatum = {
   key: string;
@@ -38,8 +52,8 @@ export function SlaBarChart({
       <p id="sla-chart-desc" className="sr-only">
         {descText}
       </p>
-      <ResponsiveContainer width="100%" height={320}>
-        <BarChart
+      <ChartResponsiveContainer width="100%" height={320}>
+        <ChartBarChart
           data={data}
           margin={{ top: 16, right: 24, left: 0, bottom: 32 }}
           role="img"
@@ -47,8 +61,8 @@ export function SlaBarChart({
         >
           <title>{titleText}</title>
           <desc>{descText}</desc>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgb(229 229 229)" />
-          <XAxis
+          <ChartCartesianGrid strokeDasharray="3 3" stroke="rgb(229 229 229)" />
+          <ChartXAxis
             dataKey="label"
             tick={{ fontSize: 11, fill: "rgb(64 64 64)" }}
             interval={0}
@@ -56,13 +70,13 @@ export function SlaBarChart({
             textAnchor="end"
             height={64}
           />
-          <YAxis
+          <ChartYAxis
             domain={[0, 100]}
             tick={{ fontSize: 11, fill: "rgb(64 64 64)" }}
             unit="%"
           />
-          <Tooltip
-            formatter={(value) => {
+          <ChartTooltip
+            formatter={(value: unknown) => {
               const n = typeof value === "number" ? value : Number(value);
               return [
                 Number.isFinite(n) ? `${n.toFixed(1)}%` : String(value ?? "—"),
@@ -75,14 +89,14 @@ export function SlaBarChart({
               borderRadius: 6,
             }}
           />
-          <Bar
+          <ChartBar
             dataKey="compliance"
             fill="rgb(4 120 87)"
             radius={[4, 4, 0, 0]}
             maxBarSize={48}
           />
-        </BarChart>
-      </ResponsiveContainer>
+        </ChartBarChart>
+      </ChartResponsiveContainer>
     </figure>
   );
 }

@@ -35,10 +35,7 @@ lerna-debug.log*
 .yarn/install-state.gz
 .pnp.*
 package-lock.json.backup
-.agents/
-.claude
-CLAUDE.md
-skills-lock.json
+
 # =============================================================================
 # Build outputs
 # =============================================================================
@@ -80,16 +77,11 @@ playwright/.cache/
 vitest.config.ts.timestamp-*
 
 .env
-.env.local
-.env.*.local
+.env.example
 
 logs/
 
-supabase/*
-!supabase/config.toml
-!supabase/seed.sql
-supabase/.branches/
-supabase/.temp/
+supabase/
 .n8n/
 
 
@@ -101,15 +93,3 @@ supabase/.temp/
 .stylelintcache
 .prettiercache
 .dccache
-.vercel
-
-# =============================================================================
-# Q&A corpus — exported PQR markdown + nella workspace state.
-# Contains PII-adjacent text (even after redaction) and is not distributable.
-# Only the .gitkeep placeholder is tracked; the manifest lives at
-# fixtures/qa-corpus/manifest.json.
-# =============================================================================
-fixtures/pqr-corpus/*
-!fixtures/pqr-corpus/.gitkeep
-fixtures/pqr-corpus/.nella/
-

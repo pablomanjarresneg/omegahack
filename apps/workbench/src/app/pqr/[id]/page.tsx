@@ -8,7 +8,13 @@ import { ChannelIcon, channelLabel } from "@/components/channel-icon";
 import { DeadlineCell } from "@/components/deadline-cell";
 import { Timeline, type TimelineEntry } from "@/components/timeline";
 import { ActionCard } from "@/components/action-card";
-import { getPqrDetail, getPqrTimeline } from "@/lib/queries";
+import { ActionPanel } from "@/components/action-panel";
+import {
+  getLatestResponse,
+  getPqrDetail,
+  getPqrTimeline,
+  listSecretarias,
+} from "@/lib/queries";
 import { pqrProgress } from "@/lib/deadline";
 import { nextActionFor } from "@/lib/next-action";
 import { formatDateTimeCO } from "@/lib/format";
@@ -36,7 +42,11 @@ export default async function PqrDetailPage({
     tipo: pqr.tipo,
   });
 
-  const { events, audits } = await getPqrTimeline(pqr.id);
+  const [{ events, audits }, latestResponse, secretarias] = await Promise.all([
+    getPqrTimeline(pqr.id),
+    getLatestResponse(pqr.id),
+    listSecretarias(),
+  ]);
 
   const intakeEntry: TimelineEntry = {
     id: "intake",
@@ -104,7 +114,50 @@ export default async function PqrDetailPage({
 
       <main className="grid flex-1 gap-6 p-6 lg:grid-cols-[1fr_320px]">
         <div className="flex flex-col gap-6">
-          <ActionCard action={nextActionFor(pqr.status)} />
+          <section className="rounded border border-border bg-surface p-5">
+            <ActionCard action={nextActionFor(pqr.status)} />
+            <div className="mt-4">
+              <ActionPanel
+                pqrId={pqr.id}
+                status={pqr.status}
+                currentSecretariaId={pqr.secretaria_id}
+                secretarias={secretarias.map((s) => ({
+                  id: s.id,
+                  nombre: s.nombre,
+                }))}
+                draftBody={latestResponse?.body ?? null}
+              />
+            </div>
+          </section>
+
+          {latestResponse && pqr.status !== "in_draft" ? (
+            <Section
+              title={
+                latestResponse.kind === "final"
+                  ? "Respuesta aprobada"
+                  : "Borrador actual"
+              }
+            >
+              <pre className="whitespace-pre-wrap font-mono text-xs leading-relaxed text-fg">
+                {latestResponse.body}
+              </pre>
+              {Array.isArray(latestResponse.citations) &&
+              latestResponse.citations.length > 0 ? (
+                <p className="mt-3 text-[11px] text-fg-subtle">
+                  Citaciones: {latestResponse.citations.length}
+                </p>
+              ) : null}
+              {latestResponse.sent_at ? (
+                <p className="mt-1 text-[11px] text-fg-subtle">
+                  Enviada {formatDateTimeCO(latestResponse.sent_at)}
+                </p>
+              ) : latestResponse.approved_at ? (
+                <p className="mt-1 text-[11px] text-fg-subtle">
+                  Aprobada {formatDateTimeCO(latestResponse.approved_at)}
+                </p>
+              ) : null}
+            </Section>
+          ) : null}
 
           <header className="rounded border border-border bg-surface p-5">
             <div className="flex flex-wrap items-center gap-2">

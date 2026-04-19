@@ -7,6 +7,7 @@ Funciones Deno desplegadas como Supabase Edge Functions. Cada subcarpeta es una 
 | Función | Trigger | Documentación |
 | --- | --- | --- |
 | [`intake-agent`](intake-agent/README.md) | POST manual o webhook | Orquesta `@omega/intake-agent` sobre Deno. |
+| [`pqr-nella-indexer`](pqr-nella-indexer/README.md) | POST desde intake + cron n8n | Indexa PQRs en el bucket compartido `omega-pqr-corpus` (idempotente). |
 | [`qa-ingest`](qa-ingest/README.md) | POST manual | Ingesta markdown del bucket `qa-corpus` al schema `qa_bank`. |
 | [`reembed-pqr`](reembed-pqr/README.md) | Cron cada minuto | Drena `pqr_embedding_jobs` y persiste embeddings 1024-dim. |
 

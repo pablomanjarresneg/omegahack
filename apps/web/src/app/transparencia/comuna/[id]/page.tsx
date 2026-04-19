@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getMonthlyTrend, isSuppressed } from "@omega/db/queries/transparency";
@@ -53,9 +52,9 @@ export default async function ComunaDetailPage({ params }: Props) {
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-10 text-stone-900">
       <nav aria-label="Breadcrumb" className="text-xs text-stone-600">
-        <Link href="/transparencia" className="underline hover:text-emerald-700">
+        <a href="/transparencia" className="underline hover:text-emerald-700">
           Transparencia
-        </Link>
+        </a>
         <span aria-hidden> / </span>
         <span>{label}</span>
       </nav>

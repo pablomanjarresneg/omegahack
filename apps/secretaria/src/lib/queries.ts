@@ -18,7 +18,6 @@ const OPEN_STATUSES: PqrStatus[] = [
   "in_review",
   "approved",
 ];
-const CLOSED_STATUSES: PqrStatus[] = ["sent", "closed"];
 
 export async function listSecretarias(): Promise<Secretaria[]> {
   const supabase = getServerSupabase();
@@ -194,7 +193,6 @@ export async function getDirectorBoard(
   const todayStartMs = todayStart.getTime();
 
   const open = rows.filter((r) => OPEN_STATUSES.includes(r.status));
-  const closed = rows.filter((r) => CLOSED_STATUSES.includes(r.status));
   const overdue = open.filter(
     (r) => r.legal_deadline && new Date(r.legal_deadline).getTime() < now,
   ).length;

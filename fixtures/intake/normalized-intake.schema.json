@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://omegahack/fixtures/intake/normalized-intake.schema.json",
+  "title": "NormalizedIntake",
+  "description": "Canonical payload emitted by every ingestion adapter (Phase 6) and consumed by the intake agent (Phase 4.5). Adapters normalize channel-specific inputs (web form, email, Mercurio CSV, WhatsApp, phone) into this single shape so the intake agent has one input contract.",
+  "type": "object",
+  "required": [
+    "source_channel",
+    "is_anonymous",
+    "subject",
+    "description",
+    "raw_text",
+    "attachments",
+    "consent_data",
+    "created_at"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "source_channel": {
+      "type": "string",
+      "enum": ["web", "email", "mercurio", "form", "phone", "whatsapp"],
+      "description": "Origin channel. Mirrors pqr.channel."
+    },
+    "citizen_name": {
+      "type": ["string", "null"],
+      "description": "Full name. Null when is_anonymous=true or channel did not capture it."
+    },
+    "is_anonymous": {
+      "type": "boolean",
+      "description": "True when the citizen did not identify themselves. Triggers the anonimato gate in validity."
+    },
+    "document_id": {
+      "type": ["string", "null"],
+      "description": "Cédula or other ID. Null when anonymous or not provided."
+    },
+    "email": {
+      "type": ["string", "null"],
+      "format": "email"
+    },
+    "phone": {
+      "type": ["string", "null"]
+    },
+    "subject": {
+      "type": "string",
+      "description": "Short subject line. May be channel-generated (email Subject:) or citizen-provided (web form)."
+    },
+    "description": {
+      "type": "string",
+      "description": "Cleaned/normalized body text. May equal raw_text on channels where no normalization is needed."
+    },
+    "raw_text": {
+      "type": "string",
+      "description": "Byte-for-byte original body as received. Never mutated. Feeds the format-preserve contract."
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["filename", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "filename": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "mime_type": { "type": "string" },
+          "size_bytes": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "location_text": {
+      "type": ["string", "null"],
+      "description": "Free-form location as stated by the citizen (pre-geocoding)."
+    },
+    "consent_data": {
+      "type": "boolean",
+      "description": "Habeas Data (Ley 1581/2012) consent flag. Adapters MUST capture this explicitly."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of when the adapter received the PQR. Storage normalizes to UTC; deadline math normalizes to America/Bogota."
+    }
+  }
+}

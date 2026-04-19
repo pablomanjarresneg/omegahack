@@ -14,7 +14,7 @@ const baseClassification = {
   urgencia: {
     level: 'media',
     tutela_risk_score: 0.2,
-    rationale: 'Requiere respuesta dentro del término especial.',
+    rationale: 'Requiere respuesta dentro del termino especial.',
   },
   entities: [],
   estructura_minima: {
@@ -42,5 +42,14 @@ describe('parseClassification', () => {
   test('accepts oposicion as a PQR type', () => {
     const parsed = parseClassification(baseClassification);
     expect(parsed.tipo).toBe('oposicion');
+  });
+
+  test('rejects out-of-range confidence', () => {
+    expect(() =>
+      parseClassification({
+        ...baseClassification,
+        confidence: 1.2,
+      }),
+    ).toThrow(/confidence/);
   });
 });

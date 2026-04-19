@@ -10,8 +10,10 @@ import { Timeline, type TimelineEntry } from "@/components/timeline";
 import { ActionCard } from "@/components/action-card";
 import { ActionPanel } from "@/components/action-panel";
 import { SimilarCasesPanel } from "@/components/similar-cases-panel";
+import { SimilarPqrsPanel } from "@/components/similar-pqrs-panel";
 import { ApplicableNormativaPanel } from "@/components/applicable-normativa-panel";
 import { searchQa } from "@/lib/qa-retrieval";
+import { findSimilarPqrs } from "@/lib/pqr-similarity";
 import {
   getLatestResponse,
   getPqrDetail,
@@ -53,6 +55,7 @@ export default async function PqrDetailPage({
     secretarias,
     similarCases,
     normativa,
+    similarPqrs,
   ] = await Promise.all([
     getPqrTimeline(pqr.id),
     getLatestResponse(pqr.id),
@@ -63,6 +66,10 @@ export default async function PqrDetailPage({
     qaQuery
       ? searchQa(qaQuery, { topK: 3, corpusFilter: ["decreto", "ley"] })
       : Promise.resolve([]),
+    findSimilarPqrs(
+      { id: pqr.id, lead: pqr.lead, peticion: pqr.peticion, hechos: pqr.hechos },
+      5,
+    ),
   ]);
 
   const intakeEntry: TimelineEntry = {
@@ -299,6 +306,7 @@ export default async function PqrDetailPage({
             ]}
           />
 
+          <SimilarPqrsPanel result={similarPqrs} />
           <SimilarCasesPanel pqrId={pqr.id} results={similarCases} />
           <ApplicableNormativaPanel results={normativa} />
         </aside>

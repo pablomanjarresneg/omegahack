@@ -49,7 +49,7 @@ export function Hero() {
               href="https://omega-workbench.vercel.app/bandeja"
               className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-medium text-primary-foreground shadow-glow transition-transform hover:scale-[1.02]"
             >
-              Abrir dashboard
+              Dashboard de alcaldía
               <svg
                 width="14"
                 height="14"
@@ -65,10 +65,12 @@ export function Hero() {
               </svg>
             </a>
             <a
-              href="#transparencia"
+              href="https://fact-miner.lovable.app/ciudadania/banco-preguntas"
+              target="_blank"
+              rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-xl border border-hairline bg-surface/60 px-5 py-3 text-sm font-medium text-foreground transition-colors hover:bg-surface-elevated"
             >
-              Ver transparencia pública
+              Banco de preguntas
             </a>
           </div>
 

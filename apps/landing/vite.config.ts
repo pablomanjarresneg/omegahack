@@ -8,6 +8,9 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
   cloudflare: false,
+  vite: {
+    envDir: "../../",
+  },
   tanstackStart: {
     spa: { enabled: true },
   },

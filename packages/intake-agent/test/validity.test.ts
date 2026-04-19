@@ -12,7 +12,7 @@ describe('deriveInvalidReasons', () => {
     classification.respeto.is_offensive = true;
     classification.anonimato.is_anonymous = true;
     classification.anonimato.has_contact_data = false;
-    classification.anonimato.public_response_route = false;
+    classification.anonimato.public_response_route = true;
     classification.dependencia.fuera_de_competencia_municipal = true;
 
     expect(deriveInvalidReasons(classification).map((reason) => reason.code)).toEqual([

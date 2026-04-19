@@ -77,6 +77,12 @@ function validateNullableString(
   }
 }
 
+function hasContactMethod(record: Record<string, unknown>): boolean {
+  const email = typeof record.email === 'string' ? record.email.trim() : '';
+  const phone = typeof record.phone === 'string' ? record.phone.trim() : '';
+  return email.length > 0 || phone.length > 0;
+}
+
 function validateAttachments(value: unknown, issues: ValidationIssue[]): void {
   if (!Array.isArray(value)) {
     addIssue(issues, 'attachments', 'must be an array');
@@ -148,6 +154,9 @@ export function getNormalizedIntakeIssues(value: unknown): ValidationIssue[] {
 
   if (typeof value.email === 'string' && !EMAIL_RE.test(value.email)) {
     addIssue(issues, 'email', 'must be a valid email address');
+  }
+  if (value.is_anonymous === true && !hasContactMethod(value)) {
+    addIssue(issues, 'email', 'anonymous submissions require an email or phone contact method');
   }
   if (typeof value.created_at === 'string' && Number.isNaN(Date.parse(value.created_at))) {
     addIssue(issues, 'created_at', 'must be a valid date-time string');

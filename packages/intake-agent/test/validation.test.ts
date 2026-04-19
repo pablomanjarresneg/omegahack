@@ -36,4 +36,32 @@ describe('validateNormalizedIntake', () => {
       ]),
     );
   });
+
+  it('rejects anonymous intake without an email or phone contact method', () => {
+    const invalid = makeIntake({
+      citizen_name: null,
+      is_anonymous: true,
+      document_id: null,
+      email: null,
+      phone: null,
+    });
+
+    expect(() => validateNormalizedIntake(invalid)).toThrow(IntakeValidationError);
+    expect(getNormalizedIntakeIssues(invalid)).toContainEqual({
+      path: 'email',
+      message: 'anonymous submissions require an email or phone contact method',
+    });
+  });
+
+  it('accepts anonymous intake with a phone contact method', () => {
+    const intake = makeIntake({
+      citizen_name: null,
+      is_anonymous: true,
+      document_id: null,
+      email: null,
+      phone: '3001234567',
+    });
+
+    expect(validateNormalizedIntake(intake)).toBe(intake);
+  });
 });

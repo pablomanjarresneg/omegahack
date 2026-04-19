@@ -4,6 +4,32 @@
   "title": "NormalizedIntake",
   "description": "Canonical payload emitted by every ingestion adapter (Phase 6) and consumed by the intake agent (Phase 4.5). Adapters normalize channel-specific inputs (web form, email, Mercurio CSV, WhatsApp, phone) into this single shape so the intake agent has one input contract.",
   "type": "object",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "is_anonymous": { "const": true }
+        },
+        "required": ["is_anonymous"]
+      },
+      "then": {
+        "anyOf": [
+          {
+            "required": ["email"],
+            "properties": {
+              "email": { "type": "string", "format": "email", "minLength": 1 }
+            }
+          },
+          {
+            "required": ["phone"],
+            "properties": {
+              "phone": { "type": "string", "minLength": 1 }
+            }
+          }
+        ]
+      }
+    }
+  ],
   "required": [
     "source_channel",
     "is_anonymous",
@@ -35,10 +61,12 @@
     },
     "email": {
       "type": ["string", "null"],
-      "format": "email"
+      "format": "email",
+      "description": "Email contact method. Required with phone absent when is_anonymous=true."
     },
     "phone": {
-      "type": ["string", "null"]
+      "type": ["string", "null"],
+      "description": "Phone contact method. Required with email absent when is_anonymous=true."
     },
     "subject": {
       "type": "string",

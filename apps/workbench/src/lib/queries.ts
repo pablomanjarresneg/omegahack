@@ -261,6 +261,23 @@ export async function getPqrDetail(id: string): Promise<PqrDetail | null> {
 
 export type PqrEvent = Database["public"]["Tables"]["pqr_events"]["Row"];
 export type PqrAudit = Database["public"]["Tables"]["pqr_audit"]["Row"];
+export type ResponseRow = Database["public"]["Tables"]["responses"]["Row"];
+
+export async function getLatestResponse(
+  pqrId: string,
+): Promise<ResponseRow | null> {
+  const supabase = getServerSupabase();
+  const { data, error } = await supabase
+    .from("responses")
+    .select("*")
+    .eq("tenant_id", env.demoTenantId)
+    .eq("pqr_id", pqrId)
+    .order("updated_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) throw error;
+  return (data as ResponseRow | null) ?? null;
+}
 
 export type ProblemGroupRow =
   Database["public"]["Tables"]["problem_groups"]["Row"];

@@ -37,6 +37,8 @@ lerna-debug.log*
 package-lock.json.backup
 .agents/
 .claude
+CLAUDE.md
+skills-lock.json
 # =============================================================================
 # Build outputs
 # =============================================================================

@@ -222,3 +222,6 @@ Workflow: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 - Evita hardcodear secretos; usa `.env` y secrets de Supabase/n8n.
 - Si cambias esquema de BD, actualiza tipos con `pnpm db:types`.
 - Si agregas una tabla sensible, valida cobertura de RLS y pruebas en `tests/rls`.
+
+## Uso de IAs
+Para el desarrollo de esta solución únicamente utilizamos herramientas gratuitas y APIs gratuitas disponibles para estudiantes. La inteligencia artificial fue empleada como apoyo para optimizar procesos, organizar información y fortalecer la propuesta, sin recurrir a servicios pagos ni a infraestructuras de alto costo. Esto permitió construir una alternativa funcional, accesible y viable dentro de un entorno académico.

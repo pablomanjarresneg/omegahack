@@ -33,7 +33,7 @@ export default async function MinePage() {
         title="Asignadas a mí"
         subtitle={`${session.user.nombre} · ${stats.total.toLocaleString("es-CO")} PQR en mi bandeja`}
       />
-      <main className="flex flex-1 flex-col gap-5 p-6">
+      <main className="flex min-w-0 flex-1 flex-col gap-5 overflow-x-hidden p-6">
         <section
           aria-label="Resumen personal"
           className="grid grid-cols-2 gap-3 md:grid-cols-4"
@@ -74,15 +74,15 @@ export default async function MinePage() {
             </p>
           </div>
         ) : (
-          <div className="overflow-hidden rounded border border-border bg-surface">
-            <table className="w-full border-collapse text-sm">
+          <div className="min-w-0 overflow-hidden rounded border border-border bg-surface">
+            <table className="w-full table-fixed border-collapse text-sm">
               <thead>
                 <tr className="border-b border-border bg-bg-subtle text-left text-[11px] uppercase tracking-wide text-fg-subtle">
                   <th className="w-[64px] px-3 py-2 font-medium">Prio</th>
                   <th className="px-3 py-2 font-medium">Asunto</th>
-                  <th className="w-[120px] px-3 py-2 font-medium">Radicado</th>
-                  <th className="w-[120px] px-3 py-2 font-medium">Estado</th>
-                  <th className="w-[180px] px-3 py-2 font-medium">Plazo</th>
+                  <th className="hidden w-[120px] px-3 py-2 font-medium sm:table-cell">Radicado</th>
+                  <th className="w-[112px] px-3 py-2 font-medium">Estado</th>
+                  <th className="w-[140px] px-3 py-2 font-medium sm:w-[180px]">Plazo</th>
                 </tr>
               </thead>
               <tbody>
@@ -106,11 +106,13 @@ export default async function MinePage() {
                       <td className="px-3 py-2">
                         <PriorityBadge level={pqr.priority_level} />
                       </td>
-                      <td className="px-3 py-2">
-                        <span className="line-clamp-2 text-sm text-fg">{subject}</span>
+                      <td className="min-w-0 px-3 py-2">
+                        <span className="line-clamp-2 break-words text-sm text-fg">{subject}</span>
                       </td>
-                      <td className="px-3 py-2 tnum text-[11px] text-fg-muted">
-                        {pqr.radicado ?? `#${pqr.id.slice(0, 8)}`}
+                      <td className="hidden px-3 py-2 tnum text-[11px] text-fg-muted sm:table-cell">
+                        <span className="block truncate">
+                          {pqr.radicado ?? `#${pqr.id.slice(0, 8)}`}
+                        </span>
                       </td>
                       <td className="px-3 py-2">
                         <StatusPill status={pqr.status} size="xs" />

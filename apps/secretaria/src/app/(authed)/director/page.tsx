@@ -100,7 +100,7 @@ export default async function DirectorPage() {
         title="Panel director"
         subtitle="Salud operativa de la secretaría · cumplimiento SLA y riesgos"
       />
-      <main className="flex flex-1 flex-col gap-6 p-6">
+      <main className="flex min-w-0 flex-1 flex-col gap-6 overflow-x-hidden p-6">
         {(board.p0Open > 0 || board.tutelaRiskCount > 0) ? (
           <div
             role="alert"

@@ -137,8 +137,8 @@ export default async function PqrDetailPage({
         </Link>
       </div>
 
-      <main className="grid flex-1 gap-6 p-6 lg:grid-cols-[1fr_320px]">
-        <div className="flex flex-col gap-6">
+      <main className="grid min-w-0 flex-1 gap-6 overflow-x-hidden p-6 lg:grid-cols-[1fr_320px]">
+        <div className="min-w-0 flex flex-col gap-6">
           <section className="rounded border border-border bg-surface p-5">
             <ActionCard action={nextActionFor(pqr.status)} />
             <div className="mt-4">
@@ -163,7 +163,7 @@ export default async function PqrDetailPage({
                   : "Borrador actual"
               }
             >
-              <pre className="whitespace-pre-wrap font-mono text-xs leading-relaxed text-fg">
+              <pre className="whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-fg">
                 {latestResponse.body}
               </pre>
               {Array.isArray(latestResponse.citations) &&
@@ -200,29 +200,29 @@ export default async function PqrDetailPage({
                 </span>
               ) : null}
             </div>
-            <h2 className="mt-3 text-lg font-semibold text-fg">{subject}</h2>
+            <h2 className="mt-3 break-words text-lg font-semibold text-fg">{subject}</h2>
             {pqr.display_text && pqr.display_text !== pqr.lead ? (
-              <p className="mt-2 whitespace-pre-wrap text-sm text-fg-muted">
+              <p className="mt-2 whitespace-pre-wrap break-words text-sm text-fg-muted">
                 {pqr.display_text}
               </p>
             ) : null}
           </header>
 
           <Section title="Hechos">
-            <pre className="whitespace-pre-wrap text-sm leading-relaxed text-fg">
+            <pre className="whitespace-pre-wrap break-words text-sm leading-relaxed text-fg">
               {pqr.hechos?.trim() || "—"}
             </pre>
           </Section>
 
           <Section title="Petición concreta">
-            <pre className="whitespace-pre-wrap text-sm leading-relaxed text-fg">
+            <pre className="whitespace-pre-wrap break-words text-sm leading-relaxed text-fg">
               {pqr.peticion?.trim() || "—"}
             </pre>
           </Section>
 
           {pqr.raw_text ? (
             <Section title="Texto original">
-              <pre className="max-h-80 overflow-auto whitespace-pre-wrap text-xs leading-relaxed text-fg-muted">
+              <pre className="max-h-80 overflow-auto whitespace-pre-wrap break-words text-xs leading-relaxed text-fg-muted">
                 {pqr.raw_text}
               </pre>
             </Section>
@@ -233,7 +233,7 @@ export default async function PqrDetailPage({
           </Section>
         </div>
 
-        <aside className="flex flex-col gap-4">
+        <aside className="min-w-0 flex flex-col gap-4">
           <div className="rounded border border-border bg-surface p-4">
             <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-fg-subtle">
               Plazo Ley 1755
@@ -343,7 +343,7 @@ function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded border border-border bg-surface p-5">
+    <section className="min-w-0 rounded border border-border bg-surface p-5">
       <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-fg-subtle">
         {title}
       </h3>
@@ -360,15 +360,15 @@ function MetaCard({
   rows: Array<[string, string]>;
 }) {
   return (
-    <div className="rounded border border-border bg-surface p-4">
+    <div className="min-w-0 rounded border border-border bg-surface p-4">
       <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-fg-subtle">
         {title}
       </h3>
-      <dl className="flex flex-col gap-1.5 text-xs">
+      <dl className="flex min-w-0 flex-col gap-1.5 text-xs">
         {rows.map(([k, v]) => (
-          <div key={k} className="flex items-baseline justify-between gap-3">
-            <dt className="text-fg-subtle">{k}</dt>
-            <dd className="truncate text-right text-fg">{v}</dd>
+          <div key={k} className="flex min-w-0 items-baseline justify-between gap-3">
+            <dt className="shrink-0 text-fg-subtle">{k}</dt>
+            <dd className="min-w-0 max-w-[65%] break-words text-right text-fg">{v}</dd>
           </div>
         ))}
       </dl>
@@ -467,7 +467,7 @@ function renderNotificationPayload(
         <p>Canal de contacto registrado.</p>
       )}
       {message ? (
-        <p className="whitespace-pre-wrap text-[11px] leading-relaxed text-fg-subtle">
+        <p className="whitespace-pre-wrap break-words text-[11px] leading-relaxed text-fg-subtle">
           {message}
         </p>
       ) : null}
@@ -483,7 +483,7 @@ function renderJsonPayload(payload: unknown): ReactNode {
     return null;
   }
   return (
-    <pre className="mt-1 max-h-40 overflow-auto rounded bg-bg-subtle p-2 font-mono text-[11px] leading-tight text-fg-muted">
+    <pre className="mt-1 max-h-40 overflow-auto whitespace-pre-wrap break-words rounded bg-bg-subtle p-2 font-mono text-[11px] leading-tight text-fg-muted">
       {JSON.stringify(payload, null, 2)}
     </pre>
   );

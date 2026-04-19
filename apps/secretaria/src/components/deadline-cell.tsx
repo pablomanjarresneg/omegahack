@@ -39,13 +39,18 @@ export function DeadlineCell({
       ? "Vencida"
       : `${remaining.toFixed(unit === "clock_hours" ? 1 : 0)} ${suffix}`;
   return (
-    <div className={clsx("flex flex-col gap-1", compact ? "min-w-[88px]" : "min-w-[120px]")}>
+    <div
+      className={clsx(
+        "flex min-w-0 flex-col gap-1",
+        compact ? "min-w-[88px]" : "min-w-[88px] sm:min-w-[120px]",
+      )}
+    >
       <div className="flex items-baseline justify-between gap-2">
         <span className={clsx("tnum text-[11px] font-medium", STATUS_TONE[status])}>
           {label}
         </span>
         {!compact ? (
-          <span className="text-[10px] text-fg-subtle tnum">
+          <span className="hidden text-[10px] text-fg-subtle tnum sm:inline">
             {formatDateCO(deadlineIso)}
           </span>
         ) : null}

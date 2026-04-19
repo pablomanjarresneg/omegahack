@@ -47,6 +47,14 @@ const EXTRA_CITATIONS: Record<PqrTipo, Citation[]> = {
         "Garantía de la atención a la ciudadanía durante estado de excepción sanitario.",
     },
   ],
+  oposicion: [
+    {
+      source: "Regla interna PQRSD",
+      article: "Categoría oposición",
+      relevance:
+        "Atención prioritaria de oposiciones con término máximo de respuesta de 5 días hábiles.",
+    },
+  ],
   sugerencia: [],
   denuncia: [
     {
@@ -62,6 +70,7 @@ const TIPO_LABEL: Record<PqrTipo, string> = {
   peticion: "petición",
   queja: "queja",
   reclamo: "reclamo",
+  oposicion: "oposición",
   sugerencia: "sugerencia",
   denuncia: "denuncia",
 };

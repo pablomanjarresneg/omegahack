@@ -9,6 +9,8 @@ export function plazoTypeForTipo(tipo: PqrTipo | null | undefined): PlazoType {
       return "queja";
     case "reclamo":
       return "reclamo";
+    case "oposicion":
+      return "oposicion";
     case "peticion":
     case "sugerencia":
     case "denuncia":

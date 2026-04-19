@@ -1,0 +1,88 @@
+{
+  "$schema": "./plan-desarrollo-mapping.schema.json",
+  "source": "Plan de Desarrollo Medellín 2024-2027 'Creemos en Medellín, Creemos en la Vida'",
+  "generated_at": "2026-04-19",
+  "description": "Mapping between Plan de Desarrollo pillars (transformaciones) and the Alcaldía secretarías that lead each one. `confidence: inferred` is set wherever the linkage is not explicitly stated in the Plan but inferred from secretaría functions. Primary responsible secretaría is listed first.",
+  "pillars": [
+    {
+      "id": "P1",
+      "nombre": "Creemos en la Vida",
+      "descripcion": "Salud, paz, convivencia y derechos humanos con enfoque en la protección de la vida.",
+      "secretarias": [
+        { "codigo": "SSAL", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SPDH", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SSEG", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SGOB", "rol": "apoyo", "confidence": "inferred" },
+        { "codigo": "DAGRD", "rol": "apoyo", "confidence": "inferred" }
+      ]
+    },
+    {
+      "id": "P2",
+      "nombre": "Creemos en la Educación",
+      "descripcion": "Calidad, cobertura y pertinencia del sistema educativo; articulación con primera infancia y juventud.",
+      "secretarias": [
+        { "codigo": "SEDU", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "UAEBC", "rol": "apoyo", "confidence": "explicit" },
+        { "codigo": "SJUV", "rol": "apoyo", "confidence": "inferred" },
+        { "codigo": "SCUL", "rol": "apoyo", "confidence": "inferred" }
+      ]
+    },
+    {
+      "id": "P3",
+      "nombre": "Creemos en la Economía",
+      "descripcion": "Desarrollo económico, empleo, ciencia, tecnología, innovación y turismo.",
+      "secretarias": [
+        { "codigo": "SDE", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SIND", "rol": "apoyo", "confidence": "explicit" },
+        { "codigo": "GCEN", "rol": "apoyo", "confidence": "inferred" }
+      ]
+    },
+    {
+      "id": "P4",
+      "nombre": "Creemos en el Hábitat",
+      "descripcion": "Ciudad sostenible, movilidad, medio ambiente, infraestructura y gestión del riesgo.",
+      "secretarias": [
+        { "codigo": "SMOV", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SMAM", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SINF", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "DAP", "rol": "apoyo", "confidence": "explicit" },
+        { "codigo": "DAGRD", "rol": "apoyo", "confidence": "explicit" }
+      ]
+    },
+    {
+      "id": "P5",
+      "nombre": "Creemos en la Inclusión",
+      "descripcion": "Familia, mujeres, juventud, territorios y corregimientos.",
+      "secretarias": [
+        { "codigo": "SINC", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SMUJ", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SJUV", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "GCOR", "rol": "apoyo", "confidence": "explicit" },
+        { "codigo": "SPAR", "rol": "apoyo", "confidence": "inferred" }
+      ]
+    },
+    {
+      "id": "P6",
+      "nombre": "Creemos en la Cultura y la Participación",
+      "descripcion": "Cultura ciudadana, participación y comunicación pública.",
+      "secretarias": [
+        { "codigo": "SCUL", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SPAR", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SCOM", "rol": "apoyo", "confidence": "inferred" }
+      ]
+    },
+    {
+      "id": "P7",
+      "nombre": "Creemos en la Gestión Pública",
+      "descripcion": "Gobernabilidad, hacienda, talento humano, servicios y evaluación.",
+      "secretarias": [
+        { "codigo": "SHAC", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SGHS", "rol": "lider", "confidence": "explicit" },
+        { "codigo": "SSUM", "rol": "lider", "confidence": "inferred" },
+        { "codigo": "SEVC", "rol": "lider", "confidence": "inferred" },
+        { "codigo": "SGOB", "rol": "apoyo", "confidence": "inferred" },
+        { "codigo": "DESP", "rol": "coordinador", "confidence": "explicit" }
+      ]
+    }
+  ]
+}

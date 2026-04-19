@@ -9,6 +9,9 @@ import { DeadlineCell } from "@/components/deadline-cell";
 import { Timeline, type TimelineEntry } from "@/components/timeline";
 import { ActionCard } from "@/components/action-card";
 import { ActionPanel } from "@/components/action-panel";
+import { SimilarCasesPanel } from "@/components/similar-cases-panel";
+import { ApplicableNormativaPanel } from "@/components/applicable-normativa-panel";
+import { searchQa } from "@/lib/qa-retrieval";
 import {
   getLatestResponse,
   getPqrDetail,
@@ -43,10 +46,23 @@ export default async function PqrDetailPage({
     tipo: pqr.tipo,
   });
 
-  const [{ events, audits }, latestResponse, secretarias] = await Promise.all([
+  const qaQuery = buildQaQuery(pqr);
+  const [
+    { events, audits },
+    latestResponse,
+    secretarias,
+    similarCases,
+    normativa,
+  ] = await Promise.all([
     getPqrTimeline(pqr.id),
     getLatestResponse(pqr.id),
     listSecretarias(),
+    qaQuery
+      ? searchQa(qaQuery, { topK: 5 })
+      : Promise.resolve([]),
+    qaQuery
+      ? searchQa(qaQuery, { topK: 3, corpusFilter: ["decreto", "ley"] })
+      : Promise.resolve([]),
   ]);
 
   const intakeEntry: TimelineEntry = {
@@ -282,10 +298,32 @@ export default async function PqrDetailPage({
               ["Teléfono", maskPhone(pqr.citizen?.telefono)],
             ]}
           />
+
+          <SimilarCasesPanel pqrId={pqr.id} results={similarCases} />
+          <ApplicableNormativaPanel results={normativa} />
         </aside>
       </main>
     </>
   );
+}
+
+/**
+ * Build the retrieval query from PQR fields. Prefers the structured
+ * `lead` summary, falls back to hechos/peticion. Returns null when we have
+ * nothing searchable, which causes the panels to skip the round-trip.
+ */
+function buildQaQuery(pqr: {
+  lead: string | null;
+  hechos: string | null;
+  peticion: string | null;
+}): string | null {
+  const parts = [pqr.lead, pqr.peticion, pqr.hechos]
+    .map((s) => (s ?? "").trim())
+    .filter((s) => s.length > 0);
+  if (parts.length === 0) return null;
+  // Cap the query at ~500 chars so the FTS path stays cheap. For semantic
+  // retrieval this is still well above the point of diminishing returns.
+  return parts.join(" ").slice(0, 500);
 }
 
 function Section({
@@ -347,13 +385,19 @@ function humanizeEventKind(kind: string): string {
     pqr_closed: "Cerrada",
     citizen_notification_sent: "Notificación enviada al ciudadano",
     citizen_notification_skipped: "Notificación no enviada",
+    citizen_notification_failed: "Notificación fallida",
   };
   return map[kind] ?? kind.replace(/_/g, " ");
 }
 
 function eventTone(kind: string): TimelineEntry["tone"] {
   if (kind === "citizen_notification_sent") return "ok";
-  if (kind === "citizen_notification_skipped") return "warn";
+  if (
+    kind === "citizen_notification_skipped" ||
+    kind === "citizen_notification_failed"
+  ) {
+    return "warn";
+  }
   if (kind === "pqr_bounced" || kind === "pqr_rejected") return "warn";
   return "default";
 }
@@ -361,7 +405,8 @@ function eventTone(kind: string): TimelineEntry["tone"] {
 function renderEventPayload(kind: string, payload: unknown): React.ReactNode {
   if (
     kind === "citizen_notification_sent" ||
-    kind === "citizen_notification_skipped"
+    kind === "citizen_notification_skipped" ||
+    kind === "citizen_notification_failed"
   ) {
     return renderNotificationPayload(kind, payload);
   }
@@ -376,9 +421,16 @@ function renderNotificationPayload(
   if (!p) return null;
 
   if (kind === "citizen_notification_skipped") {
+    const reason = typeof p.reason === "string" ? p.reason : "";
+    const label =
+      reason === "missing_resend_api_key"
+        ? "Falta configurar RESEND_API_KEY."
+        : reason === "no_email_for_resend"
+          ? "No hay email registrado para enviar por Resend."
+          : "La notificación fue omitida.";
     return (
       <p className="mt-1 text-xs text-fg-muted">
-        No hay email ni teléfono registrado para este ciudadano.
+        {label}
       </p>
     );
   }
@@ -396,6 +448,7 @@ function renderNotificationPayload(
         .filter(Boolean)
     : [];
   const message = typeof p.message === "string" ? p.message : null;
+  const error = typeof p.error === "string" ? p.error : null;
 
   return (
     <div className="mt-1 space-y-1">
@@ -408,6 +461,9 @@ function renderNotificationPayload(
         <p className="whitespace-pre-wrap text-[11px] leading-relaxed text-fg-subtle">
           {message}
         </p>
+      ) : null}
+      {error ? (
+        <p className="text-[11px] text-at-risk">Error Resend: {error}</p>
       ) : null}
     </div>
   );

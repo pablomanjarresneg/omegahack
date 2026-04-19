@@ -1,0 +1,220 @@
+{
+  "schema": "omega.tags-taxonomy.v1",
+  "version": 1,
+  "locale": "es-CO",
+  "description": "Closed civic taxonomy for Medellin PQR triage. The keyword namespace is intentionally open and is not listed here.",
+  "namespaces": [
+    {
+      "namespace": "tema",
+      "label": "Tema",
+      "description": "Primary civic issue raised by the PQR.",
+      "tags": [
+        {
+          "id": "tema:huecos-malla-vial",
+          "label": "Huecos y malla vial",
+          "description": "Damage, potholes, pavement failures, or road maintenance requests.",
+          "keywords": ["hueco", "huecos", "bache", "baches", "malla vial", "pavimento", "via rota", "calzada", "accidente por hueco"]
+        },
+        {
+          "id": "tema:andenes-accesibilidad",
+          "label": "Andenes y accesibilidad",
+          "keywords": ["anden", "andenes", "rampa", "accesibilidad", "sendero peatonal", "paso peatonal", "peaton"]
+        },
+        {
+          "id": "tema:alumbrado-publico",
+          "label": "Alumbrado publico",
+          "keywords": ["alumbrado", "luminaria", "poste sin luz", "lampara", "luz publica", "oscuro", "iluminacion"]
+        },
+        {
+          "id": "tema:residuos-solidos",
+          "label": "Residuos solidos",
+          "keywords": ["basura", "basuras", "residuos", "escombros", "recoleccion", "punto critico", "botadero", "aseo"]
+        },
+        {
+          "id": "tema:ruido-contaminacion-auditiva",
+          "label": "Ruido y contaminacion auditiva",
+          "keywords": ["ruido", "bulla", "musica alta", "contaminacion auditiva", "discoteca", "establecimiento ruidoso"]
+        },
+        {
+          "id": "tema:arbolado-zonas-verdes",
+          "label": "Arbolado y zonas verdes",
+          "keywords": ["arbol", "arboles", "tala", "poda", "rama", "zonas verdes", "jardin", "riesgo de caida"]
+        },
+        {
+          "id": "tema:agua-alcantarillado",
+          "label": "Agua y alcantarillado",
+          "keywords": ["agua", "alcantarilla", "alcantarillado", "fuga", "inundacion", "sumidero", "aguas negras", "quebrada"]
+        },
+        {
+          "id": "tema:movilidad-transito",
+          "label": "Movilidad y transito",
+          "keywords": ["transito", "movilidad", "comparendo", "semaforo", "senalizacion", "pico y placa", "grua", "inmovilizacion"]
+        },
+        {
+          "id": "tema:espacio-publico",
+          "label": "Espacio publico",
+          "keywords": ["espacio publico", "ventas informales", "ocupacion", "anden ocupado", "invasion", "establecimiento comercial"]
+        },
+        {
+          "id": "tema:seguridad-convivencia",
+          "label": "Seguridad y convivencia",
+          "keywords": ["seguridad", "convivencia", "rina", "consumo de drogas", "hurto", "cuadrante", "camara", "vigilancia"]
+        },
+        {
+          "id": "tema:salud-publica",
+          "label": "Salud publica",
+          "keywords": ["salud publica", "vigilancia sanitaria", "eps", "ips", "vacunacion", "saneamiento", "zoonosis"]
+        },
+        {
+          "id": "tema:educacion",
+          "label": "Educacion",
+          "keywords": ["matricula", "institucion educativa", "colegio", "pae", "alimentacion escolar", "docente", "estudiante"]
+        },
+        {
+          "id": "tema:hacienda-impuestos",
+          "label": "Hacienda e impuestos",
+          "keywords": ["predial", "industria y comercio", "impuesto", "paz y salvo", "cobro coactivo", "factura predial"]
+        },
+        {
+          "id": "tema:ambiente-animal",
+          "label": "Bienestar animal",
+          "keywords": ["maltrato animal", "animal", "zoonosis", "perro", "gato", "abandono animal", "proteccion animal"]
+        }
+      ]
+    },
+    {
+      "namespace": "riesgo",
+      "label": "Riesgo",
+      "description": "Operational or legal risk signals for triage.",
+      "tags": [
+        {
+          "id": "riesgo:seguridad-vial",
+          "label": "Seguridad vial",
+          "keywords": ["accidente", "accidentes", "atropello", "choque", "caida", "riesgo vial", "peligro para motos"]
+        },
+        {
+          "id": "riesgo:salud-ambiente",
+          "label": "Riesgo sanitario o ambiental",
+          "keywords": ["mal olor", "plaga", "vectores", "contaminacion", "aguas negras", "insalubre", "riesgo sanitario"]
+        },
+        {
+          "id": "riesgo:poblacion-vulnerable",
+          "label": "Poblacion vulnerable",
+          "keywords": ["adulto mayor", "discapacidad", "nino", "nina", "embarazada", "victima", "vulnerable"]
+        },
+        {
+          "id": "riesgo:tutela-derecho-fundamental",
+          "label": "Tutela o derecho fundamental",
+          "keywords": ["tutela", "derecho fundamental", "desacato", "vida digna", "debido proceso", "salud"]
+        }
+      ]
+    },
+    {
+      "namespace": "entidad",
+      "label": "Entidad",
+      "description": "Likely Medellin dependency or routing owner.",
+      "tags": [
+        {
+          "id": "entidad:infraestructura-fisica",
+          "label": "Secretaria de Infraestructura Fisica",
+          "keywords": ["infraestructura", "malla vial", "bacheo", "puente", "anden", "obra publica"]
+        },
+        {
+          "id": "entidad:movilidad",
+          "label": "Secretaria de Movilidad",
+          "keywords": ["movilidad", "transito", "comparendo", "semaforo", "senalizacion", "grua"]
+        },
+        {
+          "id": "entidad:medio-ambiente",
+          "label": "Secretaria de Medio Ambiente",
+          "keywords": ["medio ambiente", "arbolado", "tala", "ruido", "residuos", "contaminacion"]
+        },
+        {
+          "id": "entidad:gobierno-gabinete",
+          "label": "Secretaria de Gobierno y Gestion del Gabinete",
+          "keywords": ["espacio publico", "inspeccion de policia", "establecimiento comercial", "convivencia"]
+        },
+        {
+          "id": "entidad:seguridad-convivencia",
+          "label": "Secretaria de Seguridad y Convivencia",
+          "keywords": ["seguridad", "camara", "cuadrante", "delito", "victima", "convivencia"]
+        },
+        {
+          "id": "entidad:salud",
+          "label": "Secretaria de Salud",
+          "keywords": ["salud", "eps", "ips", "vigilancia sanitaria", "vacunacion", "zoonosis"]
+        },
+        {
+          "id": "entidad:educacion",
+          "label": "Secretaria de Educacion",
+          "keywords": ["educacion", "colegio", "institucion educativa", "matricula", "pae"]
+        },
+        {
+          "id": "entidad:hacienda",
+          "label": "Secretaria de Hacienda",
+          "keywords": ["hacienda", "predial", "industria y comercio", "impuesto", "cobro coactivo"]
+        }
+      ]
+    },
+    {
+      "namespace": "territorio",
+      "label": "Territorio",
+      "description": "Medellin comunas and corregimientos for spatial filtering.",
+      "tags": [
+        { "id": "territorio:comuna-1-popular", "label": "Comuna 1 Popular", "keywords": ["comuna 1", "popular", "santo domingo", "granizal"] },
+        { "id": "territorio:comuna-2-santa-cruz", "label": "Comuna 2 Santa Cruz", "keywords": ["comuna 2", "santa cruz", "villa del socorro", "la frontera"] },
+        { "id": "territorio:comuna-3-manrique", "label": "Comuna 3 Manrique", "keywords": ["comuna 3", "manrique", "campo valdes", "la cruz"] },
+        { "id": "territorio:comuna-4-aranjuez", "label": "Comuna 4 Aranjuez", "keywords": ["comuna 4", "aranjuez", "moravia", "san pedro"] },
+        { "id": "territorio:comuna-5-castilla", "label": "Comuna 5 Castilla", "keywords": ["comuna 5", "castilla", "toscana", "tricentenario"] },
+        { "id": "territorio:comuna-6-doce-de-octubre", "label": "Comuna 6 Doce de Octubre", "keywords": ["comuna 6", "doce de octubre", "pedregal", "picacho"] },
+        { "id": "territorio:comuna-7-robledo", "label": "Comuna 7 Robledo", "keywords": ["comuna 7", "robledo", "pajarito", "aures"] },
+        { "id": "territorio:comuna-8-villa-hermosa", "label": "Comuna 8 Villa Hermosa", "keywords": ["comuna 8", "villa hermosa", "enciso", "villatina"] },
+        { "id": "territorio:comuna-9-buenos-aires", "label": "Comuna 9 Buenos Aires", "keywords": ["comuna 9", "buenos aires", "miraflores", "loreto"] },
+        { "id": "territorio:comuna-10-la-candelaria", "label": "Comuna 10 La Candelaria", "keywords": ["comuna 10", "la candelaria", "prado", "guayaquil", "centro"] },
+        { "id": "territorio:comuna-11-laureles-estadio", "label": "Comuna 11 Laureles Estadio", "keywords": ["comuna 11", "laureles", "estadio", "suramericana", "bolivariana"] },
+        { "id": "territorio:comuna-12-la-america", "label": "Comuna 12 La America", "keywords": ["comuna 12", "la america", "calasanz", "floresta"] },
+        { "id": "territorio:comuna-13-san-javier", "label": "Comuna 13 San Javier", "keywords": ["comuna 13", "san javier", "veinte de julio", "blanquizal"] },
+        { "id": "territorio:comuna-14-el-poblado", "label": "Comuna 14 El Poblado", "keywords": ["comuna 14", "el poblado", "manila", "astorga"] },
+        { "id": "territorio:comuna-15-guayabal", "label": "Comuna 15 Guayabal", "keywords": ["comuna 15", "guayabal", "cristo rey", "trinidad"] },
+        { "id": "territorio:comuna-16-belen", "label": "Comuna 16 Belen", "keywords": ["comuna 16", "belen", "fatima", "la mota"] },
+        { "id": "territorio:corregimiento-50-palmitas", "label": "Corregimiento San Sebastian de Palmitas", "keywords": ["palmitas", "san sebastian de palmitas", "corregimiento 50"] },
+        { "id": "territorio:corregimiento-60-san-cristobal", "label": "Corregimiento San Cristobal", "keywords": ["san cristobal", "corregimiento 60", "boqueron"] },
+        { "id": "territorio:corregimiento-70-altavista", "label": "Corregimiento Altavista", "keywords": ["altavista", "corregimiento 70", "aguas frias"] },
+        { "id": "territorio:corregimiento-80-san-antonio-de-prado", "label": "Corregimiento San Antonio de Prado", "keywords": ["san antonio de prado", "corregimiento 80", "potrerito"] },
+        { "id": "territorio:corregimiento-90-santa-elena", "label": "Corregimiento Santa Elena", "keywords": ["santa elena", "corregimiento 90", "matasano", "las palmas"] }
+      ]
+    },
+    {
+      "namespace": "pqr",
+      "label": "Tipo PQR",
+      "description": "Petition intent and response posture.",
+      "tags": [
+        {
+          "id": "pqr:peticion-interes-particular",
+          "label": "Peticion de interes particular",
+          "keywords": ["solicito", "pido", "requiero", "peticion", "interes particular"]
+        },
+        {
+          "id": "pqr:queja-servicio",
+          "label": "Queja por servicio",
+          "keywords": ["queja", "mal servicio", "no respondieron", "demora", "inconformidad"]
+        },
+        {
+          "id": "pqr:reclamo",
+          "label": "Reclamo",
+          "keywords": ["reclamo", "cobro indebido", "corregir", "revisar decision", "factura"]
+        },
+        {
+          "id": "pqr:solicitud-informacion",
+          "label": "Solicitud de informacion",
+          "keywords": ["informacion", "certificado", "consulta", "copia", "documento"]
+        },
+        {
+          "id": "pqr:denuncia",
+          "label": "Denuncia",
+          "keywords": ["denuncia", "reporto", "irregularidad", "presunto", "violacion de norma"]
+        }
+      ]
+    }
+  ]
+}

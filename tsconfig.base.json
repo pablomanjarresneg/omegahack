@@ -32,6 +32,8 @@
       "@omega/intake-agent/*": ["./packages/intake-agent/src/*"],
       "@omega/problem-groups": ["./packages/problem-groups/src/index.ts"],
       "@omega/problem-groups/*": ["./packages/problem-groups/src/*"],
+      "@omega/rag": ["./packages/rag/src/index.ts"],
+      "@omega/rag/*": ["./packages/rag/src/*"],
       "@omega/search": ["./packages/search/src/index.ts"],
       "@omega/search/*": ["./packages/search/src/*"],
       "@omega/tags": ["./packages/tags/src/index.ts"],

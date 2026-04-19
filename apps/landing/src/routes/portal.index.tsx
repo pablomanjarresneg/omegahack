@@ -5,7 +5,11 @@ export const Route = createFileRoute("/portal/")({
   head: () => ({
     meta: [
       { title: "Radicar PQRSD — Alcaldía de Medellín" },
-      { name: "description", content: "Radique su PQRSD en línea ante la Alcaldía de Medellín. Plazos legales, datos protegidos." },
+      {
+        name: "description",
+        content:
+          "Radique su PQRSD en línea ante la Alcaldía de Medellín. Plazos legales, datos protegidos.",
+      },
     ],
   }),
   component: PortalHome,
@@ -24,12 +28,11 @@ function PortalHome() {
               Portal ciudadano
             </div>
             <h1 className="mt-3 text-balance text-5xl font-semibold leading-[1.05] tracking-tight md:text-6xl">
-              Radique su PQRSD{" "}
-              <span className="font-serif-italic text-primary">en línea.</span>
+              Radique su PQRSD <span className="font-serif-italic text-primary">en línea.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              La Alcaldía de Medellín responde en los tiempos que fija la ley. Usted elige si
-              radica con nombre o de forma anónima.
+              La Alcaldía de Medellín responde en los tiempos que fija la ley. Usted elige si radica
+              con nombre o de forma anónima.
             </p>
           </div>
 
@@ -40,7 +43,16 @@ function PortalHome() {
             >
               <div>
                 <span className="grid h-12 w-12 place-items-center rounded-xl bg-primary/10 text-primary">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <rect x="3" y="5" width="18" height="14" rx="2" />
                     <path d="M3 7l9 6 9-6" />
                   </svg>
@@ -49,12 +61,22 @@ function PortalHome() {
                   Radicar una nueva PQRSD
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Petición, queja, reclamo, sugerencia, denuncia u oposición. Le toma menos de 5 minutos.
+                  Petición, queja, reclamo, sugerencia, denuncia u oposición. Le toma menos de 5
+                  minutos.
                 </p>
               </div>
               <div className="mt-8 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-medium text-primary-foreground shadow-glow group-hover:scale-[1.01] transition-transform self-start">
                 Comenzar
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </div>
@@ -63,7 +85,16 @@ function PortalHome() {
             <div className="flex flex-col justify-between overflow-hidden rounded-2xl border border-hairline bg-surface/60 p-8">
               <div>
                 <span className="grid h-12 w-12 place-items-center rounded-xl bg-primary/10 text-primary">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <circle cx="11" cy="11" r="7" />
                     <path d="M21 21l-4.3-4.3" />
                   </svg>
@@ -115,8 +146,7 @@ function PortalHome() {
                 </>
               ),
               title: "Plazos legales",
-              body:
-                "CAROL calcula el día exacto en que vence su PQRSD según la Ley 1755/2015 y los días hábiles colombianos.",
+              body: "CAROL calcula el día exacto en que vence su PQRSD según la Ley 1755/2015 y los días hábiles colombianos.",
             },
             {
               icon: (
@@ -126,8 +156,7 @@ function PortalHome() {
                 </>
               ),
               title: "Sus datos protegidos",
-              body:
-                "Cumplimos la Ley 1581/2012 (habeas data). Usted decide qué compartir y puede radicar de forma anónima.",
+              body: "Cumplimos la Ley 1581/2012 (habeas data). Usted decide qué compartir y puede radicar de forma anónima.",
             },
             {
               icon: (
@@ -139,13 +168,21 @@ function PortalHome() {
                 </>
               ),
               title: "Transparencia",
-              body:
-                "Vea cuántas PQRSD atiende cada secretaría en el portal de transparencia, con datos abiertos y agregados.",
+              body: "Vea cuántas PQRSD atiende cada secretaría en el portal de transparencia, con datos abiertos y agregados.",
             },
           ].map((c) => (
             <div key={c.title} className="rounded-2xl border border-hairline bg-surface/60 p-6">
               <span className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
                   {c.icon}
                 </svg>
               </span>

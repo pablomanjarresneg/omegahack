@@ -10,7 +10,9 @@ function SeguimientoIndex() {
   const [v, setV] = useState("");
   return (
     <section className="mx-auto max-w-2xl px-6 py-20">
-      <Link to="/portal" className="text-sm text-muted-foreground hover:text-primary">← Volver al portal</Link>
+      <Link to="/portal" className="text-sm text-muted-foreground hover:text-primary">
+        ← Volver al portal
+      </Link>
       <h1 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">Consultar mi PQRSD</h1>
       <p className="mt-2 text-muted-foreground">
         Ingrese el número de radicado que recibió al presentar su solicitud.
@@ -19,7 +21,8 @@ function SeguimientoIndex() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (v.trim()) window.location.href = `/portal/seguimiento/${encodeURIComponent(v.trim())}`;
+          if (v.trim())
+            window.location.href = `/portal/seguimiento/${encodeURIComponent(v.trim())}`;
         }}
         className="mt-8 flex flex-col gap-3 sm:flex-row"
       >
@@ -39,8 +42,8 @@ function SeguimientoIndex() {
       </form>
 
       <div className="mt-10 rounded-xl border border-hairline bg-surface/60 p-5 text-sm text-muted-foreground">
-        ¿Perdió su número de radicado? Llame al <span className="text-foreground">44 44 144</span> con
-        el correo o teléfono que registró al radicar.
+        ¿Perdió su número de radicado? Llame al <span className="text-foreground">44 44 144</span>{" "}
+        con el correo o teléfono que registró al radicar.
       </div>
     </section>
   );

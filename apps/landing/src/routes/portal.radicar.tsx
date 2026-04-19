@@ -81,13 +81,24 @@ function RadicarPage() {
     setState((s) => ({ ...s, [key]: value }));
 
   // Resultados terminales
-  if (result.kind === "accepted") return <Exito data={result.data} reset={() => { setResult({ kind: "idle" }); setState(INITIAL); setStep(1); }} />;
+  if (result.kind === "accepted")
+    return (
+      <Exito
+        data={result.data}
+        reset={() => {
+          setResult({ kind: "idle" });
+          setState(INITIAL);
+          setStep(1);
+        }}
+      />
+    );
   if (result.kind === "duplicate") return <Duplicada data={result.data} />;
-  if (result.kind === "bounced") return <Rebotada data={result.data} reset={() => setResult({ kind: "idle" })} />;
+  if (result.kind === "bounced")
+    return <Rebotada data={result.data} reset={() => setResult({ kind: "idle" })} />;
 
   // Validaciones por gate
-  const hasContact = !!(state.email.trim() || state.document_id.trim() || state.phone.trim());
-  const canStep1 = state.consent_data === true;
+  const hasContactMethod = !!(state.email.trim() || state.phone.trim());
+  const canStep1 = state.consent_data === true && (!state.is_anonymous || hasContactMethod);
   const canStep2 = true; // location_text es nullable
   const canStep3 =
     state.subject.trim().length > 0 &&
@@ -95,10 +106,7 @@ function RadicarPage() {
     state.description.length <= 10000;
 
   const canNext =
-    (step === 1 && canStep1) ||
-    (step === 2 && canStep2) ||
-    (step === 3 && canStep3) ||
-    step === 4;
+    (step === 1 && canStep1) || (step === 2 && canStep2) || (step === 3 && canStep3) || step === 4;
 
   const submit = async () => {
     setResult({ kind: "submitting" });
@@ -108,8 +116,8 @@ function RadicarPage() {
       citizen_name: state.is_anonymous ? null : state.citizen_name.trim() || null,
       is_anonymous: state.is_anonymous,
       document_id: state.is_anonymous ? null : state.document_id.trim() || null,
-      email: state.is_anonymous ? null : state.email.trim() || null,
-      phone: state.is_anonymous ? null : state.phone.trim() || null,
+      email: state.email.trim() || null,
+      phone: state.phone.trim() || null,
       subject: state.subject.trim(),
       description: state.description.trim(),
       raw_text: state.description.trim(),
@@ -218,7 +226,9 @@ function RadicarPage() {
                 }`}
                 aria-current={n === step ? "step" : undefined}
               />
-              <div className={`text-xs ${n === step ? "font-medium text-foreground" : "text-muted-foreground"}`}>
+              <div
+                className={`text-xs ${n === step ? "font-medium text-foreground" : "text-muted-foreground"}`}
+              >
                 {n}. {label}
               </div>
             </li>
@@ -251,7 +261,8 @@ function RadicarPage() {
           <Step1
             state={state}
             update={update}
-            hasContact={hasContact}
+            hasContactMethod={hasContactMethod}
+            contactError={schemaErrors.includes("anonimo_sin_datos_contacto")}
             consentError={!!errorOnField("consent_data")}
           />
         )}
@@ -269,7 +280,7 @@ function RadicarPage() {
         <div className="mt-8 flex items-center justify-between border-t border-hairline pt-6">
           <button
             type="button"
-            onClick={() => setStep((s) => (Math.max(1, s - 1) as Step))}
+            onClick={() => setStep((s) => Math.max(1, s - 1) as Step)}
             disabled={step === 1}
             className="rounded-xl px-4 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground disabled:opacity-40"
           >
@@ -279,12 +290,21 @@ function RadicarPage() {
           {step < 4 ? (
             <button
               type="button"
-              onClick={() => setStep((s) => (Math.min(4, s + 1) as Step))}
+              onClick={() => setStep((s) => Math.min(4, s + 1) as Step)}
               disabled={!canNext}
               className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-glow disabled:opacity-50 disabled:shadow-none"
             >
               Continuar
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </button>
@@ -308,12 +328,14 @@ function RadicarPage() {
 function Step1({
   state,
   update,
-  hasContact,
+  hasContactMethod,
+  contactError,
   consentError,
 }: {
   state: FormState;
   update: <K extends keyof FormState>(k: K, v: FormState[K]) => void;
-  hasContact: boolean;
+  hasContactMethod: boolean;
+  contactError: boolean;
   consentError: boolean;
 }) {
   return (
@@ -321,7 +343,8 @@ function Step1({
       <div>
         <legend className="text-lg font-medium tracking-tight">¿Con quién hablamos?</legend>
         <p className="mt-1 text-sm text-muted-foreground">
-          Puede radicar de forma identificada o anónima. La Alcaldía está obligada a responder en ambos casos.
+          Puede radicar de forma identificada o anónima. La Alcaldía está obligada a responder en
+          ambos casos.
         </p>
       </div>
 
@@ -335,8 +358,8 @@ function Step1({
         <div>
           <div className="text-sm font-medium text-foreground">Radicar de forma anónima</div>
           <div className="mt-1 text-xs text-muted-foreground">
-            Como anónimo no podremos contactarle para pedir información adicional. La PQR se procesa
-            igual, pero si el agente de validez detecta que falta un contacto verificable, la rebotará.
+            No pediremos nombre ni documento. Aun así, necesitamos un correo o teléfono para
+            notificarle el radicado y pedir información adicional si hace falta.
           </div>
         </div>
       </label>
@@ -349,47 +372,64 @@ function Step1({
             onChange={(v) => update("citizen_name", v)}
             placeholder="María Restrepo"
           />
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Input
-              label="Documento (CC, CE, NIT...)"
-              value={state.document_id}
-              onChange={(v) => update("document_id", v)}
-              placeholder="1036123456"
-              inputMode="numeric"
-            />
-            <Input
-              label="Teléfono (opcional)"
-              value={state.phone}
-              onChange={(v) => update("phone", v)}
-              placeholder="3001234567"
-              type="tel"
-            />
-          </div>
           <Input
-            label="Correo electrónico"
+            label="Documento (CC, CE, NIT...)"
+            value={state.document_id}
+            onChange={(v) => update("document_id", v)}
+            placeholder="1036123456"
+            inputMode="numeric"
+          />
+        </div>
+      )}
+
+      <div className="space-y-4">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Input
+            label={state.is_anonymous ? "Correo electrónico" : "Correo electrónico (opcional)"}
             value={state.email}
             onChange={(v) => update("email", v)}
             placeholder="usted@correo.com"
             type="email"
+            error={contactError}
           />
-          {!hasContact && (
-            <div className="rounded-lg border border-warning/30 bg-warning/5 px-3 py-2 text-xs text-warning">
-              Sin email, documento ni teléfono la PQR puede rebotar tras el análisis de validez.
-            </div>
-          )}
-          <p className="text-xs text-muted-foreground">
-            Sus datos se tratan según la Ley 1581/2012. Solo los usaremos para responder esta PQRSD.
-          </p>
+          <Input
+            label={state.is_anonymous ? "Teléfono" : "Teléfono (opcional)"}
+            value={state.phone}
+            onChange={(v) => update("phone", v)}
+            placeholder="3001234567"
+            type="tel"
+            error={contactError}
+          />
         </div>
-      )}
+        {state.is_anonymous && !hasContactMethod && (
+          <div
+            className={`rounded-lg border px-3 py-2 text-xs ${
+              contactError
+                ? "border-destructive/40 bg-destructive/5 text-destructive"
+                : "border-warning/30 bg-warning/5 text-warning"
+            }`}
+          >
+            Para radicar anónimamente, ingrese al menos un correo o teléfono de contacto.
+          </div>
+        )}
+        {!state.is_anonymous && !hasContactMethod && (
+          <div className="rounded-lg border border-warning/30 bg-warning/5 px-3 py-2 text-xs text-warning">
+            Sin email ni teléfono será más difícil enviarle la respuesta o pedir información
+            adicional.
+          </div>
+        )}
+        <p className="text-xs text-muted-foreground">
+          Sus datos se tratan según la Ley 1581/2012. Solo los usaremos para responder esta PQRSD.
+        </p>
+      </div>
 
       <label
         className={`flex items-start gap-3 rounded-xl border p-4 ${
           consentError
             ? "border-destructive bg-destructive/5"
             : state.consent_data
-            ? "border-primary/40 bg-primary/5"
-            : "border-hairline bg-background/60"
+              ? "border-primary/40 bg-primary/5"
+              : "border-hairline bg-background/60"
         }`}
       >
         <input
@@ -425,7 +465,8 @@ function Step2({
       <div>
         <legend className="text-lg font-medium tracking-tight">¿Dónde está pasando?</legend>
         <p className="mt-1 text-sm text-muted-foreground">
-          Use esta información para asignar su PQR a la secretaría correcta. Sea específico si puede.
+          Use esta información para asignar su PQR a la secretaría correcta. Sea específico si
+          puede.
         </p>
       </div>
       <Textarea
@@ -568,7 +609,12 @@ function Step4({
                   </span>
                   <button
                     type="button"
-                    onClick={() => update("attachments", state.attachments.filter((_, idx) => idx !== i))}
+                    onClick={() =>
+                      update(
+                        "attachments",
+                        state.attachments.filter((_, idx) => idx !== i),
+                      )
+                    }
                     className="text-muted-foreground hover:text-destructive"
                   >
                     Quitar
@@ -586,10 +632,12 @@ function Step4({
           label="Identificación"
           value={
             state.is_anonymous
-              ? "Anónima"
-              : `${state.citizen_name || "—"}${state.email ? " · " + state.email : ""}${
-                  state.document_id ? " · " + state.document_id : ""
+              ? `Anónima${state.email ? " · " + state.email : ""}${
+                  state.phone ? " · " + state.phone : ""
                 }`
+              : `${state.citizen_name || "—"}${state.email ? " · " + state.email : ""}${
+                  state.phone ? " · " + state.phone : ""
+                }${state.document_id ? " · " + state.document_id : ""}`
           }
           onEdit={() => jumpTo(1)}
         />
@@ -607,14 +655,16 @@ function Step4({
         />
         <SummaryRow
           label="Adjuntos"
-          value={state.attachments.length > 0 ? `${state.attachments.length} archivo(s)` : "Ninguno"}
+          value={
+            state.attachments.length > 0 ? `${state.attachments.length} archivo(s)` : "Ninguno"
+          }
         />
       </dl>
 
       <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 text-xs text-foreground/80">
         Al enviar, su PQR entra al sistema de la Alcaldía. Recibirá un radicado{" "}
-        <span className="font-mono text-primary">MED-YYYYMMDD-XXXXXX</span>. El plazo de respuesta se
-        calcula automáticamente: entre 1 y 30 días hábiles según prioridad y tipo.
+        <span className="font-mono text-primary">MED-YYYYMMDD-XXXXXX</span>. El plazo de respuesta
+        se calcula automáticamente: entre 1 y 30 días hábiles según prioridad y tipo.
       </div>
     </div>
   );
@@ -639,16 +689,25 @@ function Exito({ data, reset }: { data: AcceptedResponse; reset: () => void }) {
     data.priority_level === "P0"
       ? "border-destructive/40 bg-destructive/10 text-destructive"
       : data.priority_level === "P1"
-      ? "border-warning/40 bg-warning/10 text-warning"
-      : data.priority_level === "P2"
-      ? "border-warning/30 bg-warning/5 text-warning"
-      : "border-primary/40 bg-primary/10 text-primary";
+        ? "border-warning/40 bg-warning/10 text-warning"
+        : data.priority_level === "P2"
+          ? "border-warning/30 bg-warning/5 text-warning"
+          : "border-primary/40 bg-primary/10 text-primary";
 
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">
       <div className="rounded-2xl border border-hairline bg-surface/60 p-10 text-center shadow-card">
         <span className="grid mx-auto h-16 w-16 place-items-center rounded-full bg-primary/15 text-primary">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <path d="M20 6L9 17l-5-5" />
           </svg>
         </span>
@@ -668,7 +727,11 @@ function Exito({ data, reset }: { data: AcceptedResponse; reset: () => void }) {
         </div>
 
         <div className="mt-8 grid gap-2 sm:grid-cols-3">
-          <Chip tone="border-primary/30 bg-primary/5 text-primary" label="Secretaría" value={data.secretaria_id} />
+          <Chip
+            tone="border-primary/30 bg-primary/5 text-primary"
+            label="Secretaría"
+            value={data.secretaria_id}
+          />
           <Chip tone={tone} label="Prioridad" value={data.priority_level} />
           <Chip
             tone="border-hairline bg-background/40 text-foreground"
@@ -715,15 +778,24 @@ function Duplicada({ data }: { data: DuplicateResponse }) {
     <section className="mx-auto max-w-3xl px-6 py-20">
       <div className="rounded-2xl border border-hairline bg-surface/60 p-10 text-center shadow-card">
         <span className="grid mx-auto h-16 w-16 place-items-center rounded-full bg-warning/15 text-warning">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <circle cx="12" cy="12" r="9" />
             <path d="M12 7v5l3 2" />
           </svg>
         </span>
         <h1 className="mt-6 text-3xl font-semibold tracking-tight">Esta PQR ya estaba radicada</h1>
         <p className="mt-3 text-muted-foreground">
-          Detectamos que esta petición es idéntica a una que usted ya radicó. Para evitar duplicados,
-          le redirigimos al caso original.
+          Detectamos que esta petición es idéntica a una que usted ya radicó. Para evitar
+          duplicados, le redirigimos al caso original.
         </p>
         <div className="mt-8 inline-flex items-center gap-3 rounded-xl border border-primary/40 bg-background px-5 py-4 font-mono text-lg text-primary">
           {data.radicado}
@@ -754,7 +826,16 @@ function Rebotada({ data, reset }: { data: BouncedResponse; reset: () => void })
       <div className="rounded-2xl border border-warning/40 bg-warning/5 p-10 shadow-card">
         <div className="flex items-start gap-4">
           <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-warning/20 text-warning">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M12 9v4M12 17h.01" />
               <path d="M10.29 3.86l-8.18 14.14A2 2 0 003.84 21h16.32a2 2 0 001.73-3l-8.18-14.14a2 2 0 00-3.46 0z" />
             </svg>
@@ -770,16 +851,17 @@ function Rebotada({ data, reset }: { data: BouncedResponse; reset: () => void })
 
             <ul className="mt-6 space-y-2.5 text-sm">
               {data.reasons.map((r) => (
-                <li key={r} className="flex items-start gap-2 rounded-lg border border-warning/30 bg-background/40 p-3">
+                <li
+                  key={r}
+                  className="flex items-start gap-2 rounded-lg border border-warning/30 bg-background/40 p-3"
+                >
                   <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-warning" />
                   <span className="text-foreground/90">{BOUNCE_REASONS[r] ?? r}</span>
                 </li>
               ))}
             </ul>
 
-            {data.message && (
-              <p className="mt-4 text-xs text-muted-foreground">{data.message}</p>
-            )}
+            {data.message && <p className="mt-4 text-xs text-muted-foreground">{data.message}</p>}
 
             <div className="mt-8">
               <button
@@ -884,7 +966,9 @@ function SummaryRow({
       <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
         {label}
       </dt>
-      <dd className={`text-foreground ${multiline ? "whitespace-pre-wrap" : "truncate"}`}>{value}</dd>
+      <dd className={`text-foreground ${multiline ? "whitespace-pre-wrap" : "truncate"}`}>
+        {value}
+      </dd>
       {onEdit && (
         <button
           type="button"

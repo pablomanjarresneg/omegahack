@@ -8,35 +8,32 @@ export const Route = createFileRoute("/portal/ayuda")({
 const SECCIONES = [
   {
     title: "¿Qué es una PQRSD?",
-    body:
-      "Es el mecanismo que tiene cualquier ciudadano para dirigirse a la Alcaldía. Significa Petición, Queja, Reclamo, Sugerencia, Denuncia u Oposición. Es un derecho garantizado por la Constitución y la Ley 1755 de 2015.",
+    body: "Es el mecanismo que tiene cualquier ciudadano para dirigirse a la Alcaldía. Significa Petición, Queja, Reclamo, Sugerencia, Denuncia u Oposición. Es un derecho garantizado por la Constitución y la Ley 1755 de 2015.",
   },
   {
     title: "¿Cuáles son los plazos?",
-    body:
-      "El plazo general es de 15 días hábiles. Las peticiones de información se responden en 10 días. Las consultas a autoridades, en 30 días. Los plazos se calculan en días hábiles colombianos, descontando festivos y fines de semana.",
+    body: "El plazo general es de 15 días hábiles. Las peticiones de información se responden en 10 días. Las consultas a autoridades, en 30 días. Los plazos se calculan en días hábiles colombianos, descontando festivos y fines de semana.",
   },
   {
     title: "¿Puedo radicar de forma anónima?",
-    body:
-      "Sí. Usted puede radicar sin dar su nombre. En ese caso, su único registro será el número de radicado, así que guárdelo bien. La Alcaldía igual está obligada a tramitar y responder su solicitud.",
+    body: "Sí. Usted puede radicar sin dar su nombre. En ese caso, su único registro será el número de radicado, así que guárdelo bien. La Alcaldía igual está obligada a tramitar y responder su solicitud.",
   },
   {
     title: "¿Cómo se protegen mis datos?",
-    body:
-      "Cumplimos la Ley 1581 de 2012 (habeas data). Sus datos personales solo se usan para responder su PQRSD y para los registros legales obligatorios. Nunca se publican; el portal de transparencia solo muestra agregados anónimos.",
+    body: "Cumplimos la Ley 1581 de 2012 (habeas data). Sus datos personales solo se usan para responder su PQRSD y para los registros legales obligatorios. Nunca se publican; el portal de transparencia solo muestra agregados anónimos.",
   },
   {
     title: "¿Qué hago si no me responden a tiempo?",
-    body:
-      "Si vence el plazo sin respuesta, configura silencio administrativo positivo o negativo según el caso. Usted puede interponer recurso de reposición, acudir al Ministerio Público o, en última instancia, presentar acción de tutela.",
+    body: "Si vence el plazo sin respuesta, configura silencio administrativo positivo o negativo según el caso. Usted puede interponer recurso de reposición, acudir al Ministerio Público o, en última instancia, presentar acción de tutela.",
   },
 ];
 
 function AyudaPage() {
   return (
     <section className="mx-auto max-w-3xl px-6 py-12 md:py-16">
-      <Link to="/portal" className="text-sm text-muted-foreground hover:text-primary">← Volver al portal</Link>
+      <Link to="/portal" className="text-sm text-muted-foreground hover:text-primary">
+        ← Volver al portal
+      </Link>
       <h1 className="mt-4 text-4xl font-semibold tracking-tight md:text-5xl">Ayuda</h1>
       <p className="mt-3 text-lg text-muted-foreground">
         Aquí encuentra lo esencial sobre sus derechos y los plazos que la ley le garantiza.

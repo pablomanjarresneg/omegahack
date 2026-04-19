@@ -41,11 +41,24 @@ export function HowItWorks() {
 
         <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-4">
           {STEPS.map((s, i) => (
-            <div key={s.n} className="relative rounded-2xl border border-hairline bg-surface/60 p-6">
+            <div
+              key={s.n}
+              className="relative rounded-2xl border border-hairline bg-surface/60 p-6"
+            >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-[11px] tracking-[0.2em] text-primary">{s.n}</span>
                 {i < STEPS.length - 1 && (
-                  <svg className="hidden text-muted-foreground/40 md:block" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    className="hidden text-muted-foreground/40 md:block"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <path d="M5 12h14M13 5l7 7-7 7" />
                   </svg>
                 )}

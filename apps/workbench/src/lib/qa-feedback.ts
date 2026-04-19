@@ -3,18 +3,35 @@ import "server-only";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { requireServiceRoleKey, requireSupabaseUrl } from "./env";
 
-// qa_bank schema is outside the @omega/db generated types (public-only), so we
-// fall back to an `any`-typed client. See qa-retrieval.ts for the rationale.
-let qaFeedbackClient: SupabaseClient<any, any, any> | null = null;
+type QaBankTable = {
+  Row: Record<string, unknown>;
+  Insert: Record<string, unknown>;
+  Update: Record<string, unknown>;
+  Relationships: [];
+};
 
-function getClient(): SupabaseClient<any, any, any> {
+type QaBankDatabase = {
+  qa_bank: {
+    Tables: Record<string, QaBankTable>;
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+  };
+};
+
+type QaBankClient = SupabaseClient<QaBankDatabase, "qa_bank">;
+
+// qa_bank schema is outside the @omega/db generated types (public-only), so we
+// use a deliberately generic schema shape for the feedback insert surface.
+let qaFeedbackClient: QaBankClient | null = null;
+
+function getClient(): QaBankClient {
   if (!qaFeedbackClient) {
-    qaFeedbackClient = createClient(
+    qaFeedbackClient = createClient<QaBankDatabase, "qa_bank">(
       requireSupabaseUrl(),
       requireServiceRoleKey(),
       {
         auth: { persistSession: false, autoRefreshToken: false },
-        db: { schema: "qa_bank" as never },
+        db: { schema: "qa_bank" },
       },
     );
   }

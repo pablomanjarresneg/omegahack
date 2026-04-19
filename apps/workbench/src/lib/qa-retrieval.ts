@@ -19,20 +19,38 @@ import { requireServiceRoleKey, requireSupabaseUrl } from "./env";
 
 const DEFAULT_TOP_K = 5;
 
-// We deliberately use an `any`-typed SupabaseClient for the qa_bank schema.
-// The generated @omega/db/types only cover the `public` schema, so generic
-// inference against `createClient<Database>` would fail at compile time for
-// qa_bank.*. Since this module only performs read queries that surface
-// through our own row shape types (`ChunkRow`), loss of generic inference
-// here is acceptable.
-let qaClient: SupabaseClient<any, any, any> | null = null;
+type QaBankTable = {
+  Row: Record<string, unknown>;
+  Insert: Record<string, unknown>;
+  Update: Record<string, unknown>;
+  Relationships: [];
+};
 
-function getQaClient(): SupabaseClient<any, any, any> {
+type QaBankDatabase = {
+  qa_bank: {
+    Tables: Record<string, QaBankTable>;
+    Views: Record<string, never>;
+    Functions: Record<string, never>;
+  };
+};
+
+type QaBankClient = SupabaseClient<QaBankDatabase, "qa_bank">;
+
+// The generated @omega/db/types only cover the `public` schema. Keep the
+// qa_bank client generic enough for PostgREST calls, then map rows through our
+// own local shapes before exposing them to the UI.
+let qaClient: QaBankClient | null = null;
+
+function getQaClient(): QaBankClient {
   if (!qaClient) {
-    qaClient = createClient(requireSupabaseUrl(), requireServiceRoleKey(), {
-      auth: { persistSession: false, autoRefreshToken: false },
-      db: { schema: "qa_bank" as never },
-    });
+    qaClient = createClient<QaBankDatabase, "qa_bank">(
+      requireSupabaseUrl(),
+      requireServiceRoleKey(),
+      {
+        auth: { persistSession: false, autoRefreshToken: false },
+        db: { schema: "qa_bank" },
+      },
+    );
   }
   return qaClient;
 }

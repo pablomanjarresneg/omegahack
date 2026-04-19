@@ -26,12 +26,11 @@ export function Architecture() {
               // para el CTO
             </div>
             <h2 className="mt-3 text-balance text-4xl font-semibold tracking-tight md:text-5xl">
-              Arquitectura{" "}
-              <span className="font-serif-italic text-primary">auditable.</span>
+              Arquitectura <span className="font-serif-italic text-primary">auditable.</span>
             </h2>
             <p className="mt-5 text-muted-foreground">
-              Stack moderno, sin magia, sin lock-in. Su equipo de TI puede leer cada línea
-              y exportar cada byte.
+              Stack moderno, sin magia, sin lock-in. Su equipo de TI puede leer cada línea y
+              exportar cada byte.
             </p>
           </div>
 
@@ -54,7 +53,17 @@ export function Architecture() {
                   key={b}
                   className="flex items-start gap-2.5 rounded-xl border border-hairline bg-surface/60 px-4 py-3 text-sm"
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0 text-primary">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="mt-0.5 shrink-0 text-primary"
+                  >
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
                   <span className="text-foreground/90">{b}</span>

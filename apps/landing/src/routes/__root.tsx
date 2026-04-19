@@ -30,10 +30,16 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "CAROL — PQRSD para alcaldías" },
-      { name: "description", content: "Plataforma para automatizar PQRSD en alcaldías colombianas." },
+      {
+        name: "description",
+        content: "Plataforma para automatizar PQRSD en alcaldías colombianas.",
+      },
       { name: "author", content: "CAROL" },
       { property: "og:title", content: "CAROL — PQRSD para alcaldías" },
-      { property: "og:description", content: "Cumplimiento Ley 1755/2015 y Ley 1581/2012 por diseño." },
+      {
+        property: "og:description",
+        content: "Cumplimiento Ley 1755/2015 y Ley 1581/2012 por diseño.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],

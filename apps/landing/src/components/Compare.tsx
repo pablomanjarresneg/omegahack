@@ -1,11 +1,27 @@
 const ROWS: [string, string, string][] = [
   ["Radicación", "Captura manual en Mercurio", "Intake automático desde web, correo, n8n"],
-  ["Plazos legales", "Conteo a mano, sin alertas", "Motor de días hábiles colombianos (Ley Emiliani)"],
+  [
+    "Plazos legales",
+    "Conteo a mano, sin alertas",
+    "Motor de días hábiles colombianos (Ley Emiliani)",
+  ],
   ["Tutelas", "Aparecen sin aviso previo", "Alertas tempranas de riesgo de tutela"],
-  ["Trazabilidad", "Hojas de cálculo y correos sueltos", "Auditoría inmutable append-only por fila"],
-  ["Clasificación", "Funcionario lee y deriva a mano", "26 secretarías + 16 comunas, asistido por IA"],
+  [
+    "Trazabilidad",
+    "Hojas de cálculo y correos sueltos",
+    "Auditoría inmutable append-only por fila",
+  ],
+  [
+    "Clasificación",
+    "Funcionario lee y deriva a mano",
+    "26 secretarías + 16 comunas, asistido por IA",
+  ],
   ["Patrones", "Problemas recurrentes invisibles", "Problem Groups por similitud + territorio"],
-  ["Habeas data", "PII expuesto en correos internos", "Ley 1581/2012 aplicada al texto, RLS multi-tenant"],
+  [
+    "Habeas data",
+    "PII expuesto en correos internos",
+    "Ley 1581/2012 aplicada al texto, RLS multi-tenant",
+  ],
   ["Transparencia", "Informes anuales en PDF", "Dashboard público con k-anonymity ≥ 5"],
 ];
 
@@ -36,13 +52,34 @@ export function Compare() {
             >
               <div className="col-span-4 font-medium text-foreground">{row[0]}</div>
               <div className="col-span-4 flex items-start gap-2 text-muted-foreground">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-1 shrink-0 text-destructive/80">
-                  <path d="M18 6L6 18" /><path d="M6 6l12 12" />
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mt-1 shrink-0 text-destructive/80"
+                >
+                  <path d="M18 6L6 18" />
+                  <path d="M6 6l12 12" />
                 </svg>
                 {row[1]}
               </div>
               <div className="col-span-4 flex items-start gap-2 text-foreground">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-1 shrink-0 text-primary">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="mt-1 shrink-0 text-primary"
+                >
                   <path d="M20 6L9 17l-5-5" />
                 </svg>
                 {row[2]}

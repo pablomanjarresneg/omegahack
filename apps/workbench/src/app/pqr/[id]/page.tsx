@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Topbar } from "@/components/topbar";
@@ -339,7 +340,7 @@ function Section({
   children,
 }: {
   title: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <section className="rounded border border-border bg-surface p-5">
@@ -410,7 +411,7 @@ function eventTone(kind: string): TimelineEntry["tone"] {
   return "default";
 }
 
-function renderEventPayload(kind: string, payload: unknown): React.ReactNode {
+function renderEventPayload(kind: string, payload: unknown): ReactNode {
   if (
     kind === "citizen_notification_sent" ||
     kind === "citizen_notification_skipped" ||
@@ -424,7 +425,7 @@ function renderEventPayload(kind: string, payload: unknown): React.ReactNode {
 function renderNotificationPayload(
   kind: string,
   payload: unknown,
-): React.ReactNode {
+): ReactNode {
   const p = asRecord(payload);
   if (!p) return null;
 
@@ -477,7 +478,7 @@ function renderNotificationPayload(
   );
 }
 
-function renderJsonPayload(payload: unknown): React.ReactNode {
+function renderJsonPayload(payload: unknown): ReactNode {
   if (!payload || (typeof payload === "object" && Object.keys(payload).length === 0)) {
     return null;
   }
@@ -492,7 +493,7 @@ function renderAudit(a: {
   before: unknown;
   after: unknown;
   operation: string;
-}): React.ReactNode {
+}): ReactNode {
   const diff: string[] = [];
   if (a.operation === "UPDATE" && a.before && a.after) {
     const b = a.before as Record<string, unknown>;

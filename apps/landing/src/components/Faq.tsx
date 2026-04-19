@@ -41,14 +41,21 @@ export function Faq() {
             // preguntas frecuentes
           </div>
           <h2 className="mt-3 text-balance text-4xl font-semibold tracking-tight md:text-5xl">
-            Lo que preguntan{" "}
-            <span className="font-serif-italic text-primary">los CTOs.</span>
+            Lo que preguntan <span className="font-serif-italic text-primary">los CTOs.</span>
           </h2>
         </div>
 
-        <Accordion type="single" collapsible className="mt-12 rounded-2xl border border-hairline bg-surface/60 px-6">
+        <Accordion
+          type="single"
+          collapsible
+          className="mt-12 rounded-2xl border border-hairline bg-surface/60 px-6"
+        >
           {ITEMS.map((it, i) => (
-            <AccordionItem key={it.q} value={`item-${i}`} className={i === ITEMS.length - 1 ? "border-b-0" : ""}>
+            <AccordionItem
+              key={it.q}
+              value={`item-${i}`}
+              className={i === ITEMS.length - 1 ? "border-b-0" : ""}
+            >
               <AccordionTrigger className="py-5 text-left text-base font-medium tracking-tight text-foreground hover:no-underline">
                 {it.q}
               </AccordionTrigger>

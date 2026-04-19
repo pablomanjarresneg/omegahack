@@ -47,7 +47,8 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
   --shadow-glow: 0 0 60px -10px color-mix(in oklab, var(--glow) 55%, transparent);
-  --shadow-card: 0 1px 0 0 color-mix(in oklab, white 6%, transparent) inset, 0 30px 60px -30px rgb(0 0 0 / 0.6);
+  --shadow-card:
+    0 1px 0 0 color-mix(in oklab, white 6%, transparent) inset, 0 30px 60px -30px rgb(0 0 0 / 0.6);
 }
 
 :root {
@@ -179,30 +180,28 @@
   }
 
   .text-gradient {
-    background: linear-gradient(
-      180deg,
-      oklch(0.98 0.01 85) 0%,
-      oklch(0.78 0.04 80) 100%
-    );
+    background: linear-gradient(180deg, oklch(0.98 0.01 85) 0%, oklch(0.78 0.04 80) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   .accent-gradient {
-    background: linear-gradient(
-      135deg,
-      oklch(0.88 0.2 145) 0%,
-      oklch(0.7 0.2 160) 100%
-    );
+    background: linear-gradient(135deg, oklch(0.88 0.2 145) 0%, oklch(0.7 0.2 160) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
   }
   .caret {
     display: inline-block;
@@ -215,21 +214,37 @@
   }
 
   @keyframes float-slow {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
   }
-  .float-slow { animation: float-slow 8s ease-in-out infinite; }
+  .float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+  }
 
   @keyframes scan {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
   }
   .scan-line {
     position: absolute;
     left: 0;
     right: 0;
     height: 30%;
-    background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--primary) 12%, transparent), transparent);
+    background: linear-gradient(
+      180deg,
+      transparent,
+      color-mix(in oklab, var(--primary) 12%, transparent),
+      transparent
+    );
     animation: scan 4s linear infinite;
     pointer-events: none;
   }

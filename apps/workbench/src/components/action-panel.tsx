@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { ArrowRight, Loader2 } from "lucide-react";
 import clsx from "clsx";
 import type { Database } from "@omega/db/types";
@@ -96,17 +96,18 @@ function SubmitBtn({
 }
 
 function useAction() {
-  const [pending, start] = useTransition();
+  const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const run = (fn: () => Promise<void>) => {
     setError(null);
-    start(async () => {
-      try {
-        await fn();
-      } catch (e) {
+    setPending(true);
+    void fn()
+      .catch((e) => {
         setError(e instanceof Error ? e.message : "Algo falló");
-      }
-    });
+      })
+      .finally(() => {
+        setPending(false);
+      });
   };
   return { pending, error, run };
 }

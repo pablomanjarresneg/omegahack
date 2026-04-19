@@ -28,8 +28,8 @@ export function Transparency() {
               <span className="font-serif-italic text-primary">sin riesgo.</span>
             </h2>
             <p className="mt-5 text-muted-foreground">
-              k-anonymity ≥ 5 aplicado en base de datos. Sin PII, sin nombres, sin direcciones.
-              La ciudadanía ve agregados; la auditoría ve el detalle.
+              k-anonymity ≥ 5 aplicado en base de datos. Sin PII, sin nombres, sin direcciones. La
+              ciudadanía ve agregados; la auditoría ve el detalle.
             </p>
             <ul className="mt-6 space-y-2.5 text-sm">
               {[
@@ -39,7 +39,17 @@ export function Transparency() {
                 "Tasa de respuesta dentro del plazo legal",
               ].map((b) => (
                 <li key={b} className="flex items-start gap-2">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-1 shrink-0 text-primary">
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="mt-1 shrink-0 text-primary"
+                  >
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
                   <span className="text-foreground/90">{b}</span>
@@ -51,7 +61,16 @@ export function Transparency() {
               className="mt-8 inline-flex items-center gap-2 rounded-xl border border-hairline bg-surface/60 px-4 py-2.5 text-sm font-medium text-foreground hover:bg-surface-elevated"
             >
               Ver demo de transparencia
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </a>
@@ -63,8 +82,7 @@ export function Transparency() {
                 transparencia.medellin.gov.co
               </div>
               <div className="flex items-center gap-1.5 font-mono text-[10px] text-success">
-                <span className="h-1.5 w-1.5 rounded-full bg-success" />
-                k ≥ 5
+                <span className="h-1.5 w-1.5 rounded-full bg-success" />k ≥ 5
               </div>
             </div>
 
@@ -75,8 +93,12 @@ export function Transparency() {
                 { k: "Comunas", v: "16/16" },
               ].map((s) => (
                 <div key={s.k} className="rounded-xl border border-hairline bg-background/40 p-3">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">{s.k}</div>
-                  <div className="mt-1 text-2xl font-semibold tracking-tight text-primary">{s.v}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    {s.k}
+                  </div>
+                  <div className="mt-1 text-2xl font-semibold tracking-tight text-primary">
+                    {s.v}
+                  </div>
                 </div>
               ))}
             </div>
@@ -88,7 +110,9 @@ export function Transparency() {
               <div className="mt-3 space-y-2.5">
                 {SECRETARIAS.map((s) => (
                   <div key={s.code} className="flex items-center gap-3">
-                    <span className="w-12 font-mono text-[11px] text-muted-foreground">{s.code}</span>
+                    <span className="w-12 font-mono text-[11px] text-muted-foreground">
+                      {s.code}
+                    </span>
                     <span className="w-32 truncate text-xs text-foreground/90">{s.name}</span>
                     <div className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-background/60">
                       <div
@@ -96,7 +120,9 @@ export function Transparency() {
                         style={{ width: `${s.pct}%` }}
                       />
                     </div>
-                    <span className="w-12 text-right font-mono text-[11px] text-foreground">{s.count}</span>
+                    <span className="w-12 text-right font-mono text-[11px] text-foreground">
+                      {s.count}
+                    </span>
                   </div>
                 ))}
               </div>

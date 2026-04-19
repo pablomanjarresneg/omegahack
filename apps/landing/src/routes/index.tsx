@@ -42,7 +42,6 @@ function Landing() {
         <Transparency />
         <Architecture />
         <Faq />
-        
       </main>
       <SiteFooter />
     </div>

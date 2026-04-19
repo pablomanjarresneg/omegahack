@@ -11,6 +11,10 @@
   },
   "dependencies": {
     "@omega/db": "workspace:*",
+    "@omega/deadline-engine": "workspace:*",
+    "@supabase/supabase-js": "^2.103.3",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.468.0",
     "next": "14.2.33",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

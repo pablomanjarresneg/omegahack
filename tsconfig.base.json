@@ -26,8 +26,16 @@
       "@omega/deadline-engine/*": ["./packages/deadline-engine/src/*"],
       "@omega/habeas-data": ["./packages/habeas-data/src/index.ts"],
       "@omega/habeas-data/*": ["./packages/habeas-data/src/*"],
+      "@omega/classifier": ["./packages/classifier/src/index.ts"],
+      "@omega/classifier/*": ["./packages/classifier/src/*"],
+      "@omega/intake-agent": ["./packages/intake-agent/src/index.ts"],
+      "@omega/intake-agent/*": ["./packages/intake-agent/src/*"],
+      "@omega/problem-groups": ["./packages/problem-groups/src/index.ts"],
+      "@omega/problem-groups/*": ["./packages/problem-groups/src/*"],
       "@omega/search": ["./packages/search/src/index.ts"],
-      "@omega/search/*": ["./packages/search/src/*"]
+      "@omega/search/*": ["./packages/search/src/*"],
+      "@omega/tags": ["./packages/tags/src/index.ts"],
+      "@omega/tags/*": ["./packages/tags/src/*"]
     }
   },
   "exclude": ["node_modules", ".next", "dist", ".turbo"]

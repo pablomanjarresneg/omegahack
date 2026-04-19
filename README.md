@@ -224,4 +224,4 @@ Workflow: [.github/workflows/ci.yml](.github/workflows/ci.yml)
 - Si agregas una tabla sensible, valida cobertura de RLS y pruebas en `tests/rls`.
 
 ## Uso de IAs
-Para el desarrollo de esta solución únicamente utilizamos herramientas gratuitas y APIs gratuitas disponibles para estudiantes. La inteligencia artificial fue empleada como apoyo para optimizar procesos, organizar información y fortalecer la propuesta, sin recurrir a servicios pagos ni a infraestructuras de alto costo. Esto permitió construir una alternativa funcional, accesible y viable dentro de un entorno académico.
+Para el desarrollo de esta propuesta utilizamos únicamente herramientas en sus versiones gratuitas o con beneficios académicos para estudiantes. Entre ellas se encuentran ChatGPT como apoyo para ideación, redacción y estructuración de procesos; Gemini API para estudiantes para pruebas y automatizaciones con inteligencia artificial; n8n en su versión gratuita para la orquestación de flujos de trabajo; y Lovable en su plan gratuito para la construcción rápida de interfaces y prototipos.

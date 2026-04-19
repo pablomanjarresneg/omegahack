@@ -1,0 +1,28 @@
+{
+  "name": "@omega/classifier",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schemas": "./src/schemas.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "echo \"(no lint configured yet)\"",
+    "eval": "tsx eval/run.ts"
+  },
+  "dependencies": {
+    "@omega/habeas-data": "workspace:*"
+  },
+  "devDependencies": {
+    "@omega/config-ts": "workspace:*",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

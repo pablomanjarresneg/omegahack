@@ -950,7 +950,81 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      transparency_comuna_density: {
+        Row: {
+          avg_response_hours: number | null
+          closed_count: number | null
+          comuna_id: string | null
+          pqr_count: number | null
+          tenant_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pqr_comuna_id_fkey"
+            columns: ["comuna_id"]
+            isOneToOne: false
+            referencedRelation: "comunas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pqr_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transparency_monthly_trend: {
+        Row: {
+          comuna_id: string | null
+          month: string | null
+          pqr_count: number | null
+          tenant_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pqr_comuna_id_fkey"
+            columns: ["comuna_id"]
+            isOneToOne: false
+            referencedRelation: "comunas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pqr_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      transparency_secretaria_ranking: {
+        Row: {
+          closed: number | null
+          overdue_open: number | null
+          secretaria_id: string | null
+          sla_breach_rate: number | null
+          tenant_id: string | null
+          total: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pqr_secretaria_id_fkey"
+            columns: ["secretaria_id"]
+            isOneToOne: false
+            referencedRelation: "secretarias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pqr_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "tenants"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       drain_reembed_batch: {
@@ -984,9 +1058,9 @@ export type Database = {
         | "peticion"
         | "queja"
         | "reclamo"
-        | "oposicion"
         | "sugerencia"
         | "denuncia"
+        | "oposicion"
       priority_level: "P0_critica" | "P1_alta" | "P2_media" | "P3_baja"
       response_kind: "draft" | "final"
       territorial_kind: "comuna" | "corregimiento"
@@ -997,7 +1071,179 @@ export type Database = {
   }
   qa_bank: {
     Tables: {
-      [_ in never]: never
+      qa_chunks: {
+        Row: {
+          created_at: string
+          document_id: string
+          heading_path: string[]
+          id: string
+          ord: number
+          text: string
+          token_count: number
+        }
+        Insert: {
+          created_at?: string
+          document_id: string
+          heading_path?: string[]
+          id?: string
+          ord: number
+          text: string
+          token_count?: number
+        }
+        Update: {
+          created_at?: string
+          document_id?: string
+          heading_path?: string[]
+          id?: string
+          ord?: number
+          text?: string
+          token_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qa_chunks_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "qa_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      qa_documents: {
+        Row: {
+          checksum: string
+          created_at: string
+          id: string
+          kind: string
+          source_id: string
+          tenant_id: string | null
+          title: string
+          uri: string
+        }
+        Insert: {
+          checksum: string
+          created_at?: string
+          id?: string
+          kind: string
+          source_id: string
+          tenant_id?: string | null
+          title: string
+          uri: string
+        }
+        Update: {
+          checksum?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          source_id?: string
+          tenant_id?: string | null
+          title?: string
+          uri?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qa_documents_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "qa_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      qa_embeddings: {
+        Row: {
+          chunk_id: string
+          created_at: string
+          embedding: string
+          model: string
+        }
+        Insert: {
+          chunk_id: string
+          created_at?: string
+          embedding: string
+          model: string
+        }
+        Update: {
+          chunk_id?: string
+          created_at?: string
+          embedding?: string
+          model?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qa_embeddings_chunk_id_fkey"
+            columns: ["chunk_id"]
+            isOneToOne: true
+            referencedRelation: "qa_chunks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      qa_feedback: {
+        Row: {
+          chunk_id: string
+          created_at: string
+          id: string
+          notes: string | null
+          pqr_id: string | null
+          useful: boolean
+          user_id: string | null
+        }
+        Insert: {
+          chunk_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          pqr_id?: string | null
+          useful: boolean
+          user_id?: string | null
+        }
+        Update: {
+          chunk_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          pqr_id?: string | null
+          useful?: boolean
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qa_feedback_chunk_id_fkey"
+            columns: ["chunk_id"]
+            isOneToOne: false
+            referencedRelation: "qa_chunks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      qa_sources: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          published_at: string | null
+          title: string
+          url: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          published_at?: string | null
+          title: string
+          url?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          published_at?: string | null
+          title?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -1153,9 +1399,9 @@ export const Constants = {
         "peticion",
         "queja",
         "reclamo",
-        "oposicion",
         "sugerencia",
         "denuncia",
+        "oposicion",
       ],
       priority_level: ["P0_critica", "P1_alta", "P2_media", "P3_baja"],
       response_kind: ["draft", "final"],

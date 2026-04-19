@@ -1,0 +1,30 @@
+{
+  "name": "@omega/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types.ts",
+    "./client": "./src/supabase-client.ts",
+    "./queries/transparency": "./src/queries/transparency.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "echo \"(no lint configured yet)\"",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.58.0",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@omega/config-ts": "workspace:*",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,5547 @@
+{
+  "generatedAt": "2026-04-19T10:38:14.439Z",
+  "deadlineCases": [
+    {
+      "id": "dl-0001",
+      "label": "peticion_general-jan-2024",
+      "input": {
+        "issuedAt": "2024-01-02T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-01-24T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-01-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0002",
+      "label": "peticion_general-mar-2024",
+      "input": {
+        "issuedAt": "2024-03-15T09:30:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-04-10T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-03-25",
+          "2024-03-28",
+          "2024-03-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0003",
+      "label": "peticion_general-jul-2024",
+      "input": {
+        "issuedAt": "2024-07-15T14:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-08-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0004",
+      "label": "peticion_general-dec-2024",
+      "input": {
+        "issuedAt": "2024-12-02T10:15:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-12-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0005",
+      "label": "peticion_general-jan-2025",
+      "input": {
+        "issuedAt": "2025-01-02T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-01-24T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0006",
+      "label": "peticion_general-mar-2025",
+      "input": {
+        "issuedAt": "2025-03-10T08:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-04-01T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-03-24"
+        ]
+      }
+    },
+    {
+      "id": "dl-0007",
+      "label": "peticion_general-jul-2025",
+      "input": {
+        "issuedAt": "2025-07-15T13:45:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-08-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0008",
+      "label": "peticion_general-dec-2025",
+      "input": {
+        "issuedAt": "2025-12-01T11:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-12-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-12-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0009",
+      "label": "peticion_general-feb-2026",
+      "input": {
+        "issuedAt": "2026-02-02T09:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-02-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0010",
+      "label": "peticion_general-jun-2026",
+      "input": {
+        "issuedAt": "2026-06-15T15:30:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-07-07T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2026-06-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0011",
+      "label": "peticion_general-sep-2026",
+      "input": {
+        "issuedAt": "2026-09-14T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-10-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0012",
+      "label": "peticion_general-feb-2027",
+      "input": {
+        "issuedAt": "2027-02-01T10:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0013",
+      "label": "peticion_general-jun-2027",
+      "input": {
+        "issuedAt": "2027-06-14T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-07-06T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2027-07-05"
+        ]
+      }
+    },
+    {
+      "id": "dl-0014",
+      "label": "peticion_general-oct-2027",
+      "input": {
+        "issuedAt": "2027-10-04T08:30:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-10-26T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2027-10-18"
+        ]
+      }
+    },
+    {
+      "id": "dl-0015",
+      "label": "peticion_general-feb-2028",
+      "input": {
+        "issuedAt": "2028-02-01T09:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-02-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0016",
+      "label": "peticion_general-jun-2028",
+      "input": {
+        "issuedAt": "2028-06-05T14:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-06-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-06-19",
+          "2028-06-26"
+        ]
+      }
+    },
+    {
+      "id": "dl-0017",
+      "label": "peticion_general-nov-2028",
+      "input": {
+        "issuedAt": "2028-11-06T10:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-11-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-11-13"
+        ]
+      }
+    },
+    {
+      "id": "dl-0018",
+      "label": "queja-jan-2024",
+      "input": {
+        "issuedAt": "2024-01-02T12:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2024-01-24T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-01-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0019",
+      "label": "queja-mar-2024",
+      "input": {
+        "issuedAt": "2024-03-15T09:30:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2024-04-10T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-03-25",
+          "2024-03-28",
+          "2024-03-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0020",
+      "label": "queja-jul-2024",
+      "input": {
+        "issuedAt": "2024-07-15T14:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2024-08-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0021",
+      "label": "queja-dec-2024",
+      "input": {
+        "issuedAt": "2024-12-02T10:15:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2024-12-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0022",
+      "label": "queja-jan-2025",
+      "input": {
+        "issuedAt": "2025-01-02T12:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2025-01-24T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0023",
+      "label": "queja-mar-2025",
+      "input": {
+        "issuedAt": "2025-03-10T08:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2025-04-01T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-03-24"
+        ]
+      }
+    },
+    {
+      "id": "dl-0024",
+      "label": "queja-jul-2025",
+      "input": {
+        "issuedAt": "2025-07-15T13:45:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2025-08-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0025",
+      "label": "queja-dec-2025",
+      "input": {
+        "issuedAt": "2025-12-01T11:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2025-12-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-12-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0026",
+      "label": "queja-feb-2026",
+      "input": {
+        "issuedAt": "2026-02-02T09:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2026-02-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0027",
+      "label": "queja-jun-2026",
+      "input": {
+        "issuedAt": "2026-06-15T15:30:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2026-07-07T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2026-06-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0028",
+      "label": "queja-sep-2026",
+      "input": {
+        "issuedAt": "2026-09-14T12:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2026-10-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0029",
+      "label": "queja-feb-2027",
+      "input": {
+        "issuedAt": "2027-02-01T10:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0030",
+      "label": "queja-jun-2027",
+      "input": {
+        "issuedAt": "2027-06-14T12:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2027-07-06T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2027-07-05"
+        ]
+      }
+    },
+    {
+      "id": "dl-0031",
+      "label": "queja-oct-2027",
+      "input": {
+        "issuedAt": "2027-10-04T08:30:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2027-10-26T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2027-10-18"
+        ]
+      }
+    },
+    {
+      "id": "dl-0032",
+      "label": "queja-feb-2028",
+      "input": {
+        "issuedAt": "2028-02-01T09:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2028-02-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0033",
+      "label": "queja-jun-2028",
+      "input": {
+        "issuedAt": "2028-06-05T14:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2028-06-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-06-19",
+          "2028-06-26"
+        ]
+      }
+    },
+    {
+      "id": "dl-0034",
+      "label": "queja-nov-2028",
+      "input": {
+        "issuedAt": "2028-11-06T10:00:00.000Z",
+        "plazoType": "queja"
+      },
+      "expected": {
+        "deadlineAt": "2028-11-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-11-13"
+        ]
+      }
+    },
+    {
+      "id": "dl-0035",
+      "label": "reclamo-jan-2024",
+      "input": {
+        "issuedAt": "2024-01-02T12:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2024-01-24T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-01-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0036",
+      "label": "reclamo-mar-2024",
+      "input": {
+        "issuedAt": "2024-03-15T09:30:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2024-04-10T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-03-25",
+          "2024-03-28",
+          "2024-03-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0037",
+      "label": "reclamo-jul-2024",
+      "input": {
+        "issuedAt": "2024-07-15T14:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2024-08-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0038",
+      "label": "reclamo-dec-2024",
+      "input": {
+        "issuedAt": "2024-12-02T10:15:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2024-12-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0039",
+      "label": "reclamo-jan-2025",
+      "input": {
+        "issuedAt": "2025-01-02T12:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2025-01-24T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0040",
+      "label": "reclamo-mar-2025",
+      "input": {
+        "issuedAt": "2025-03-10T08:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2025-04-01T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-03-24"
+        ]
+      }
+    },
+    {
+      "id": "dl-0041",
+      "label": "reclamo-jul-2025",
+      "input": {
+        "issuedAt": "2025-07-15T13:45:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2025-08-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0042",
+      "label": "reclamo-dec-2025",
+      "input": {
+        "issuedAt": "2025-12-01T11:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2025-12-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-12-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0043",
+      "label": "reclamo-feb-2026",
+      "input": {
+        "issuedAt": "2026-02-02T09:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2026-02-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0044",
+      "label": "reclamo-jun-2026",
+      "input": {
+        "issuedAt": "2026-06-15T15:30:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2026-07-07T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2026-06-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0045",
+      "label": "reclamo-sep-2026",
+      "input": {
+        "issuedAt": "2026-09-14T12:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2026-10-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0046",
+      "label": "reclamo-feb-2027",
+      "input": {
+        "issuedAt": "2027-02-01T10:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0047",
+      "label": "reclamo-jun-2027",
+      "input": {
+        "issuedAt": "2027-06-14T12:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2027-07-06T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2027-07-05"
+        ]
+      }
+    },
+    {
+      "id": "dl-0048",
+      "label": "reclamo-oct-2027",
+      "input": {
+        "issuedAt": "2027-10-04T08:30:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2027-10-26T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2027-10-18"
+        ]
+      }
+    },
+    {
+      "id": "dl-0049",
+      "label": "reclamo-feb-2028",
+      "input": {
+        "issuedAt": "2028-02-01T09:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2028-02-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0050",
+      "label": "reclamo-jun-2028",
+      "input": {
+        "issuedAt": "2028-06-05T14:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2028-06-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-06-19",
+          "2028-06-26"
+        ]
+      }
+    },
+    {
+      "id": "dl-0051",
+      "label": "reclamo-nov-2028",
+      "input": {
+        "issuedAt": "2028-11-06T10:00:00.000Z",
+        "plazoType": "reclamo"
+      },
+      "expected": {
+        "deadlineAt": "2028-11-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-11-13"
+        ]
+      }
+    },
+    {
+      "id": "dl-0052",
+      "label": "informacion-jan-2024",
+      "input": {
+        "issuedAt": "2024-01-02T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-01-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-01-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0053",
+      "label": "informacion-mar-2024",
+      "input": {
+        "issuedAt": "2024-03-15T09:30:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-04-03T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-03-25",
+          "2024-03-28",
+          "2024-03-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0054",
+      "label": "informacion-jul-2024",
+      "input": {
+        "issuedAt": "2024-07-15T14:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-07-29T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0055",
+      "label": "informacion-dec-2024",
+      "input": {
+        "issuedAt": "2024-12-02T10:15:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-12-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0056",
+      "label": "informacion-jan-2025",
+      "input": {
+        "issuedAt": "2025-01-02T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-01-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0057",
+      "label": "informacion-mar-2025",
+      "input": {
+        "issuedAt": "2025-03-10T08:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-03-25T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-03-24"
+        ]
+      }
+    },
+    {
+      "id": "dl-0058",
+      "label": "informacion-jul-2025",
+      "input": {
+        "issuedAt": "2025-07-15T13:45:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-07-29T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0059",
+      "label": "informacion-dec-2025",
+      "input": {
+        "issuedAt": "2025-12-01T11:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-12-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-12-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0060",
+      "label": "informacion-feb-2026",
+      "input": {
+        "issuedAt": "2026-02-02T09:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-02-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0061",
+      "label": "informacion-jun-2026",
+      "input": {
+        "issuedAt": "2026-06-15T15:30:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-06-30T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2026-06-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0062",
+      "label": "informacion-sep-2026",
+      "input": {
+        "issuedAt": "2026-09-14T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-09-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0063",
+      "label": "informacion-feb-2027",
+      "input": {
+        "issuedAt": "2027-02-01T10:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0064",
+      "label": "informacion-jun-2027",
+      "input": {
+        "issuedAt": "2027-06-14T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2027-06-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0065",
+      "label": "informacion-oct-2027",
+      "input": {
+        "issuedAt": "2027-10-04T08:30:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2027-10-19T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2027-10-18"
+        ]
+      }
+    },
+    {
+      "id": "dl-0066",
+      "label": "informacion-feb-2028",
+      "input": {
+        "issuedAt": "2028-02-01T09:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2028-02-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0067",
+      "label": "informacion-jun-2028",
+      "input": {
+        "issuedAt": "2028-06-05T14:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2028-06-20T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2028-06-19"
+        ]
+      }
+    },
+    {
+      "id": "dl-0068",
+      "label": "informacion-nov-2028",
+      "input": {
+        "issuedAt": "2028-11-06T10:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2028-11-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2028-11-13"
+        ]
+      }
+    },
+    {
+      "id": "dl-0069",
+      "label": "consulta-jan-2024",
+      "input": {
+        "issuedAt": "2024-01-02T12:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2024-02-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2024-01-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0070",
+      "label": "consulta-mar-2024",
+      "input": {
+        "issuedAt": "2024-03-15T09:30:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2024-05-02T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2024-03-25",
+          "2024-03-28",
+          "2024-03-29",
+          "2024-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0071",
+      "label": "consulta-jul-2024",
+      "input": {
+        "issuedAt": "2024-07-15T14:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2024-08-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2024-08-07",
+          "2024-08-19"
+        ]
+      }
+    },
+    {
+      "id": "dl-0072",
+      "label": "consulta-dec-2024",
+      "input": {
+        "issuedAt": "2024-12-02T10:15:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2025-01-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2024-12-25",
+          "2025-01-01",
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0073",
+      "label": "consulta-jan-2025",
+      "input": {
+        "issuedAt": "2025-01-02T12:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2025-02-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0074",
+      "label": "consulta-mar-2025",
+      "input": {
+        "issuedAt": "2025-03-10T08:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2025-04-24T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2025-03-24",
+          "2025-04-17",
+          "2025-04-18"
+        ]
+      }
+    },
+    {
+      "id": "dl-0075",
+      "label": "consulta-jul-2025",
+      "input": {
+        "issuedAt": "2025-07-15T13:45:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2025-08-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2025-08-07",
+          "2025-08-18"
+        ]
+      }
+    },
+    {
+      "id": "dl-0076",
+      "label": "consulta-dec-2025",
+      "input": {
+        "issuedAt": "2025-12-01T11:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2026-01-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2025-12-08",
+          "2025-12-25",
+          "2026-01-01",
+          "2026-01-12"
+        ]
+      }
+    },
+    {
+      "id": "dl-0077",
+      "label": "consulta-feb-2026",
+      "input": {
+        "issuedAt": "2026-02-02T09:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2026-03-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0078",
+      "label": "consulta-jun-2026",
+      "input": {
+        "issuedAt": "2026-06-15T15:30:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2026-07-29T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2026-06-29",
+          "2026-07-20"
+        ]
+      }
+    },
+    {
+      "id": "dl-0079",
+      "label": "consulta-sep-2026",
+      "input": {
+        "issuedAt": "2026-09-14T12:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2026-10-27T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2026-10-12"
+        ]
+      }
+    },
+    {
+      "id": "dl-0080",
+      "label": "consulta-feb-2027",
+      "input": {
+        "issuedAt": "2027-02-01T10:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2027-03-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0081",
+      "label": "consulta-jun-2027",
+      "input": {
+        "issuedAt": "2027-06-14T12:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2027-07-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2027-07-05",
+          "2027-07-20"
+        ]
+      }
+    },
+    {
+      "id": "dl-0082",
+      "label": "consulta-oct-2027",
+      "input": {
+        "issuedAt": "2027-10-04T08:30:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2027-11-18T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2027-10-18",
+          "2027-11-01",
+          "2027-11-15"
+        ]
+      }
+    },
+    {
+      "id": "dl-0083",
+      "label": "consulta-feb-2028",
+      "input": {
+        "issuedAt": "2028-02-01T09:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2028-03-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0084",
+      "label": "consulta-jun-2028",
+      "input": {
+        "issuedAt": "2028-06-05T14:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2028-07-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2028-06-19",
+          "2028-06-26",
+          "2028-07-03",
+          "2028-07-20"
+        ]
+      }
+    },
+    {
+      "id": "dl-0085",
+      "label": "consulta-nov-2028",
+      "input": {
+        "issuedAt": "2028-11-06T10:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2028-12-20T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2028-11-13",
+          "2028-12-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0086",
+      "label": "inter_autoridades-jan-2024",
+      "input": {
+        "issuedAt": "2024-01-02T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2024-01-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-01-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0087",
+      "label": "inter_autoridades-mar-2024",
+      "input": {
+        "issuedAt": "2024-03-15T09:30:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2024-04-03T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-03-25",
+          "2024-03-28",
+          "2024-03-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0088",
+      "label": "inter_autoridades-jul-2024",
+      "input": {
+        "issuedAt": "2024-07-15T14:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2024-07-29T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0089",
+      "label": "inter_autoridades-dec-2024",
+      "input": {
+        "issuedAt": "2024-12-02T10:15:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2024-12-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0090",
+      "label": "inter_autoridades-jan-2025",
+      "input": {
+        "issuedAt": "2025-01-02T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2025-01-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0091",
+      "label": "inter_autoridades-mar-2025",
+      "input": {
+        "issuedAt": "2025-03-10T08:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2025-03-25T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-03-24"
+        ]
+      }
+    },
+    {
+      "id": "dl-0092",
+      "label": "inter_autoridades-jul-2025",
+      "input": {
+        "issuedAt": "2025-07-15T13:45:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2025-07-29T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0093",
+      "label": "inter_autoridades-dec-2025",
+      "input": {
+        "issuedAt": "2025-12-01T11:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2025-12-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-12-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0094",
+      "label": "inter_autoridades-feb-2026",
+      "input": {
+        "issuedAt": "2026-02-02T09:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2026-02-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0095",
+      "label": "inter_autoridades-jun-2026",
+      "input": {
+        "issuedAt": "2026-06-15T15:30:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2026-06-30T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2026-06-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0096",
+      "label": "inter_autoridades-sep-2026",
+      "input": {
+        "issuedAt": "2026-09-14T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2026-09-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0097",
+      "label": "inter_autoridades-feb-2027",
+      "input": {
+        "issuedAt": "2027-02-01T10:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0098",
+      "label": "inter_autoridades-jun-2027",
+      "input": {
+        "issuedAt": "2027-06-14T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2027-06-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0099",
+      "label": "inter_autoridades-oct-2027",
+      "input": {
+        "issuedAt": "2027-10-04T08:30:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2027-10-19T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2027-10-18"
+        ]
+      }
+    },
+    {
+      "id": "dl-0100",
+      "label": "inter_autoridades-feb-2028",
+      "input": {
+        "issuedAt": "2028-02-01T09:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2028-02-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0101",
+      "label": "inter_autoridades-jun-2028",
+      "input": {
+        "issuedAt": "2028-06-05T14:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2028-06-20T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2028-06-19"
+        ]
+      }
+    },
+    {
+      "id": "dl-0102",
+      "label": "inter_autoridades-nov-2028",
+      "input": {
+        "issuedAt": "2028-11-06T10:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2028-11-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2028-11-13"
+        ]
+      }
+    },
+    {
+      "id": "dl-0103",
+      "label": "salud_priority-jan-2024",
+      "input": {
+        "issuedAt": "2024-01-02T12:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2024-01-10T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": [
+          "2024-01-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0104",
+      "label": "salud_priority-mar-2024",
+      "input": {
+        "issuedAt": "2024-03-15T09:30:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2024-03-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0105",
+      "label": "salud_priority-jul-2024",
+      "input": {
+        "issuedAt": "2024-07-15T14:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2024-07-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0106",
+      "label": "salud_priority-dec-2024",
+      "input": {
+        "issuedAt": "2024-12-02T10:15:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2024-12-09T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0107",
+      "label": "salud_priority-jan-2025",
+      "input": {
+        "issuedAt": "2025-01-02T12:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2025-01-10T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": [
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0108",
+      "label": "salud_priority-mar-2025",
+      "input": {
+        "issuedAt": "2025-03-10T08:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2025-03-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0109",
+      "label": "salud_priority-jul-2025",
+      "input": {
+        "issuedAt": "2025-07-15T13:45:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2025-07-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0110",
+      "label": "salud_priority-dec-2025",
+      "input": {
+        "issuedAt": "2025-12-01T11:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2025-12-09T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": [
+          "2025-12-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0111",
+      "label": "salud_priority-feb-2026",
+      "input": {
+        "issuedAt": "2026-02-02T09:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2026-02-09T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0112",
+      "label": "salud_priority-jun-2026",
+      "input": {
+        "issuedAt": "2026-06-15T15:30:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2026-06-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0113",
+      "label": "salud_priority-sep-2026",
+      "input": {
+        "issuedAt": "2026-09-14T12:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2026-09-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0114",
+      "label": "salud_priority-feb-2027",
+      "input": {
+        "issuedAt": "2027-02-01T10:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-08T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0115",
+      "label": "salud_priority-jun-2027",
+      "input": {
+        "issuedAt": "2027-06-14T12:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2027-06-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0116",
+      "label": "salud_priority-oct-2027",
+      "input": {
+        "issuedAt": "2027-10-04T08:30:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2027-10-11T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0117",
+      "label": "salud_priority-feb-2028",
+      "input": {
+        "issuedAt": "2028-02-01T09:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2028-02-08T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0118",
+      "label": "salud_priority-jun-2028",
+      "input": {
+        "issuedAt": "2028-06-05T14:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2028-06-12T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0119",
+      "label": "salud_priority-nov-2028",
+      "input": {
+        "issuedAt": "2028-11-06T10:00:00.000Z",
+        "plazoType": "salud_priority"
+      },
+      "expected": {
+        "deadlineAt": "2028-11-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": [
+          "2028-11-13"
+        ]
+      }
+    },
+    {
+      "id": "dl-0120",
+      "label": "traslado_por_competencia-jan-2024",
+      "input": {
+        "issuedAt": "2024-01-02T12:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2024-01-10T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": [
+          "2024-01-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0121",
+      "label": "traslado_por_competencia-mar-2024",
+      "input": {
+        "issuedAt": "2024-03-15T09:30:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2024-03-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0122",
+      "label": "traslado_por_competencia-jul-2024",
+      "input": {
+        "issuedAt": "2024-07-15T14:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2024-07-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0123",
+      "label": "traslado_por_competencia-dec-2024",
+      "input": {
+        "issuedAt": "2024-12-02T10:15:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2024-12-09T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0124",
+      "label": "traslado_por_competencia-jan-2025",
+      "input": {
+        "issuedAt": "2025-01-02T12:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2025-01-10T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": [
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0125",
+      "label": "traslado_por_competencia-mar-2025",
+      "input": {
+        "issuedAt": "2025-03-10T08:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2025-03-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0126",
+      "label": "traslado_por_competencia-jul-2025",
+      "input": {
+        "issuedAt": "2025-07-15T13:45:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2025-07-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0127",
+      "label": "traslado_por_competencia-dec-2025",
+      "input": {
+        "issuedAt": "2025-12-01T11:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2025-12-09T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": [
+          "2025-12-08"
+        ]
+      }
+    },
+    {
+      "id": "dl-0128",
+      "label": "traslado_por_competencia-feb-2026",
+      "input": {
+        "issuedAt": "2026-02-02T09:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2026-02-09T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0129",
+      "label": "traslado_por_competencia-jun-2026",
+      "input": {
+        "issuedAt": "2026-06-15T15:30:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2026-06-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0130",
+      "label": "traslado_por_competencia-sep-2026",
+      "input": {
+        "issuedAt": "2026-09-14T12:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2026-09-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0131",
+      "label": "traslado_por_competencia-feb-2027",
+      "input": {
+        "issuedAt": "2027-02-01T10:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-08T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0132",
+      "label": "traslado_por_competencia-jun-2027",
+      "input": {
+        "issuedAt": "2027-06-14T12:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2027-06-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0133",
+      "label": "traslado_por_competencia-oct-2027",
+      "input": {
+        "issuedAt": "2027-10-04T08:30:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2027-10-11T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0134",
+      "label": "traslado_por_competencia-feb-2028",
+      "input": {
+        "issuedAt": "2028-02-01T09:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2028-02-08T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0135",
+      "label": "traslado_por_competencia-jun-2028",
+      "input": {
+        "issuedAt": "2028-06-05T14:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2028-06-12T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0136",
+      "label": "traslado_por_competencia-nov-2028",
+      "input": {
+        "issuedAt": "2028-11-06T10:00:00.000Z",
+        "plazoType": "traslado_por_competencia"
+      },
+      "expected": {
+        "deadlineAt": "2028-11-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": [
+          "2028-11-13"
+        ]
+      }
+    },
+    {
+      "id": "dl-0137",
+      "label": "eom-2024-01-31",
+      "input": {
+        "issuedAt": "2024-01-31T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-02-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0138",
+      "label": "eom-2024-01-31-info",
+      "input": {
+        "issuedAt": "2024-01-31T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-02-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0139",
+      "label": "eom-2024-04-30",
+      "input": {
+        "issuedAt": "2024-04-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-05-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-05-01",
+          "2024-05-13"
+        ]
+      }
+    },
+    {
+      "id": "dl-0140",
+      "label": "eom-2024-04-30-info",
+      "input": {
+        "issuedAt": "2024-04-30T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-05-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-05-01",
+          "2024-05-13"
+        ]
+      }
+    },
+    {
+      "id": "dl-0141",
+      "label": "eom-2024-06-30",
+      "input": {
+        "issuedAt": "2024-06-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-07-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-07-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0142",
+      "label": "eom-2024-06-30-info",
+      "input": {
+        "issuedAt": "2024-06-30T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-07-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-07-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0143",
+      "label": "eom-2024-02-29",
+      "input": {
+        "issuedAt": "2024-02-29T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-03-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0144",
+      "label": "eom-2024-02-29-info",
+      "input": {
+        "issuedAt": "2024-02-29T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-03-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0145",
+      "label": "eom-2025-01-31",
+      "input": {
+        "issuedAt": "2025-01-31T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-02-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0146",
+      "label": "eom-2025-01-31-info",
+      "input": {
+        "issuedAt": "2025-01-31T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-02-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0147",
+      "label": "eom-2025-04-30",
+      "input": {
+        "issuedAt": "2025-04-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-05-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0148",
+      "label": "eom-2025-04-30-info",
+      "input": {
+        "issuedAt": "2025-04-30T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-05-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0149",
+      "label": "eom-2025-06-30",
+      "input": {
+        "issuedAt": "2025-06-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-07-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0150",
+      "label": "eom-2025-06-30-info",
+      "input": {
+        "issuedAt": "2025-06-30T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-07-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0151",
+      "label": "eom-2025-02-28",
+      "input": {
+        "issuedAt": "2025-02-28T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-03-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0152",
+      "label": "eom-2025-02-28-info",
+      "input": {
+        "issuedAt": "2025-02-28T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-03-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0153",
+      "label": "eom-2026-01-31",
+      "input": {
+        "issuedAt": "2026-01-31T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-02-20T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0154",
+      "label": "eom-2026-01-31-info",
+      "input": {
+        "issuedAt": "2026-01-31T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-02-13T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0155",
+      "label": "eom-2026-04-30",
+      "input": {
+        "issuedAt": "2026-04-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-05-25T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2026-05-01",
+          "2026-05-18"
+        ]
+      }
+    },
+    {
+      "id": "dl-0156",
+      "label": "eom-2026-04-30-info",
+      "input": {
+        "issuedAt": "2026-04-30T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-05-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2026-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0157",
+      "label": "eom-2026-06-30",
+      "input": {
+        "issuedAt": "2026-06-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-07-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2026-07-20"
+        ]
+      }
+    },
+    {
+      "id": "dl-0158",
+      "label": "eom-2026-06-30-info",
+      "input": {
+        "issuedAt": "2026-06-30T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-07-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0159",
+      "label": "eom-2026-02-28",
+      "input": {
+        "issuedAt": "2026-02-28T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-03-20T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0160",
+      "label": "eom-2026-02-28-info",
+      "input": {
+        "issuedAt": "2026-02-28T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-03-13T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0161",
+      "label": "eom-2027-01-31",
+      "input": {
+        "issuedAt": "2027-01-31T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-19T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0162",
+      "label": "eom-2027-01-31-info",
+      "input": {
+        "issuedAt": "2027-01-31T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-12T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0163",
+      "label": "eom-2027-04-30",
+      "input": {
+        "issuedAt": "2027-04-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-05-24T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2027-05-10"
+        ]
+      }
+    },
+    {
+      "id": "dl-0164",
+      "label": "eom-2027-04-30-info",
+      "input": {
+        "issuedAt": "2027-04-30T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2027-05-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2027-05-10"
+        ]
+      }
+    },
+    {
+      "id": "dl-0165",
+      "label": "eom-2027-06-30",
+      "input": {
+        "issuedAt": "2027-06-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-07-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2027-07-05",
+          "2027-07-20"
+        ]
+      }
+    },
+    {
+      "id": "dl-0166",
+      "label": "eom-2027-06-30-info",
+      "input": {
+        "issuedAt": "2027-06-30T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2027-07-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2027-07-05"
+        ]
+      }
+    },
+    {
+      "id": "dl-0167",
+      "label": "eom-2027-02-28",
+      "input": {
+        "issuedAt": "2027-02-28T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-03-19T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0168",
+      "label": "eom-2027-02-28-info",
+      "input": {
+        "issuedAt": "2027-02-28T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2027-03-12T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0169",
+      "label": "eom-2028-01-31",
+      "input": {
+        "issuedAt": "2028-01-31T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-02-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0170",
+      "label": "eom-2028-01-31-info",
+      "input": {
+        "issuedAt": "2028-01-31T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2028-02-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0171",
+      "label": "eom-2028-04-30",
+      "input": {
+        "issuedAt": "2028-04-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-05-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0172",
+      "label": "eom-2028-04-30-info",
+      "input": {
+        "issuedAt": "2028-04-30T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2028-05-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2028-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0173",
+      "label": "eom-2028-06-30",
+      "input": {
+        "issuedAt": "2028-06-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-07-25T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-07-03",
+          "2028-07-20"
+        ]
+      }
+    },
+    {
+      "id": "dl-0174",
+      "label": "eom-2028-06-30-info",
+      "input": {
+        "issuedAt": "2028-06-30T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2028-07-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2028-07-03"
+        ]
+      }
+    },
+    {
+      "id": "dl-0175",
+      "label": "eom-2028-02-29",
+      "input": {
+        "issuedAt": "2028-02-29T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-03-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-03-20"
+        ]
+      }
+    },
+    {
+      "id": "dl-0176",
+      "label": "eom-2028-02-29-info",
+      "input": {
+        "issuedAt": "2028-02-29T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2028-03-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0177",
+      "label": "new-year-2024-12-30",
+      "input": {
+        "issuedAt": "2024-12-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-01-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-01-01",
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0178",
+      "label": "new-year-2024-12-30-consulta",
+      "input": {
+        "issuedAt": "2024-12-30T12:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2025-02-12T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2025-01-01",
+          "2025-01-06"
+        ]
+      }
+    },
+    {
+      "id": "dl-0179",
+      "label": "new-year-2025-12-30",
+      "input": {
+        "issuedAt": "2025-12-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-01-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2026-01-01",
+          "2026-01-12"
+        ]
+      }
+    },
+    {
+      "id": "dl-0180",
+      "label": "new-year-2025-12-30-consulta",
+      "input": {
+        "issuedAt": "2025-12-30T12:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2026-02-12T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2026-01-01",
+          "2026-01-12"
+        ]
+      }
+    },
+    {
+      "id": "dl-0181",
+      "label": "new-year-2026-12-30",
+      "input": {
+        "issuedAt": "2026-12-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-01-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2027-01-01",
+          "2027-01-11"
+        ]
+      }
+    },
+    {
+      "id": "dl-0182",
+      "label": "new-year-2026-12-30-consulta",
+      "input": {
+        "issuedAt": "2026-12-30T12:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-12T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2027-01-01",
+          "2027-01-11"
+        ]
+      }
+    },
+    {
+      "id": "dl-0183",
+      "label": "new-year-2027-12-30",
+      "input": {
+        "issuedAt": "2027-12-30T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-01-21T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-01-10"
+        ]
+      }
+    },
+    {
+      "id": "dl-0184",
+      "label": "new-year-2027-12-30-consulta",
+      "input": {
+        "issuedAt": "2027-12-30T12:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2028-02-11T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": [
+          "2028-01-10"
+        ]
+      }
+    },
+    {
+      "id": "dl-0185",
+      "label": "semana-santa-wed-2024-03-27",
+      "input": {
+        "issuedAt": "2024-03-27T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-04-19T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-03-28",
+          "2024-03-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0186",
+      "label": "semana-santa-thu-2024-03-28",
+      "input": {
+        "issuedAt": "2024-03-28T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-04-12T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-03-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0187",
+      "label": "semana-santa-fri-2024-03-29",
+      "input": {
+        "issuedAt": "2024-03-29T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-04-12T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0188",
+      "label": "semana-santa-wed-2025-04-16",
+      "input": {
+        "issuedAt": "2025-04-16T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-05-12T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-04-17",
+          "2025-04-18",
+          "2025-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0189",
+      "label": "semana-santa-thu-2025-04-17",
+      "input": {
+        "issuedAt": "2025-04-17T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-05-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-04-18",
+          "2025-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0190",
+      "label": "semana-santa-fri-2025-04-18",
+      "input": {
+        "issuedAt": "2025-04-18T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-05-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0191",
+      "label": "semana-santa-wed-2026-04-01",
+      "input": {
+        "issuedAt": "2026-04-01T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-04-24T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2026-04-02",
+          "2026-04-03"
+        ]
+      }
+    },
+    {
+      "id": "dl-0192",
+      "label": "semana-santa-thu-2026-04-02",
+      "input": {
+        "issuedAt": "2026-04-02T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-04-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2026-04-03"
+        ]
+      }
+    },
+    {
+      "id": "dl-0193",
+      "label": "semana-santa-fri-2026-04-03",
+      "input": {
+        "issuedAt": "2026-04-03T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-04-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0194",
+      "label": "semana-santa-wed-2027-03-24",
+      "input": {
+        "issuedAt": "2027-03-24T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-04-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2027-03-25",
+          "2027-03-26"
+        ]
+      }
+    },
+    {
+      "id": "dl-0195",
+      "label": "semana-santa-thu-2027-03-25",
+      "input": {
+        "issuedAt": "2027-03-25T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2027-04-09T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2027-03-26"
+        ]
+      }
+    },
+    {
+      "id": "dl-0196",
+      "label": "semana-santa-fri-2027-03-26",
+      "input": {
+        "issuedAt": "2027-03-26T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2027-04-09T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0197",
+      "label": "semana-santa-wed-2028-04-12",
+      "input": {
+        "issuedAt": "2028-04-12T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-05-08T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-04-13",
+          "2028-04-14",
+          "2028-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0198",
+      "label": "semana-santa-thu-2028-04-13",
+      "input": {
+        "issuedAt": "2028-04-13T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2028-04-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2028-04-14"
+        ]
+      }
+    },
+    {
+      "id": "dl-0199",
+      "label": "semana-santa-fri-2028-04-14",
+      "input": {
+        "issuedAt": "2028-04-14T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2028-04-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0200",
+      "label": "emiliani-2024-08-19",
+      "input": {
+        "issuedAt": "2024-08-16T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-09-02T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-08-19"
+        ]
+      }
+    },
+    {
+      "id": "dl-0201",
+      "label": "emiliani-2024-10-14",
+      "input": {
+        "issuedAt": "2024-10-11T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-10-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-10-14"
+        ]
+      }
+    },
+    {
+      "id": "dl-0202",
+      "label": "emiliani-2024-11-04",
+      "input": {
+        "issuedAt": "2024-11-01T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-11-19T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-11-04",
+          "2024-11-11"
+        ]
+      }
+    },
+    {
+      "id": "dl-0203",
+      "label": "emiliani-2024-11-11",
+      "input": {
+        "issuedAt": "2024-11-08T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2024-11-25T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-11-11"
+        ]
+      }
+    },
+    {
+      "id": "dl-0204",
+      "label": "emiliani-2025-08-18",
+      "input": {
+        "issuedAt": "2025-08-15T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-09-01T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-08-18"
+        ]
+      }
+    },
+    {
+      "id": "dl-0205",
+      "label": "emiliani-2025-10-13",
+      "input": {
+        "issuedAt": "2025-10-10T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-10-27T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-10-13"
+        ]
+      }
+    },
+    {
+      "id": "dl-0206",
+      "label": "emiliani-2026-08-17",
+      "input": {
+        "issuedAt": "2026-08-14T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-08-31T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2026-08-17"
+        ]
+      }
+    },
+    {
+      "id": "dl-0207",
+      "label": "emiliani-2026-10-12",
+      "input": {
+        "issuedAt": "2026-10-09T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2026-10-26T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2026-10-12"
+        ]
+      }
+    },
+    {
+      "id": "dl-0208",
+      "label": "emiliani-2027-10-18",
+      "input": {
+        "issuedAt": "2027-10-15T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2027-11-02T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2027-10-18",
+          "2027-11-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0209",
+      "label": "emiliani-2028-08-21",
+      "input": {
+        "issuedAt": "2028-08-18T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2028-09-04T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2028-08-21"
+        ]
+      }
+    },
+    {
+      "id": "dl-0210",
+      "label": "weekend-2024-02-03",
+      "input": {
+        "issuedAt": "2024-02-03T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-02-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0211",
+      "label": "weekend-2024-02-04",
+      "input": {
+        "issuedAt": "2024-02-04T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-02-23T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0212",
+      "label": "weekend-2024-08-10",
+      "input": {
+        "issuedAt": "2024-08-10T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-09-02T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-08-19"
+        ]
+      }
+    },
+    {
+      "id": "dl-0213",
+      "label": "weekend-2024-08-11",
+      "input": {
+        "issuedAt": "2024-08-11T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2024-09-02T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2024-08-19"
+        ]
+      }
+    },
+    {
+      "id": "dl-0214",
+      "label": "weekend-2025-03-08",
+      "input": {
+        "issuedAt": "2025-03-08T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-03-31T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-03-24"
+        ]
+      }
+    },
+    {
+      "id": "dl-0215",
+      "label": "weekend-2025-03-09",
+      "input": {
+        "issuedAt": "2025-03-09T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-03-31T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2025-03-24"
+        ]
+      }
+    },
+    {
+      "id": "dl-0216",
+      "label": "weekend-2025-09-13",
+      "input": {
+        "issuedAt": "2025-09-13T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-10-03T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0217",
+      "label": "weekend-2025-09-14",
+      "input": {
+        "issuedAt": "2025-09-14T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2025-10-03T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0218",
+      "label": "weekend-2026-04-18",
+      "input": {
+        "issuedAt": "2026-04-18T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-05-11T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2026-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0219",
+      "label": "weekend-2026-04-19",
+      "input": {
+        "issuedAt": "2026-04-19T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-05-11T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2026-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0220",
+      "label": "weekend-2027-02-06",
+      "input": {
+        "issuedAt": "2027-02-06T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-26T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0221",
+      "label": "weekend-2027-02-07",
+      "input": {
+        "issuedAt": "2027-02-07T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2027-02-26T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0222",
+      "label": "weekend-2028-05-13",
+      "input": {
+        "issuedAt": "2028-05-13T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-06-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-05-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0223",
+      "label": "weekend-2028-05-14",
+      "input": {
+        "issuedAt": "2028-05-14T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2028-06-05T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2028-05-29"
+        ]
+      }
+    },
+    {
+      "id": "dl-0224",
+      "label": "inter-aut-2024-04-25",
+      "input": {
+        "issuedAt": "2024-04-25T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2024-05-10T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0225",
+      "label": "inter-aut-2024-07-15",
+      "input": {
+        "issuedAt": "2024-07-15T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2024-07-29T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0226",
+      "label": "inter-aut-2024-08-01",
+      "input": {
+        "issuedAt": "2024-08-01T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2024-08-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-08-07"
+        ]
+      }
+    },
+    {
+      "id": "dl-0227",
+      "label": "inter-aut-2025-04-24",
+      "input": {
+        "issuedAt": "2025-04-24T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2025-05-09T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0228",
+      "label": "inter-aut-2025-07-14",
+      "input": {
+        "issuedAt": "2025-07-14T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2025-07-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0229",
+      "label": "inter-aut-2025-07-31",
+      "input": {
+        "issuedAt": "2025-07-31T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2025-08-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2025-08-07"
+        ]
+      }
+    },
+    {
+      "id": "dl-0230",
+      "label": "inter-aut-2026-04-24",
+      "input": {
+        "issuedAt": "2026-04-24T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2026-05-11T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2026-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0231",
+      "label": "inter-aut-2026-07-13",
+      "input": {
+        "issuedAt": "2026-07-13T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2026-07-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2026-07-20"
+        ]
+      }
+    },
+    {
+      "id": "dl-0232",
+      "label": "inter-aut-2026-08-03",
+      "input": {
+        "issuedAt": "2026-08-03T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2026-08-19T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2026-08-07",
+          "2026-08-17"
+        ]
+      }
+    },
+    {
+      "id": "dl-0233",
+      "label": "inter-aut-2027-04-26",
+      "input": {
+        "issuedAt": "2027-04-26T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2027-05-11T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2027-05-10"
+        ]
+      }
+    },
+    {
+      "id": "dl-0234",
+      "label": "inter-aut-2027-07-13",
+      "input": {
+        "issuedAt": "2027-07-13T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2027-07-28T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2027-07-20"
+        ]
+      }
+    },
+    {
+      "id": "dl-0235",
+      "label": "inter-aut-2027-08-02",
+      "input": {
+        "issuedAt": "2027-08-02T12:00:00.000Z",
+        "plazoType": "inter_autoridades"
+      },
+      "expected": {
+        "deadlineAt": "2027-08-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2027-08-16"
+        ]
+      }
+    },
+    {
+      "id": "dl-0236",
+      "label": "post-tutela-2024-01-10T12:00:00.000Z",
+      "input": {
+        "issuedAt": "2024-01-10T12:00:00.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2024-01-12T12:00:00.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0237",
+      "label": "post-tutela-2024-01-13T23:30:00.000Z",
+      "input": {
+        "issuedAt": "2024-01-13T23:30:00.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2024-01-15T23:30:00.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0238",
+      "label": "post-tutela-2025-07-19T05:00:00.000Z",
+      "input": {
+        "issuedAt": "2025-07-19T05:00:00.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2025-07-21T05:00:00.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0239",
+      "label": "post-tutela-2025-12-31T18:00:00.000Z",
+      "input": {
+        "issuedAt": "2025-12-31T18:00:00.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2026-01-02T18:00:00.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0240",
+      "label": "post-tutela-2026-04-18T12:00:00.000Z",
+      "input": {
+        "issuedAt": "2026-04-18T12:00:00.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2026-04-20T12:00:00.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0241",
+      "label": "post-tutela-2026-05-01T00:00:00.000Z",
+      "input": {
+        "issuedAt": "2026-05-01T00:00:00.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2026-05-03T00:00:00.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0242",
+      "label": "post-tutela-2027-03-26T09:00:00.000Z",
+      "input": {
+        "issuedAt": "2027-03-26T09:00:00.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2027-03-28T09:00:00.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0243",
+      "label": "post-tutela-2027-11-15T23:59:59.000Z",
+      "input": {
+        "issuedAt": "2027-11-15T23:59:59.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2027-11-17T23:59:59.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0244",
+      "label": "post-tutela-2028-02-29T12:00:00.000Z",
+      "input": {
+        "issuedAt": "2028-02-29T12:00:00.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2028-03-02T12:00:00.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0245",
+      "label": "post-tutela-2028-12-31T23:00:00.000Z",
+      "input": {
+        "issuedAt": "2028-12-31T23:00:00.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2029-01-02T23:00:00.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0246",
+      "label": "susp-2026-feb",
+      "input": {
+        "issuedAt": "2026-02-02T12:00:00.000Z",
+        "plazoType": "informacion",
+        "tenantConfig": {
+          "suspensiones": [
+            {
+              "from": "2026-02-05",
+              "to": "2026-02-09",
+              "reason": "ajuste-test"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "deadlineAt": "2026-02-19T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0247",
+      "label": "susp-2025-jun",
+      "input": {
+        "issuedAt": "2025-06-02T12:00:00.000Z",
+        "plazoType": "informacion",
+        "tenantConfig": {
+          "suspensiones": [
+            {
+              "from": "2025-06-05",
+              "to": "2025-06-09",
+              "reason": "ajuste-test"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "deadlineAt": "2025-06-19T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0248",
+      "label": "susp-2024-oct",
+      "input": {
+        "issuedAt": "2024-10-07T12:00:00.000Z",
+        "plazoType": "informacion",
+        "tenantConfig": {
+          "suspensiones": [
+            {
+              "from": "2024-10-10",
+              "to": "2024-10-14",
+              "reason": "ajuste-test"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "deadlineAt": "2024-10-24T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": [
+          "2024-10-14"
+        ]
+      }
+    },
+    {
+      "id": "dl-0249",
+      "label": "susp-2027-mar",
+      "input": {
+        "issuedAt": "2027-03-01T12:00:00.000Z",
+        "plazoType": "informacion",
+        "tenantConfig": {
+          "suspensiones": [
+            {
+              "from": "2027-03-04",
+              "to": "2027-03-08",
+              "reason": "ajuste-test"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "deadlineAt": "2027-03-18T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0250",
+      "label": "salud-3-2025-03-10",
+      "input": {
+        "issuedAt": "2025-03-10T12:00:00.000Z",
+        "plazoType": "salud_priority",
+        "tenantConfig": {
+          "saludPriorityDays": 3
+        }
+      },
+      "expected": {
+        "deadlineAt": "2025-03-13T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 3,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0251",
+      "label": "salud-8-2025-03-10",
+      "input": {
+        "issuedAt": "2025-03-10T12:00:00.000Z",
+        "plazoType": "salud_priority",
+        "tenantConfig": {
+          "saludPriorityDays": 8
+        }
+      },
+      "expected": {
+        "deadlineAt": "2025-03-20T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 8,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0252",
+      "label": "salud-3-2026-06-15",
+      "input": {
+        "issuedAt": "2026-06-15T12:00:00.000Z",
+        "plazoType": "salud_priority",
+        "tenantConfig": {
+          "saludPriorityDays": 3
+        }
+      },
+      "expected": {
+        "deadlineAt": "2026-06-18T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 3,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0253",
+      "label": "salud-8-2026-06-15",
+      "input": {
+        "issuedAt": "2026-06-15T12:00:00.000Z",
+        "plazoType": "salud_priority",
+        "tenantConfig": {
+          "saludPriorityDays": 8
+        }
+      },
+      "expected": {
+        "deadlineAt": "2026-06-25T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 8,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0254",
+      "label": "salud-3-2027-02-01",
+      "input": {
+        "issuedAt": "2027-02-01T12:00:00.000Z",
+        "plazoType": "salud_priority",
+        "tenantConfig": {
+          "saludPriorityDays": 3
+        }
+      },
+      "expected": {
+        "deadlineAt": "2027-02-04T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 3,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0255",
+      "label": "salud-8-2027-02-01",
+      "input": {
+        "issuedAt": "2027-02-01T12:00:00.000Z",
+        "plazoType": "salud_priority",
+        "tenantConfig": {
+          "saludPriorityDays": 8
+        }
+      },
+      "expected": {
+        "deadlineAt": "2027-02-11T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 8,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0256",
+      "label": "salud-3-2028-05-10",
+      "input": {
+        "issuedAt": "2028-05-10T12:00:00.000Z",
+        "plazoType": "salud_priority",
+        "tenantConfig": {
+          "saludPriorityDays": 3
+        }
+      },
+      "expected": {
+        "deadlineAt": "2028-05-15T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 3,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0257",
+      "label": "salud-8-2028-05-10",
+      "input": {
+        "issuedAt": "2028-05-10T12:00:00.000Z",
+        "plazoType": "salud_priority",
+        "tenantConfig": {
+          "saludPriorityDays": 8
+        }
+      },
+      "expected": {
+        "deadlineAt": "2028-05-22T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 8,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "spot-check-2026-04-18",
+      "label": "spot-check-2026-04-18",
+      "input": {
+        "issuedAt": "2026-04-18T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-05-11T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": [
+          "2026-05-01"
+        ]
+      }
+    },
+    {
+      "id": "dl-0258",
+      "label": "oposicion-2025-03-10",
+      "input": {
+        "issuedAt": "2025-03-10T12:00:00.000Z",
+        "plazoType": "oposicion"
+      },
+      "expected": {
+        "deadlineAt": "2025-03-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0259",
+      "label": "oposicion-2026-04-20",
+      "input": {
+        "issuedAt": "2026-04-20T12:00:00.000Z",
+        "plazoType": "oposicion"
+      },
+      "expected": {
+        "deadlineAt": "2026-04-27T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0260",
+      "label": "oposicion-2027-11-08",
+      "input": {
+        "issuedAt": "2027-11-08T12:00:00.000Z",
+        "plazoType": "oposicion"
+      },
+      "expected": {
+        "deadlineAt": "2027-11-16T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": [
+          "2027-11-15"
+        ]
+      }
+    },
+    {
+      "id": "dl-0261",
+      "label": "oposicion-2028-05-10",
+      "input": {
+        "issuedAt": "2028-05-10T12:00:00.000Z",
+        "plazoType": "oposicion"
+      },
+      "expected": {
+        "deadlineAt": "2028-05-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    }
+  ],
+  "extensionCases": [
+    {
+      "id": "ext-001",
+      "label": "peticion_general-2025-03-10-x1.25",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "reason": "extension by 1.25x for testing",
+        "newDeadlineAt": "2025-04-07T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2025-04-07T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-002",
+      "label": "peticion_general-2025-03-10-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2025-04-11T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2025-04-11T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-003",
+      "label": "peticion_general-2025-03-10-x1.75",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "reason": "extension by 1.75x for testing",
+        "newDeadlineAt": "2025-04-16T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2025-04-16T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-004",
+      "label": "peticion_general-2025-03-10-x2.5-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2025-05-07T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-005",
+      "label": "peticion_general-2025-03-10-x3-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2025-05-16T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-006",
+      "label": "peticion_general-2025-03-10-earlier-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "reason": "cannot shorten the deadline",
+        "newDeadlineAt": "2025-03-28T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
+      }
+    },
+    {
+      "id": "ext-007",
+      "label": "informacion-2025-07-15-x1.25",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-07-15T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-07-29T05:00:00.000Z"
+        },
+        "reason": "extension by 1.25x for testing",
+        "newDeadlineAt": "2025-08-01T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2025-08-01T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-008",
+      "label": "informacion-2025-07-15-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-07-15T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-07-29T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2025-08-05T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2025-08-05T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-009",
+      "label": "informacion-2025-07-15-x1.75",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-07-15T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-07-29T05:00:00.000Z"
+        },
+        "reason": "extension by 1.75x for testing",
+        "newDeadlineAt": "2025-08-11T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2025-08-11T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-010",
+      "label": "informacion-2025-07-15-x2.5-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-07-15T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-07-29T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2025-08-21T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-011",
+      "label": "informacion-2025-07-15-x3-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-07-15T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-07-29T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2025-08-28T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-012",
+      "label": "informacion-2025-07-15-earlier-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-07-15T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-07-29T05:00:00.000Z"
+        },
+        "reason": "cannot shorten the deadline",
+        "newDeadlineAt": "2025-07-25T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
+      }
+    },
+    {
+      "id": "ext-013",
+      "label": "consulta-2026-02-02-x1.25",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-02-02T12:00:00.000Z",
+          "plazoType": "consulta",
+          "deadlineAt": "2026-03-16T05:00:00.000Z"
+        },
+        "reason": "extension by 1.25x for testing",
+        "newDeadlineAt": "2026-03-27T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2026-03-27T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-014",
+      "label": "consulta-2026-02-02-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-02-02T12:00:00.000Z",
+          "plazoType": "consulta",
+          "deadlineAt": "2026-03-16T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2026-04-09T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2026-04-09T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-015",
+      "label": "consulta-2026-02-02-x1.75",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-02-02T12:00:00.000Z",
+          "plazoType": "consulta",
+          "deadlineAt": "2026-03-16T05:00:00.000Z"
+        },
+        "reason": "extension by 1.75x for testing",
+        "newDeadlineAt": "2026-04-21T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2026-04-21T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-016",
+      "label": "consulta-2026-02-02-x2.5-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-02-02T12:00:00.000Z",
+          "plazoType": "consulta",
+          "deadlineAt": "2026-03-16T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2026-05-25T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-017",
+      "label": "consulta-2026-02-02-x3-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-02-02T12:00:00.000Z",
+          "plazoType": "consulta",
+          "deadlineAt": "2026-03-16T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2026-06-17T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-018",
+      "label": "consulta-2026-02-02-earlier-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-02-02T12:00:00.000Z",
+          "plazoType": "consulta",
+          "deadlineAt": "2026-03-16T05:00:00.000Z"
+        },
+        "reason": "cannot shorten the deadline",
+        "newDeadlineAt": "2026-03-12T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
+      }
+    },
+    {
+      "id": "ext-019",
+      "label": "inter_autoridades-2026-06-15-x1.25",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-06-15T12:00:00.000Z",
+          "plazoType": "inter_autoridades",
+          "deadlineAt": "2026-06-30T05:00:00.000Z"
+        },
+        "reason": "extension by 1.25x for testing",
+        "newDeadlineAt": "2026-07-03T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2026-07-03T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-020",
+      "label": "inter_autoridades-2026-06-15-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-06-15T12:00:00.000Z",
+          "plazoType": "inter_autoridades",
+          "deadlineAt": "2026-06-30T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2026-07-07T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2026-07-07T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-021",
+      "label": "inter_autoridades-2026-06-15-x1.75",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-06-15T12:00:00.000Z",
+          "plazoType": "inter_autoridades",
+          "deadlineAt": "2026-06-30T05:00:00.000Z"
+        },
+        "reason": "extension by 1.75x for testing",
+        "newDeadlineAt": "2026-07-10T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2026-07-10T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-022",
+      "label": "inter_autoridades-2026-06-15-x2.5-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-06-15T12:00:00.000Z",
+          "plazoType": "inter_autoridades",
+          "deadlineAt": "2026-06-30T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2026-07-22T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-023",
+      "label": "inter_autoridades-2026-06-15-x3-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-06-15T12:00:00.000Z",
+          "plazoType": "inter_autoridades",
+          "deadlineAt": "2026-06-30T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2026-07-29T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-024",
+      "label": "inter_autoridades-2026-06-15-earlier-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-06-15T12:00:00.000Z",
+          "plazoType": "inter_autoridades",
+          "deadlineAt": "2026-06-30T05:00:00.000Z"
+        },
+        "reason": "cannot shorten the deadline",
+        "newDeadlineAt": "2026-06-25T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
+      }
+    },
+    {
+      "id": "ext-025",
+      "label": "queja-2027-02-01-x1.25",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-02-01T12:00:00.000Z",
+          "plazoType": "queja",
+          "deadlineAt": "2027-02-22T05:00:00.000Z"
+        },
+        "reason": "extension by 1.25x for testing",
+        "newDeadlineAt": "2027-02-26T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-02-26T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-026",
+      "label": "queja-2027-02-01-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-02-01T12:00:00.000Z",
+          "plazoType": "queja",
+          "deadlineAt": "2027-02-22T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2027-03-04T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-03-04T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-027",
+      "label": "queja-2027-02-01-x1.75",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-02-01T12:00:00.000Z",
+          "plazoType": "queja",
+          "deadlineAt": "2027-02-22T05:00:00.000Z"
+        },
+        "reason": "extension by 1.75x for testing",
+        "newDeadlineAt": "2027-03-09T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-03-09T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-028",
+      "label": "queja-2027-02-01-x2.5-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-02-01T12:00:00.000Z",
+          "plazoType": "queja",
+          "deadlineAt": "2027-02-22T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2027-03-30T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-029",
+      "label": "queja-2027-02-01-x3-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-02-01T12:00:00.000Z",
+          "plazoType": "queja",
+          "deadlineAt": "2027-02-22T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2027-04-08T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-030",
+      "label": "queja-2027-02-01-earlier-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-02-01T12:00:00.000Z",
+          "plazoType": "queja",
+          "deadlineAt": "2027-02-22T05:00:00.000Z"
+        },
+        "reason": "cannot shorten the deadline",
+        "newDeadlineAt": "2027-02-18T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
+      }
+    },
+    {
+      "id": "ext-031",
+      "label": "reclamo-2027-10-04-x1.25",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-10-04T12:00:00.000Z",
+          "plazoType": "reclamo",
+          "deadlineAt": "2027-10-26T05:00:00.000Z"
+        },
+        "reason": "extension by 1.25x for testing",
+        "newDeadlineAt": "2027-11-02T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-11-02T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-032",
+      "label": "reclamo-2027-10-04-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-10-04T12:00:00.000Z",
+          "plazoType": "reclamo",
+          "deadlineAt": "2027-10-26T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2027-11-08T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-11-08T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-033",
+      "label": "reclamo-2027-10-04-x1.75",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-10-04T12:00:00.000Z",
+          "plazoType": "reclamo",
+          "deadlineAt": "2027-10-26T05:00:00.000Z"
+        },
+        "reason": "extension by 1.75x for testing",
+        "newDeadlineAt": "2027-11-11T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-11-11T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-034",
+      "label": "reclamo-2027-10-04-x2.5-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-10-04T12:00:00.000Z",
+          "plazoType": "reclamo",
+          "deadlineAt": "2027-10-26T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2027-11-30T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-035",
+      "label": "reclamo-2027-10-04-x3-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-10-04T12:00:00.000Z",
+          "plazoType": "reclamo",
+          "deadlineAt": "2027-10-26T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2027-12-10T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-036",
+      "label": "reclamo-2027-10-04-earlier-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-10-04T12:00:00.000Z",
+          "plazoType": "reclamo",
+          "deadlineAt": "2027-10-26T05:00:00.000Z"
+        },
+        "reason": "cannot shorten the deadline",
+        "newDeadlineAt": "2027-10-22T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
+      }
+    },
+    {
+      "id": "ext-037",
+      "label": "traslado_por_competencia-2028-05-10-x1.25",
+      "input": {
+        "pqr": {
+          "issuedAt": "2028-05-10T12:00:00.000Z",
+          "plazoType": "traslado_por_competencia",
+          "deadlineAt": "2028-05-17T05:00:00.000Z"
+        },
+        "reason": "extension by 1.25x for testing",
+        "newDeadlineAt": "2028-05-18T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2028-05-18T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-038",
+      "label": "traslado_por_competencia-2028-05-10-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2028-05-10T12:00:00.000Z",
+          "plazoType": "traslado_por_competencia",
+          "deadlineAt": "2028-05-17T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2028-05-22T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2028-05-22T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-039",
+      "label": "traslado_por_competencia-2028-05-10-x1.75",
+      "input": {
+        "pqr": {
+          "issuedAt": "2028-05-10T12:00:00.000Z",
+          "plazoType": "traslado_por_competencia",
+          "deadlineAt": "2028-05-17T05:00:00.000Z"
+        },
+        "reason": "extension by 1.75x for testing",
+        "newDeadlineAt": "2028-05-23T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2028-05-23T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-040",
+      "label": "traslado_por_competencia-2028-05-10-x2.5-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2028-05-10T12:00:00.000Z",
+          "plazoType": "traslado_por_competencia",
+          "deadlineAt": "2028-05-17T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2028-05-30T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-041",
+      "label": "traslado_por_competencia-2028-05-10-x3-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2028-05-10T12:00:00.000Z",
+          "plazoType": "traslado_por_competencia",
+          "deadlineAt": "2028-05-17T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2028-06-01T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-042",
+      "label": "traslado_por_competencia-2028-05-10-earlier-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2028-05-10T12:00:00.000Z",
+          "plazoType": "traslado_por_competencia",
+          "deadlineAt": "2028-05-17T05:00:00.000Z"
+        },
+        "reason": "cannot shorten the deadline",
+        "newDeadlineAt": "2028-05-15T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
+      }
+    },
+    {
+      "id": "ext-043",
+      "label": "peticion_general-2024-03-15-x1.25",
+      "input": {
+        "pqr": {
+          "issuedAt": "2024-03-15T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2024-04-10T05:00:00.000Z"
+        },
+        "reason": "extension by 1.25x for testing",
+        "newDeadlineAt": "2024-04-16T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2024-04-16T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-044",
+      "label": "peticion_general-2024-03-15-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2024-03-15T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2024-04-10T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2024-04-22T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2024-04-22T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-045",
+      "label": "peticion_general-2024-03-15-x1.75",
+      "input": {
+        "pqr": {
+          "issuedAt": "2024-03-15T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2024-04-10T05:00:00.000Z"
+        },
+        "reason": "extension by 1.75x for testing",
+        "newDeadlineAt": "2024-04-25T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2024-04-25T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-046",
+      "label": "peticion_general-2024-03-15-x2.5-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2024-03-15T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2024-04-10T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2024-05-15T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-047",
+      "label": "peticion_general-2024-03-15-x3-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2024-03-15T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2024-04-10T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2024-05-24T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-048",
+      "label": "peticion_general-2024-03-15-earlier-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2024-03-15T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2024-04-10T05:00:00.000Z"
+        },
+        "reason": "cannot shorten the deadline",
+        "newDeadlineAt": "2024-04-08T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
+      }
+    },
+    {
+      "id": "ext-049",
+      "label": "oposicion-2027-11-08-x1.25",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "extension by 1.25x for testing",
+        "newDeadlineAt": "2027-11-17T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-11-17T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-050",
+      "label": "oposicion-2027-11-08-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2027-11-19T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-11-19T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-051",
+      "label": "oposicion-2027-11-08-x1.75",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "extension by 1.75x for testing",
+        "newDeadlineAt": "2027-11-22T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2027-11-22T05:00:00.000Z"
+      }
+    },
+    {
+      "id": "ext-052",
+      "label": "oposicion-2027-11-08-x2.5-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2027-11-26T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-053",
+      "label": "oposicion-2027-11-08-x3-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "extension exceeds cap",
+        "newDeadlineAt": "2027-11-30T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_EXCEEDS_LIMIT"
+      }
+    },
+    {
+      "id": "ext-054",
+      "label": "oposicion-2027-11-08-earlier-rejected",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "reason": "cannot shorten the deadline",
+        "newDeadlineAt": "2027-11-11T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": true,
+        "errorCode": "EXTENSION_NOT_AFTER_ORIGINAL"
+      }
+    }
+  ],
+  "progressCases": [
+    {
+      "id": "prog-001",
+      "label": "peticion_general-2025-03-10-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "now": "2025-03-13T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-002",
+      "label": "peticion_general-2025-03-10-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "now": "2025-03-27T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-003",
+      "label": "peticion_general-2025-03-10-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "now": "2025-04-03T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-004",
+      "label": "informacion-2025-07-15-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-07-15T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-07-29T05:00:00.000Z"
+        },
+        "now": "2025-07-17T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 10
+      }
+    },
+    {
+      "id": "prog-005",
+      "label": "informacion-2025-07-15-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-07-15T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-07-29T05:00:00.000Z"
+        },
+        "now": "2025-07-25T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 10
+      }
+    },
+    {
+      "id": "prog-006",
+      "label": "informacion-2025-07-15-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-07-15T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-07-29T05:00:00.000Z"
+        },
+        "now": "2025-07-31T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 10
+      }
+    },
+    {
+      "id": "prog-007",
+      "label": "consulta-2026-02-02-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-02-02T12:00:00.000Z",
+          "plazoType": "consulta",
+          "deadlineAt": "2026-03-16T05:00:00.000Z"
+        },
+        "now": "2026-02-10T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 30
+      }
+    },
+    {
+      "id": "prog-008",
+      "label": "consulta-2026-02-02-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-02-02T12:00:00.000Z",
+          "plazoType": "consulta",
+          "deadlineAt": "2026-03-16T05:00:00.000Z"
+        },
+        "now": "2026-03-06T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 30
+      }
+    },
+    {
+      "id": "prog-009",
+      "label": "consulta-2026-02-02-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-02-02T12:00:00.000Z",
+          "plazoType": "consulta",
+          "deadlineAt": "2026-03-16T05:00:00.000Z"
+        },
+        "now": "2026-03-18T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 30
+      }
+    },
+    {
+      "id": "prog-010",
+      "label": "inter_autoridades-2026-06-15-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-06-15T12:00:00.000Z",
+          "plazoType": "inter_autoridades",
+          "deadlineAt": "2026-06-30T05:00:00.000Z"
+        },
+        "now": "2026-06-17T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 10
+      }
+    },
+    {
+      "id": "prog-011",
+      "label": "inter_autoridades-2026-06-15-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-06-15T12:00:00.000Z",
+          "plazoType": "inter_autoridades",
+          "deadlineAt": "2026-06-30T05:00:00.000Z"
+        },
+        "now": "2026-06-25T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 10
+      }
+    },
+    {
+      "id": "prog-012",
+      "label": "inter_autoridades-2026-06-15-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-06-15T12:00:00.000Z",
+          "plazoType": "inter_autoridades",
+          "deadlineAt": "2026-06-30T05:00:00.000Z"
+        },
+        "now": "2026-07-02T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 10
+      }
+    },
+    {
+      "id": "prog-013",
+      "label": "queja-2027-02-01-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-02-01T12:00:00.000Z",
+          "plazoType": "queja",
+          "deadlineAt": "2027-02-22T05:00:00.000Z"
+        },
+        "now": "2027-02-04T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-014",
+      "label": "queja-2027-02-01-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-02-01T12:00:00.000Z",
+          "plazoType": "queja",
+          "deadlineAt": "2027-02-22T05:00:00.000Z"
+        },
+        "now": "2027-02-17T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-015",
+      "label": "queja-2027-02-01-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-02-01T12:00:00.000Z",
+          "plazoType": "queja",
+          "deadlineAt": "2027-02-22T05:00:00.000Z"
+        },
+        "now": "2027-02-24T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-016",
+      "label": "reclamo-2027-10-04-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-10-04T12:00:00.000Z",
+          "plazoType": "reclamo",
+          "deadlineAt": "2027-10-26T05:00:00.000Z"
+        },
+        "now": "2027-10-07T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-017",
+      "label": "reclamo-2027-10-04-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-10-04T12:00:00.000Z",
+          "plazoType": "reclamo",
+          "deadlineAt": "2027-10-26T05:00:00.000Z"
+        },
+        "now": "2027-10-21T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-018",
+      "label": "reclamo-2027-10-04-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-10-04T12:00:00.000Z",
+          "plazoType": "reclamo",
+          "deadlineAt": "2027-10-26T05:00:00.000Z"
+        },
+        "now": "2027-10-28T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-019",
+      "label": "traslado_por_competencia-2028-05-10-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2028-05-10T12:00:00.000Z",
+          "plazoType": "traslado_por_competencia",
+          "deadlineAt": "2028-05-17T05:00:00.000Z"
+        },
+        "now": "2028-05-11T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 5
+      }
+    },
+    {
+      "id": "prog-020",
+      "label": "traslado_por_competencia-2028-05-10-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2028-05-10T12:00:00.000Z",
+          "plazoType": "traslado_por_competencia",
+          "deadlineAt": "2028-05-17T05:00:00.000Z"
+        },
+        "now": "2028-05-16T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 5
+      }
+    },
+    {
+      "id": "prog-021",
+      "label": "traslado_por_competencia-2028-05-10-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2028-05-10T12:00:00.000Z",
+          "plazoType": "traslado_por_competencia",
+          "deadlineAt": "2028-05-17T05:00:00.000Z"
+        },
+        "now": "2028-05-19T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 5
+      }
+    },
+    {
+      "id": "prog-022",
+      "label": "peticion_general-2024-03-15-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2024-03-15T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2024-04-10T05:00:00.000Z"
+        },
+        "now": "2024-03-20T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-023",
+      "label": "peticion_general-2024-03-15-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2024-03-15T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2024-04-10T05:00:00.000Z"
+        },
+        "now": "2024-04-05T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-024",
+      "label": "peticion_general-2024-03-15-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2024-03-15T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2024-04-10T05:00:00.000Z"
+        },
+        "now": "2024-04-12T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-025",
+      "label": "peticion_general-2026-04-18-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-04-18T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2026-05-11T05:00:00.000Z"
+        },
+        "now": "2026-04-22T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-026",
+      "label": "peticion_general-2026-04-18-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-04-18T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2026-05-11T05:00:00.000Z"
+        },
+        "now": "2026-05-06T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-027",
+      "label": "peticion_general-2026-04-18-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2026-04-18T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2026-05-11T05:00:00.000Z"
+        },
+        "now": "2026-05-13T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 15
+      }
+    },
+    {
+      "id": "prog-028",
+      "label": "informacion-2025-12-01-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-12-01T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-12-16T05:00:00.000Z"
+        },
+        "now": "2025-12-03T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 10
+      }
+    },
+    {
+      "id": "prog-029",
+      "label": "informacion-2025-12-01-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-12-01T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-12-16T05:00:00.000Z"
+        },
+        "now": "2025-12-12T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 10
+      }
+    },
+    {
+      "id": "prog-030",
+      "label": "informacion-2025-12-01-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-12-01T12:00:00.000Z",
+          "plazoType": "informacion",
+          "deadlineAt": "2025-12-16T05:00:00.000Z"
+        },
+        "now": "2025-12-18T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 10
+      }
+    },
+    {
+      "id": "prog-031",
+      "label": "oposicion-2027-11-08-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "now": "2027-11-09T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 5
+      }
+    },
+    {
+      "id": "prog-032",
+      "label": "oposicion-2027-11-08-at_risk",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "now": "2027-11-12T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "at_risk",
+        "unit": "business_days",
+        "amount": 5
+      }
+    },
+    {
+      "id": "prog-033",
+      "label": "oposicion-2027-11-08-overdue",
+      "input": {
+        "pqr": {
+          "issuedAt": "2027-11-08T12:00:00.000Z",
+          "plazoType": "oposicion",
+          "deadlineAt": "2027-11-16T05:00:00.000Z"
+        },
+        "now": "2027-11-18T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "overdue",
+        "unit": "business_days",
+        "amount": 5
+      }
+    }
+  ]
+}

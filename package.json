@@ -1,0 +1,26 @@
+{
+  "name": "omegahack",
+  "version": "0.0.0",
+  "private": true,
+  "description": "OmegaHack — Alcaldía de Medellín PQRSD multi-agent platform",
+  "packageManager": "pnpm@10.30.3",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "test:rls": "pnpm -F @omega/rls-tests test",
+    "typecheck": "turbo run typecheck",
+    "db:types": "supabase gen types typescript --linked --schema public,qa_bank 2>/dev/null > packages/db/src/types.ts",
+    "db:push": "supabase db push",
+    "db:diff": "supabase db diff --linked"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.8",
+    "typescript": "^5.7.2"
+  }
+}

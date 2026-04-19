@@ -1,0 +1,30 @@
+{
+  "name": "@omega/rag",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./chunking": "./src/chunking.ts",
+    "./retriever": "./src/retriever.ts",
+    "./embedding": "./src/embedding.ts",
+    "./nella-client": "./src/nella-client.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "echo \"(no lint configured yet)\""
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@omega/config-ts": "workspace:*",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Neutrals — warm slate */
+  --bg: 250 250 249;
+  --bg-subtle: 245 245 244;
+  --surface: 255 255 255;
+  --surface-hover: 250 250 249;
+  --border: 231 229 228;
+  --border-strong: 214 211 209;
+
+  /* Ink */
+  --fg: 28 25 23;
+  --fg-muted: 87 83 78;
+  --fg-subtle: 120 113 108;
+
+  /* Brand — Alcaldía de Medellín (institutional emerald, adapted) */
+  --brand: 4 120 87;
+  --brand-hover: 6 95 70;
+  --brand-fg: 236 253 245;
+
+  /* Priority / SLA semantics — contrast AA+ on white */
+  --p0: 185 28 28;    /* red-700 */
+  --p1: 194 65 12;    /* orange-700 */
+  --p2: 29 78 216;    /* blue-700 */
+  --p3: 75 85 99;     /* gray-600 */
+
+  --ok: 21 128 61;    /* green-700 */
+  --at-risk: 161 98 7; /* amber-700 */
+  --overdue: 153 27 27; /* red-800 */
+
+  --radius: 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: 12 10 9;
+    --bg-subtle: 23 23 23;
+    --surface: 28 25 23;
+    --surface-hover: 41 37 36;
+    --border: 68 64 60;
+    --border-strong: 87 83 78;
+
+    --fg: 250 250 249;
+    --fg-muted: 168 162 158;
+    --fg-subtle: 120 113 108;
+
+    --brand: 16 185 129;
+    --brand-hover: 52 211 153;
+    --brand-fg: 6 78 59;
+
+    --p0: 248 113 113;
+    --p1: 251 146 60;
+    --p2: 96 165 250;
+    --p3: 156 163 175;
+
+    --ok: 74 222 128;
+    --at-risk: 250 204 21;
+    --overdue: 248 113 113;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}

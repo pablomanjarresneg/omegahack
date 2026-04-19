@@ -21,7 +21,9 @@
     "sourceMap": true,
     "paths": {
       "@omega/db": ["./packages/db/src/index.ts"],
-      "@omega/db/*": ["./packages/db/src/*"]
+      "@omega/db/*": ["./packages/db/src/*"],
+      "@omega/deadline-engine": ["./packages/deadline-engine/src/index.ts"],
+      "@omega/deadline-engine/*": ["./packages/deadline-engine/src/*"]
     }
   },
   "exclude": ["node_modules", ".next", "dist", ".turbo"]

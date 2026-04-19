@@ -27,6 +27,11 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**", "test/**", "package.json", "vitest.config.ts"],
+      "outputs": ["coverage/**"]
     }
   }
 }

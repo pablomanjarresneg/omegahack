@@ -85,7 +85,7 @@ vitest.config.ts.timestamp-*
 
 logs/
 
-# Supabase: ignore everything except migrations folder and config.toml.
+# Supabase: ignore everything except migrations folder, config.toml, and seed.sql.
 # SQL migration files themselves are applied directly to the linked project
 # and are not tracked in git.
 supabase/*
@@ -94,6 +94,7 @@ supabase/*
 supabase/.branches/
 supabase/.temp/
 *.sql
+!supabase/seed.sql
 .n8n/
 
 
@@ -105,3 +106,4 @@ supabase/.temp/
 .stylelintcache
 .prettiercache
 .dccache
+.vercel

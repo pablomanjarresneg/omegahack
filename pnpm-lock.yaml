@@ -75,6 +75,9 @@ importers:
       '@omega/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@supabase/supabase-js':
+        specifier: ^2.103.3
+        version: 2.103.3
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4

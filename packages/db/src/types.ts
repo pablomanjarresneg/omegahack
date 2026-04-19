@@ -980,7 +980,13 @@ export type Database = {
         | "approved"
         | "sent"
         | "closed"
-      pqr_tipo: "peticion" | "queja" | "reclamo" | "sugerencia" | "denuncia"
+      pqr_tipo:
+        | "peticion"
+        | "queja"
+        | "reclamo"
+        | "oposicion"
+        | "sugerencia"
+        | "denuncia"
       priority_level: "P0_critica" | "P1_alta" | "P2_media" | "P3_baja"
       response_kind: "draft" | "final"
       territorial_kind: "comuna" | "corregimiento"
@@ -1143,7 +1149,14 @@ export const Constants = {
         "sent",
         "closed",
       ],
-      pqr_tipo: ["peticion", "queja", "reclamo", "sugerencia", "denuncia"],
+      pqr_tipo: [
+        "peticion",
+        "queja",
+        "reclamo",
+        "oposicion",
+        "sugerencia",
+        "denuncia",
+      ],
       priority_level: ["P0_critica", "P1_alta", "P2_media", "P3_baja"],
       response_kind: ["draft", "final"],
       territorial_kind: ["comuna", "corregimiento"],

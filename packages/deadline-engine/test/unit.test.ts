@@ -174,6 +174,7 @@ describe('plazos.ts', () => {
   test('PLAZOS table is frozen and complete', () => {
     expect(Object.isFrozen(PLAZOS)).toBe(true);
     expect(PLAZOS.peticion_general.amount).toBe(15);
+    expect(PLAZOS.oposicion.amount).toBe(5);
     expect(PLAZOS.post_tutela.unit).toBe('clock_hours');
   });
 
@@ -337,6 +338,13 @@ describe('index.ts edge cases', () => {
   test('computeDeadline accepts bare YYYY-MM-DD', () => {
     const r = computeDeadline('2026-04-20', 'peticion_general');
     expect(r.deadlineAt.toISOString()).toBe('2026-05-12T05:00:00.000Z');
+  });
+
+  test('computeDeadline applies 5 business days for oposicion', () => {
+    const r = computeDeadline('2026-04-20', 'oposicion');
+    expect(r.unit).toBe('business_days');
+    expect(r.amount).toBe(5);
+    expect(r.deadlineAt.toISOString()).toBe('2026-04-27T05:00:00.000Z');
   });
 
   test('DeadlineEngineError carries name and code', () => {

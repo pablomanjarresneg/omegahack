@@ -32,6 +32,11 @@ export const PLAZOS: Readonly<Record<PlazoType, PlazoDefinition>> = Object.freez
     amount: 15,
     description: 'Reclamo: 15 días hábiles.',
   }),
+  oposicion: Object.freeze({
+    unit: 'business_days',
+    amount: 5,
+    description: 'Oposición: máximo 5 días hábiles para responder.',
+  }),
   informacion: Object.freeze({
     unit: 'business_days',
     amount: 10,

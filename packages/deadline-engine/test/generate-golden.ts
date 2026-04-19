@@ -208,6 +208,7 @@ const PLAZO_AMOUNTS: Record<PlazoType, { unit: 'business_days' | 'clock_hours'; 
   peticion_general: { unit: 'business_days', amount: 15 },
   queja: { unit: 'business_days', amount: 15 },
   reclamo: { unit: 'business_days', amount: 15 },
+  oposicion: { unit: 'business_days', amount: 5 },
   informacion: { unit: 'business_days', amount: 10 },
   consulta: { unit: 'business_days', amount: 30 },
   inter_autoridades: { unit: 'business_days', amount: 10 },
@@ -509,6 +510,14 @@ function generateDeadlineCases(holidays: HolidaysByYear): DeadlineCase[] {
     },
   });
 
+  // 12. Oposición has a special 5-business-day response maximum.
+  const oposicionSamples = ['2025-03-10', '2026-04-20', '2027-11-08', '2028-05-10'];
+  for (const iso of oposicionSamples) {
+    cases.push(
+      buildBusinessDayCase(idx++, `oposicion-${iso}`, iso, '12:00:00.000', 'oposicion', holidays),
+    );
+  }
+
   return cases;
 }
 
@@ -525,6 +534,7 @@ function generateExtensionCases(holidays: HolidaysByYear): ExtensionCase[] {
     { issued: '2027-10-04', plazo: 'reclamo' },
     { issued: '2028-05-10', plazo: 'traslado_por_competencia' },
     { issued: '2024-03-15', plazo: 'peticion_general' },
+    { issued: '2027-11-08', plazo: 'oposicion' },
   ];
 
   for (const b of bases) {
@@ -615,6 +625,7 @@ function generateProgressCases(holidays: HolidaysByYear): ProgressCase[] {
     { issued: '2024-03-15', plazo: 'peticion_general' },
     { issued: '2026-04-18', plazo: 'peticion_general' },
     { issued: '2025-12-01', plazo: 'informacion' },
+    { issued: '2027-11-08', plazo: 'oposicion' },
   ];
 
   for (const b of bases) {

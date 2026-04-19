@@ -2,6 +2,7 @@ export type PlazoType =
   | 'peticion_general'
   | 'queja'
   | 'reclamo'
+  | 'oposicion'
   | 'informacion'
   | 'consulta'
   | 'inter_autoridades'

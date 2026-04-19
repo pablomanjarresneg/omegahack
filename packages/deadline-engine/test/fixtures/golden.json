@@ -1,0 +1,133 @@
+{
+  "generatedAt": "2026-04-18T00:00:00.000Z",
+  "deadlineCases": [
+    {
+      "id": "spot-check-2026-04-18",
+      "label": "spot-check-2026-04-18",
+      "input": {
+        "issuedAt": "2026-04-18T12:00:00.000Z",
+        "plazoType": "peticion_general"
+      },
+      "expected": {
+        "deadlineAt": "2026-05-11T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 15,
+        "holidaysSkipped": ["2026-05-01"]
+      }
+    },
+    {
+      "id": "dl-0002",
+      "label": "informacion-jul-2025",
+      "input": {
+        "issuedAt": "2025-07-15T12:00:00.000Z",
+        "plazoType": "informacion"
+      },
+      "expected": {
+        "deadlineAt": "2025-07-29T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0003",
+      "label": "consulta-jan-2024",
+      "input": {
+        "issuedAt": "2024-01-02T12:00:00.000Z",
+        "plazoType": "consulta"
+      },
+      "expected": {
+        "deadlineAt": "2024-02-14T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 30,
+        "holidaysSkipped": ["2024-01-08"]
+      }
+    },
+    {
+      "id": "dl-0004",
+      "label": "post-tutela-2026-04-18",
+      "input": {
+        "issuedAt": "2026-04-18T12:00:00.000Z",
+        "plazoType": "post_tutela"
+      },
+      "expected": {
+        "deadlineAt": "2026-04-20T12:00:00.000Z",
+        "unit": "clock_hours",
+        "amount": 48,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0005",
+      "label": "salud-5-2025-03-10",
+      "input": {
+        "issuedAt": "2025-03-10T12:00:00.000Z",
+        "plazoType": "salud_priority",
+        "tenantConfig": { "saludPriorityDays": 5 }
+      },
+      "expected": {
+        "deadlineAt": "2025-03-17T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 5,
+        "holidaysSkipped": []
+      }
+    },
+    {
+      "id": "dl-0006",
+      "label": "susp-2026-feb",
+      "input": {
+        "issuedAt": "2026-02-02T12:00:00.000Z",
+        "plazoType": "informacion",
+        "tenantConfig": {
+          "suspensiones": [
+            { "from": "2026-02-05", "to": "2026-02-09", "reason": "ajuste-test" }
+          ]
+        }
+      },
+      "expected": {
+        "deadlineAt": "2026-02-19T05:00:00.000Z",
+        "unit": "business_days",
+        "amount": 10,
+        "holidaysSkipped": []
+      }
+    }
+  ],
+  "extensionCases": [
+    {
+      "id": "ext-001",
+      "label": "peticion_general-2025-03-10-x1.5",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "reason": "extension by 1.5x for testing",
+        "newDeadlineAt": "2025-04-11T05:00:00.000Z"
+      },
+      "expected": {
+        "shouldThrow": false,
+        "newDeadlineAt": "2025-04-11T05:00:00.000Z"
+      }
+    }
+  ],
+  "progressCases": [
+    {
+      "id": "prog-001",
+      "label": "peticion_general-2025-03-10-on_track",
+      "input": {
+        "pqr": {
+          "issuedAt": "2025-03-10T12:00:00.000Z",
+          "plazoType": "peticion_general",
+          "deadlineAt": "2025-04-01T05:00:00.000Z"
+        },
+        "now": "2025-03-13T12:00:00.000Z"
+      },
+      "expected": {
+        "status": "on_track",
+        "unit": "business_days",
+        "amount": 15
+      }
+    }
+  ]
+}

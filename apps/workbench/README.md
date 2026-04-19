@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# @omega/workbench
 
-## Getting Started
+Consola interna de jurídica. Es donde los funcionarios procesan casos, revisan colas, investigan grupos de problemas y auditan cambios. Next.js 14 (App Router) en el puerto **3001**.
 
-First, run the development server:
+## Responsabilidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Revisar casos individuales y redactar respuestas (`/pqr/[id]`).
+- Trabajar colas filtradas por secretaría, estado y prioridad (`/queue`, `/bandeja`).
+- Navegar grupos de problemas recurrentes (`/grupos`).
+- Ver la auditoría append-only (`/auditoria`).
+- Vista sectorial para administración (`/alcaldia`).
+
+## Rutas
+
+```
+app/
+  layout.tsx
+  page.tsx                         # redirect a /queue o /bandeja
+  pqr/[id]/page.tsx                # detalle de un PQR — hechos, petición, respuestas, eventos, tags
+  bandeja/                         # casos asignados al funcionario actual
+  queue/                           # cola global filtrable
+  grupos/                          # problem groups
+  auditoria/                       # pqr_audit viewer
+  alcaldia/                        # KPI y vista por secretaría
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Dependencias
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `@omega/db` — cliente Supabase operacional.
+- `@omega/deadline-engine` — cálculo de progreso de plazo y riesgo en vivo.
+- `@supabase/ssr` — sesión funcionaria vía cookies en SSR.
+- `lucide-react` — iconografía.
+- `clsx` — composición de classes.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Notificaciones
 
-## Learn More
+`apps/workbench/src/lib/citizen-notifications.ts` compone los mensajes que se envían al ciudadano en cada cambio de estado. El envío real pasa por canales externos (correo / SMS / n8n).
 
-To learn more about Next.js, take a look at the following resources:
+## Variables de entorno
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Ver `apps/workbench/.env.example`. Requiere Supabase URL/keys y — cuando está habilitado — un token para la integración saliente de notificaciones.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Comandos
 
-## Deploy on Vercel
+```bash
+pnpm --filter @omega/workbench dev       # http://localhost:3001
+pnpm --filter @omega/workbench build
+pnpm --filter @omega/workbench typecheck
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Despliegue
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proyecto Vercel: `omega-workbench`. Protegido con auth (solo funcionarios con JWT que lleva `tenant_id` + `role`).

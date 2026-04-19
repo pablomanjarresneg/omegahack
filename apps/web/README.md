@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# @omega/web
 
-## Getting Started
+Sitio público para ciudadanos y portal de transparencia. Next.js 14 (App Router) en el puerto **3000**.
 
-First, run the development server:
+## Responsabilidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Home pública — información de la plataforma y link al workbench de jurídica.
+- `/transparencia` — dashboard público con agregados por comuna, secretaría y tendencia mensual. Consume las vistas `public.transparency_*` (k-anonymity ≥ 5 aplicado en la BD).
+- `/api/*` — route handlers para captura de PQRs desde el formulario público y endpoints auxiliares.
+
+## Rutas
+
+```
+app/
+  layout.tsx
+  page.tsx                         # home
+  transparencia/                   # dashboard público
+  api/                             # route handlers (POST intake, GET salud)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Dependencias
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `@omega/db` — cliente Supabase con `SET ROLE app_operational` para lecturas server-side.
+- `@supabase/supabase-js` — cliente desde el navegador donde se necesita.
+- `leaflet` + `react-leaflet` — mapa de densidad por comuna.
+- `recharts` — gráficos del dashboard de transparencia.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Variables de entorno
 
-## Learn More
+Ver `apps/web/.env.example`. El bundle del cliente solo recibe las variables con prefijo `NEXT_PUBLIC_`.
 
-To learn more about Next.js, take a look at the following resources:
+## Comandos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm --filter @omega/web dev           # http://localhost:3000
+pnpm --filter @omega/web build
+pnpm --filter @omega/web typecheck
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Despliegue
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proyecto Vercel: `omega-web`. Se deploya desde `main`; las PRs generan preview deployments automáticos.

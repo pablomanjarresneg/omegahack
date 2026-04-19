@@ -69,6 +69,42 @@ type M2 = {
   top_secretarias: SecretariaDist[];
 };
 
+type Percentiles = { p50_ms: number; p90_ms: number; p99_ms: number; max_ms: number; sample: number };
+
+type M3 = {
+  intake_latency: Percentiles;
+  end_to_end_latency: Percentiles;
+  deadline_buckets: { on_track: number; at_risk: number; overdue: number };
+  open_total: number;
+};
+
+function percentile(sortedAsc: number[], p: number): number {
+  if (sortedAsc.length === 0) return 0;
+  const idx = Math.min(sortedAsc.length - 1, Math.floor((p / 100) * sortedAsc.length));
+  return sortedAsc[idx] ?? 0;
+}
+
+function summarize(samples: number[]): Percentiles {
+  const sorted = [...samples].sort((a, b) => a - b);
+  return {
+    p50_ms: percentile(sorted, 50),
+    p90_ms: percentile(sorted, 90),
+    p99_ms: percentile(sorted, 99),
+    max_ms: sorted.length > 0 ? (sorted[sorted.length - 1] ?? 0) : 0,
+    sample: sorted.length,
+  };
+}
+
+function fmtDuration(ms: number): string {
+  if (ms <= 0) return "0s";
+  const s = Math.round(ms / 1000);
+  if (s < 60) return `${s}s`;
+  const m = Math.round(s / 60);
+  if (m < 60) return `${m}m`;
+  const h = (s / 3600).toFixed(1);
+  return `${h}h`;
+}
+
 async function computeM1(db: Db, tenantId: string): Promise<M1> {
   const [totalRes, groupedRes, activeGroupsRes, hotGroupsRes] = await Promise.all([
     db
@@ -199,6 +235,107 @@ async function computeM2(db: Db, tenantId: string): Promise<M2> {
   };
 }
 
+const OPEN_STATUSES = new Set([
+  "received",
+  "accepted",
+  "assigned",
+  "in_draft",
+  "in_review",
+  "approved",
+]);
+
+const AT_RISK_WINDOW_MS = 48 * 60 * 60 * 1000;
+
+async function computeM3(db: Db, tenantId: string): Promise<M3> {
+  const [eventsRes, openPqrsRes] = await Promise.all([
+    db
+      .from("pqr_events")
+      .select("pqr_id, kind, created_at")
+      .eq("tenant_id", tenantId)
+      .in("kind", ["received", "classified", "response_sent"]),
+    db
+      .from("pqr")
+      .select("id, status, legal_deadline")
+      .eq("tenant_id", tenantId),
+  ]);
+
+  if (eventsRes.error) throw new Error(`pqr_events: ${eventsRes.error.message}`);
+  if (openPqrsRes.error) throw new Error(`pqr: ${openPqrsRes.error.message}`);
+
+  const byPqr = new Map<string, { received?: number; classified?: number; response_sent?: number }>();
+  for (const row of (eventsRes.data ?? []) as Array<{
+    pqr_id: string;
+    kind: string;
+    created_at: string;
+  }>) {
+    const ts = new Date(row.created_at).getTime();
+    const slot = byPqr.get(row.pqr_id) ?? {};
+    if (row.kind === "received") slot.received = Math.min(slot.received ?? ts, ts);
+    if (row.kind === "classified") slot.classified = Math.min(slot.classified ?? ts, ts);
+    if (row.kind === "response_sent")
+      slot.response_sent = Math.min(slot.response_sent ?? ts, ts);
+    byPqr.set(row.pqr_id, slot);
+  }
+
+  const intakeSamples: number[] = [];
+  const endToEndSamples: number[] = [];
+  for (const slot of byPqr.values()) {
+    if (slot.received !== undefined && slot.classified !== undefined) {
+      intakeSamples.push(slot.classified - slot.received);
+    }
+    if (slot.received !== undefined && slot.response_sent !== undefined) {
+      endToEndSamples.push(slot.response_sent - slot.received);
+    }
+  }
+
+  const now = Date.now();
+  const buckets = { on_track: 0, at_risk: 0, overdue: 0 };
+  let openTotal = 0;
+  for (const row of (openPqrsRes.data ?? []) as Array<{
+    id: string;
+    status: string;
+    legal_deadline: string | null;
+  }>) {
+    if (!OPEN_STATUSES.has(row.status)) continue;
+    openTotal++;
+    if (!row.legal_deadline) continue;
+    const delta = new Date(row.legal_deadline).getTime() - now;
+    if (delta <= 0) buckets.overdue++;
+    else if (delta < AT_RISK_WINDOW_MS) buckets.at_risk++;
+    else buckets.on_track++;
+  }
+
+  return {
+    intake_latency: summarize(intakeSamples),
+    end_to_end_latency: summarize(endToEndSamples),
+    deadline_buckets: buckets,
+    open_total: openTotal,
+  };
+}
+
+function printM3(m3: M3): void {
+  console.log("");
+  console.log("── M3 · Tiempo de respuesta ────────────────────────────────");
+  const li = m3.intake_latency;
+  console.log(
+    `   Intake latency (n=${li.sample})   p50 ${fmtDuration(li.p50_ms)} · p90 ${fmtDuration(li.p90_ms)} · p99 ${fmtDuration(li.p99_ms)} · max ${fmtDuration(li.max_ms)}`,
+  );
+  const le = m3.end_to_end_latency;
+  console.log(
+    `   End-to-end (n=${le.sample})       p50 ${fmtDuration(le.p50_ms)} · p90 ${fmtDuration(le.p90_ms)} · p99 ${fmtDuration(le.p99_ms)} · max ${fmtDuration(le.max_ms)}`,
+  );
+  console.log("");
+  console.log(`   Abiertos                ${m3.open_total.toLocaleString("es-CO")}`);
+  console.log(`     on_track              ${m3.deadline_buckets.on_track.toLocaleString("es-CO")} (≥ 48h margen)`);
+  console.log(`     at_risk               ${m3.deadline_buckets.at_risk.toLocaleString("es-CO")} (< 48h margen)`);
+  console.log(`     overdue               ${m3.deadline_buckets.overdue.toLocaleString("es-CO")} (vencidos)`);
+  console.log("");
+  console.log(`   Sin OmegaHack           triage humano ≈ minutos-horas, plazos se pierden sin alertas`);
+  console.log(
+    `   Con OmegaHack           intake p50 ${fmtDuration(li.p50_ms)} · semáforo on_track/at_risk/overdue activo`,
+  );
+}
+
 function printM1(m1: M1): void {
   console.log("");
   console.log("── M1 · Repetición de casos ────────────────────────────────");
@@ -226,12 +363,14 @@ async function main(): Promise<void> {
   console.log(`benchmark · tenant ${tenantId}`);
   console.log(`corrido:    ${new Date().toISOString()}`);
 
-  const [m1, m2] = await Promise.all([
+  const [m1, m2, m3] = await Promise.all([
     computeM1(db, tenantId),
     computeM2(db, tenantId),
+    computeM3(db, tenantId),
   ]);
   printM1(m1);
   printM2(m2);
+  printM3(m3);
 }
 
 function printM2(m2: M2): void {

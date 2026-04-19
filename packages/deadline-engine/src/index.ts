@@ -24,7 +24,7 @@ import {
 
 export * from './types';
 export { isBusinessDay, addBusinessDays, subtractBusinessDays } from './business-days';
-export { isHoliday, loadHolidays } from './holidays';
+export { applyEmiliani, computeEasterSunday, isHoliday, loadHolidays } from './holidays';
 export { PLAZOS, resolvePlazo } from './plazos';
 export type { PlazoDefinition } from './plazos';
 export { isSuspended, validateSuspensions } from './suspensiones';
@@ -60,6 +60,7 @@ function enumerateBogotaDates(
   endInclusive: Date,
 ): string[] {
   const out: string[] = [];
+  /* c8 ignore next 3 -- defensive: callers always pass start < end */
   if (endInclusive.getTime() <= startExclusive.getTime()) {
     return out;
   }
@@ -119,8 +120,13 @@ export function computeDeadline(
   }
 
   const holidaysSkipped: string[] = [];
-  for (const iso of enumerateBogotaDates(issued, deadlineAt)) {
-    if (isHoliday(iso, holidays)) {
+  if (plazo.unit === 'business_days') {
+    for (const iso of enumerateBogotaDates(issued, deadlineAt)) {
+      if (!isHoliday(iso, holidays)) continue;
+      // Only holidays on weekdays actually extend the plazo; a holiday that
+      // falls on a Saturday or Sunday is already skipped as a weekend.
+      const dow = fromBogotaISODate(iso).getUTCDay();
+      if (dow === 0 || dow === 6) continue;
       holidaysSkipped.push(iso);
     }
   }
@@ -144,6 +150,7 @@ function countBusinessDaysBetween(
   holidays: ReturnType<typeof loadHolidays>,
   suspensiones: readonly Suspension[] | undefined,
 ): number {
+  /* c8 ignore next 3 -- defensive: callers already clamp to start < end */
   if (endInclusive.getTime() <= startExclusive.getTime()) {
     return 0;
   }

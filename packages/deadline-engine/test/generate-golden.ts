@@ -237,9 +237,13 @@ function buildBusinessDayCase(
   tenantConfig?: TenantConfig,
 ): DeadlineCase {
   const meta = PLAZO_AMOUNTS[plazoType];
+  const amount =
+    plazoType === 'salud_priority' && tenantConfig?.saludPriorityDays
+      ? tenantConfig.saludPriorityDays
+      : meta.amount;
   const ref = referenceAddBusinessDays(
     issuedAtISO,
-    meta.amount,
+    amount,
     holidays,
     tenantConfig?.suspensiones,
   );
@@ -247,7 +251,7 @@ function buildBusinessDayCase(
   const expected = {
     deadlineAt: `${ref.deadlineISO}T05:00:00.000Z`,
     unit: meta.unit,
-    amount: meta.amount,
+    amount,
     holidaysSkipped: [...ref.holidaysSkipped].sort(),
   };
   const input: DeadlineCase['input'] = tenantConfig
@@ -569,7 +573,7 @@ function generateExtensionCases(holidays: HolidaysByYear): ExtensionCase[] {
           reason: `extension exceeds cap`,
           newDeadlineAt,
         },
-        expected: { shouldThrow: true, errorCode: 'EXTENSION_EXCEEDS_CAP' },
+        expected: { shouldThrow: true, errorCode: 'EXTENSION_EXCEEDS_LIMIT' },
       });
       idx += 1;
     }

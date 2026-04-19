@@ -28,7 +28,7 @@ export function applyEmiliani(date: Date): Date {
   if (day === 1) {
     return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
   }
-  const delta = (8 - day) % 7 || 7;
+  const delta = day === 0 ? 1 : 8 - day;
   const shifted = new Date(date.getTime());
   shifted.setUTCDate(shifted.getUTCDate() + delta);
   return new Date(Date.UTC(shifted.getUTCFullYear(), shifted.getUTCMonth(), shifted.getUTCDate()));

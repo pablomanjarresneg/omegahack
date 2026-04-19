@@ -18,12 +18,27 @@ export type {
   SearchOptions,
 } from './retriever.js';
 
-export { nellaSearch, defaultNellaTransport } from './nella-client.js';
+export {
+  nellaSearch,
+  nellaIndex,
+  defaultNellaTransport,
+  DEFAULT_PQR_BUCKET,
+} from './nella-client.js';
 export type {
   HopSource,
   HopTelemetry,
   NellaClientDeps,
   NellaRawResult,
+  NellaSearchInput,
   NellaSearchParams,
+  NellaIndexDoc,
+  NellaIndexInput,
+  NellaIndexResult,
   NellaTransport,
 } from './nella-client.js';
+
+export { renderPqrAsNellaDoc, renderPqrMarkdown } from './pqr-renderer.js';
+export type { PqrRenderRow, PqrRenderedDoc } from './pqr-renderer.js';
+
+export { indexPqrBatch } from './pqr-indexer.js';
+export type { IndexPqrBatchDeps, IndexPqrBatchResult } from './pqr-indexer.js';

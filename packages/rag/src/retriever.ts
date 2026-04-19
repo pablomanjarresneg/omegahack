@@ -20,6 +20,8 @@ export interface RetrievedChunk {
   score: number;
   /** Source of this result — for telemetry & UI badges. `'nella'` only appears when the nella-client returned it. */
   source: 'nella' | 'pgvector' | 'fts';
+  /** Only populated when `source === 'nella'` and nella returned extra fields (e.g. `problem_group_id`, `priority_level`). */
+  metadata?: Record<string, unknown>;
 }
 
 export interface SearchOptions {

@@ -1,5 +1,6 @@
-// nella MCP client with a three-stage fallback chain:
+// nella MCP client.
 //
+// Search path:
 //     nella MCP  ──(timeout / auth / empty)──▶  pgvector (qa_embeddings)
 //                                                   │
 //                                                   ▼
@@ -9,15 +10,23 @@
 // callback so the caller (usually the UI) can render a badge and so logs
 // can track fallback frequency.
 //
+// Index path:
+//     nella.index({ bucket, documents })   — idempotent on doc id
+//
+// Nella's indexer skips documents whose ids already exist, so calling
+// `index()` with the same UUIDs repeatedly is a no-op; that's the contract
+// the PQR indexer relies on for incremental backfills.
+//
 // The nella MCP transport is pluggable — the default `defaultNellaTransport`
-// looks for an `NELLA_MCP_ENDPOINT` env var; if absent it throws immediately
-// so the fallback chain kicks in. This keeps local dev working without
-// requiring nella to be installed.
+// looks for an `NELLA_MCP_ENDPOINT` env var; if absent it returns null so
+// the fallback chain kicks in for search, and the indexer short-circuits.
 
 import type { Pool } from 'pg';
 import { searchFts, searchSimilar, type RetrievedChunk, type SearchOptions } from './retriever.js';
 
 export type HopSource = 'nella' | 'pgvector' | 'fts';
+
+export const DEFAULT_PQR_BUCKET = 'omega-pqr-corpus';
 
 export interface HopTelemetry {
   source: HopSource;
@@ -32,18 +41,48 @@ export interface NellaSearchParams extends SearchOptions {
   query: string;
   /** Upper bound on nella MCP latency before we abandon & fall through. */
   timeoutMs?: number;
+  /** Optional nella bucket to scope the search to (e.g. `omega-pqr-corpus`). */
+  bucket?: string;
 }
 
 const DEFAULT_TIMEOUT_MS = 2500;
 const DEFAULT_TOP_K = 5;
 
+export interface NellaSearchInput {
+  query: string;
+  mode: 'hybrid' | 'semantic' | 'keyword';
+  topK: number;
+  bucket?: string;
+}
+
+export interface NellaIndexDoc {
+  /** Stable id — nella skips documents whose id has already been indexed. */
+  id: string;
+  /** Body text to embed. */
+  text: string;
+  title?: string;
+  url?: string;
+  /** Free-form metadata. Keep keys terse + ASCII so nella stores them faithfully. */
+  metadata?: Record<string, unknown>;
+}
+
+export interface NellaIndexInput {
+  bucket: string;
+  documents: NellaIndexDoc[];
+}
+
+export interface NellaIndexResult {
+  /** Ids nella treated as new (or re-indexed). */
+  indexed: string[];
+  /** Ids nella recognised as already-indexed and skipped. */
+  skipped: string[];
+}
+
 export interface NellaTransport {
   /** `mode` maps to nella's search mode; 'hybrid' is the sweet spot per docs. */
-  search(input: {
-    query: string;
-    mode: 'hybrid' | 'semantic' | 'keyword';
-    topK: number;
-  }): Promise<NellaRawResult[]>;
+  search(input: NellaSearchInput): Promise<NellaRawResult[]>;
+  /** Upload documents to a nella bucket. Must be idempotent by doc id. */
+  index?(input: NellaIndexInput): Promise<NellaIndexResult>;
 }
 
 export interface NellaRawResult {
@@ -54,6 +93,8 @@ export interface NellaRawResult {
   score: number;
   /** Optional — nella may or may not return this. */
   heading_path?: string[];
+  /** Optional — arbitrary metadata nella stored alongside the doc. */
+  metadata?: Record<string, unknown>;
 }
 
 export interface NellaClientDeps {
@@ -90,7 +131,12 @@ export async function nellaSearch(
     const start = now();
     try {
       const raw = await raceWithTimeout(
-        transport.search({ query: params.query, mode: 'hybrid', topK }),
+        transport.search({
+          query: params.query,
+          mode: 'hybrid',
+          topK,
+          bucket: params.bucket,
+        }),
         timeoutMs,
       );
       const elapsed = now() - start;
@@ -105,6 +151,7 @@ export async function nellaSearch(
         chunkText: r.text,
         score: r.score,
         source: 'nella',
+        metadata: r.metadata,
       }));
       emitTelemetry({
         source: 'nella',
@@ -179,6 +226,27 @@ export async function nellaSearch(
   }
 }
 
+/**
+ * Upload documents to a nella bucket. Throws if no transport is configured
+ * (indexing is a write — there is no fallback). Returns the indexed/skipped
+ * split so callers can log incremental progress.
+ */
+export async function nellaIndex(
+  input: NellaIndexInput,
+  deps: Pick<NellaClientDeps, 'transport'>,
+): Promise<NellaIndexResult> {
+  const transport = deps.transport ?? defaultNellaTransport();
+  if (!transport || !transport.index) {
+    throw new Error(
+      'nellaIndex: no transport with index() configured. Set NELLA_MCP_ENDPOINT + NELLA_MCP_TOKEN or inject a transport.',
+    );
+  }
+  if (input.documents.length === 0) {
+    return { indexed: [], skipped: [] };
+  }
+  return transport.index(input);
+}
+
 // ---------------------------------------------------------------------------
 // helpers
 // ---------------------------------------------------------------------------
@@ -204,33 +272,54 @@ function errMessage(e: unknown): string {
 
 /**
  * Default transport — HTTP POST to `NELLA_MCP_ENDPOINT` with bearer
- * `NELLA_MCP_TOKEN`. Returns `null` when either env var is missing so the
- * caller can skip the nella hop entirely (rather than racing against a
- * guaranteed-failing request).
+ * `NELLA_MCP_TOKEN`. The endpoint is expected to accept a JSON body of
+ * `{ tool, arguments }` and return `{ results }` for search or
+ * `{ indexed, skipped }` for index. Point it at the MCP SSE proxy
+ * described in `docs/nella-n8n-mcp-guide.md` or at a thin HTTP gateway
+ * that forwards to nella's SSE tools.
+ *
+ * Returns `null` when either env var is missing so the caller can skip
+ * the nella hop entirely (rather than racing against a guaranteed-failing
+ * request).
  */
 export function defaultNellaTransport(): NellaTransport | null {
   const endpoint = process.env.NELLA_MCP_ENDPOINT;
   const token = process.env.NELLA_MCP_TOKEN;
   if (!endpoint || !token) return null;
+
+  const searchTool = process.env.NELLA_MCP_SEARCH_TOOL ?? 'nella_search';
+  const indexTool = process.env.NELLA_MCP_INDEX_TOOL ?? 'nella_index';
+
+  async function post(tool: string, args: unknown): Promise<unknown> {
+    const resp = await fetch(endpoint!, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ tool, arguments: args }),
+    });
+    if (!resp.ok) {
+      const body = await resp.text();
+      throw new Error(`nella MCP ${tool} ${resp.status}: ${body}`);
+    }
+    return resp.json();
+  }
+
   return {
     async search(input) {
-      const resp = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          tool: 'nella_search',
-          arguments: input,
-        }),
-      });
-      if (!resp.ok) {
-        const body = await resp.text();
-        throw new Error(`nella MCP ${resp.status}: ${body}`);
-      }
-      const json = (await resp.json()) as { results?: NellaRawResult[] };
+      const json = (await post(searchTool, input)) as { results?: NellaRawResult[] };
       return Array.isArray(json.results) ? json.results : [];
+    },
+    async index(input) {
+      const json = (await post(indexTool, input)) as {
+        indexed?: string[];
+        skipped?: string[];
+      };
+      return {
+        indexed: Array.isArray(json.indexed) ? json.indexed : [],
+        skipped: Array.isArray(json.skipped) ? json.skipped : [],
+      };
     },
   };
 }

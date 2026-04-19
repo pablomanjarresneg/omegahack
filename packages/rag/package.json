@@ -10,7 +10,9 @@
     "./chunking": "./src/chunking.ts",
     "./retriever": "./src/retriever.ts",
     "./embedding": "./src/embedding.ts",
-    "./nella-client": "./src/nella-client.ts"
+    "./nella-client": "./src/nella-client.ts",
+    "./pqr-renderer": "./src/pqr-renderer.ts",
+    "./pqr-indexer": "./src/pqr-indexer.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -19,6 +21,7 @@
     "lint": "echo \"(no lint configured yet)\""
   },
   "dependencies": {
+    "@omega/habeas-data": "workspace:*",
     "pg": "^8.13.1"
   },
   "devDependencies": {

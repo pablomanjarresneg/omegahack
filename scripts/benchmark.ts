@@ -14,7 +14,14 @@
 //   SUPABASE_URL (or NEXT_PUBLIC_SUPABASE_URL), SUPABASE_SERVICE_ROLE_KEY
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { Database } from "@omega/db/types";
+
+const __filename = fileURLToPath(import.meta.url);
+const REPO_ROOT = path.resolve(path.dirname(__filename), "..");
+const OUTPUT_DIR = path.join(REPO_ROOT, ".private", "benchmark");
 
 const DEFAULT_TENANT_ID = "00000000-0000-0000-0000-000000000001";
 
@@ -371,6 +378,100 @@ async function main(): Promise<void> {
   printM1(m1);
   printM2(m2);
   printM3(m3);
+
+  const generatedAt = new Date().toISOString();
+  const report: BenchmarkReport = {
+    generated_at: generatedAt,
+    tenant_id: tenantId,
+    sample_size: m1.total_pqrs,
+    m1_repeticion: m1,
+    m2_cargas: m2,
+    m3_tiempo: m3,
+  };
+
+  await mkdir(OUTPUT_DIR, { recursive: true });
+  const jsonPath = path.join(OUTPUT_DIR, "latest.json");
+  const mdPath = path.join(OUTPUT_DIR, "latest.md");
+  await writeFile(jsonPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+  await writeFile(mdPath, renderMarkdownReport(report), "utf8");
+  console.log("");
+  console.log(`escritos: ${path.relative(REPO_ROOT, jsonPath)}`);
+  console.log(`          ${path.relative(REPO_ROOT, mdPath)}`);
+}
+
+type BenchmarkReport = {
+  generated_at: string;
+  tenant_id: string;
+  sample_size: number;
+  m1_repeticion: M1;
+  m2_cargas: M2;
+  m3_tiempo: M3;
+};
+
+function renderMarkdownReport(r: BenchmarkReport): string {
+  const { m1_repeticion: m1, m2_cargas: m2, m3_tiempo: m3 } = r;
+  const top = m2.top_secretarias
+    .map((s) => `- **${s.count}** · ${s.nombre ?? s.secretaria_id ?? "(sin asignar)"}`)
+    .join("\n");
+  return `# Benchmark OmegaHack
+
+- **Corrida:** ${r.generated_at}
+- **Tenant:** \`${r.tenant_id}\`
+- **Muestra:** ${r.sample_size.toLocaleString("es-CO")} PQRs
+
+## Resumen
+
+| Indicador | Sin OmegaHack | Con OmegaHack |
+| --- | --- | --- |
+| Repetición — dedup rate | 0.0 % | **${fmtPct(m1.dedup_rate)}** (${m1.respuestas_ahorradas} respuestas ahorradas) |
+| Cargas — auto-routing | 0.0 % | **${fmtPct(m2.auto_routing_rate)}** (prioridad ${fmtPct(m2.priority_rate)}) |
+| Tiempo — intake p50 | ≈ 30 min humano (supuesto) | **${fmtDuration(m3.intake_latency.p50_ms)}** |
+
+## M1 · Repetición de casos
+
+- Total PQRs: ${m1.total_pqrs}
+- Agrupados en un problem_group: ${m1.grouped_pqrs}
+- Grupos activos (≥ 2 miembros): ${m1.active_groups}
+- Grupos *hot* (5+ en 5 días): ${m1.hot_groups}
+- **Dedup rate:** ${fmtPct(m1.dedup_rate)}
+- **Respuestas ahorradas:** ${m1.respuestas_ahorradas} (cada grupo se responde una vez en lugar de N)
+
+## M2 · Cargas innecesarias
+
+- Con secretaría asignada: ${m2.classified_pqrs} / ${m2.total_pqrs} (**${fmtPct(m2.auto_routing_rate)}**)
+- Con prioridad asignada: ${m2.priority_assigned} (${fmtPct(m2.priority_rate)})
+- Con tags de alta confianza (≥ 0.7): ${m2.high_confidence_tagged_pqrs} (${fmtPct(m2.high_confidence_rate)})
+
+Top secretarías por volumen:
+
+${top}
+
+## M3 · Tiempo de respuesta
+
+Intake latency (n = ${m3.intake_latency.sample}):
+
+- p50 **${fmtDuration(m3.intake_latency.p50_ms)}**
+- p90 ${fmtDuration(m3.intake_latency.p90_ms)}
+- p99 ${fmtDuration(m3.intake_latency.p99_ms)}
+- max ${fmtDuration(m3.intake_latency.max_ms)}
+
+End-to-end (received → response_sent, n = ${m3.end_to_end_latency.sample}):
+
+- p50 ${fmtDuration(m3.end_to_end_latency.p50_ms)}
+- p90 ${fmtDuration(m3.end_to_end_latency.p90_ms)}
+- max ${fmtDuration(m3.end_to_end_latency.max_ms)}
+
+Salud de plazos sobre ${m3.open_total} PQRs abiertos:
+
+- 🟢 on_track (≥ 48 h margen): ${m3.deadline_buckets.on_track}
+- 🟡 at_risk (< 48 h margen): ${m3.deadline_buckets.at_risk}
+- 🔴 overdue: ${m3.deadline_buckets.overdue}
+
+## Supuestos
+
+- **Baseline "sin OmegaHack"** se modela como el peor caso sobre el mismo dataset: dedup 0 %, auto-routing 0 %, triage humano de ~30 min por PQR. No se mide con cronómetro; es un supuesto conservador para la comparación.
+- Los eventos de intake (\`received\`, \`classified\`, \`response_sent\`) provienen de \`pqr_events\` y reflejan tanto runs sintéticos como reales.
+`;
 }
 
 function printM2(m2: M2): void {

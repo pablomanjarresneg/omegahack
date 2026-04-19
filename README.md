@@ -1,12 +1,12 @@
-# Mini Reto Escala
+# Mini Reto Escala en 3 Cifras
 
-Entregable del reto de escala. Benchmark de OmegaHack sobre los tres indicadores del PDS PQRSF (Distrito de Medellín): tiempo de respuesta, cargas innecesarias y repetición de casos.
+Entregable del reto de escala. Definición de tres métricas que sostienen la escalabilidad del modelo OmegaHack para PQRSF, con el rol responsable y la frecuencia con la que se miden.
 
-## Benchmark
+## Entregable
 
-[Benchmark.pdf](retos/mini_reto-escala/Benchmark.pdf)
+[Escala en 3 Cifras.pdf](retos/mini_reto-escala/Escala%20en%203%20Cifras.pdf)
 
-Mide los tres indicadores contra datos reales del tenant demo (Supabase enlazado), con fórmulas, números crudos, supuestos y cómo reproducirlo. Generado por `scripts/benchmark.ts` (versionado en `main`).
+Tabla con las 3 métricas (tiempo de respuesta, cargas innecesarias, repetición de casos), valores marginal e ideal, rol que mide y frecuencia. Marco legal: Ley 1755/2015, Ley 883/2015, Ley 1581/2018.
 
 ## Archivos
 
